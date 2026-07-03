@@ -10,7 +10,7 @@ most of it — paste this file and ask it to check everything and report back.
 - [ ] Phone number and email are correct and clickable (`tel:` / `mailto:` links).
 - [ ] Every service in `src/data/services.ts` is real and correctly described.
 - [ ] Legal name and service areas in the footer are right.
-- [ ] Favicon replaced with the client's mark (`public/assets/favicon.svg`).
+- [ ] Favicon replaced with the client's mark (`public/assets/favicon.png`).
 
 ## SEO
 

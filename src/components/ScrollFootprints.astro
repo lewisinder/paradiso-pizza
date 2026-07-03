@@ -1,0 +1,138 @@
+<div class="scroll-footprints" aria-hidden="true"></div>
+
+<script>
+  // Rooster trail scroll indicator: footprints are laid along an S-curve down
+  // one side of the page and stamp in one-by-one as the scroll reaches them.
+  const rail = document.querySelector<HTMLElement>(".scroll-footprints");
+
+  if (rail) {
+    interface Mark {
+      el: HTMLElement;
+      y: number;
+      stamped: boolean;
+    }
+
+    const marks: Mark[] = [];
+    let ticking = false;
+    let builtHeight = 0;
+
+    // Deterministic per-index wobble so the trail doesn't reshuffle on rebuild.
+    const wobble = (i: number, salt: number) => {
+      const n = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
+      return (n - Math.floor(n)) * 2 - 1; // -1..1
+    };
+
+    const readVar = (styles: CSSStyleDeclaration, name: string) =>
+      parseFloat(styles.getPropertyValue(name));
+
+    const build = () => {
+      const styles = getComputedStyle(rail);
+      const spacing = readVar(styles, "--fp-spacing");
+      const amplitude = readVar(styles, "--fp-amplitude");
+      const wavelength = readVar(styles, "--fp-wavelength");
+      const stepWidth = readVar(styles, "--fp-step-width");
+      const height = document.documentElement.scrollHeight;
+
+      builtHeight = height;
+      rail.textContent = "";
+      marks.length = 0;
+
+      const count = Math.min(Math.floor((height - spacing) / spacing), 120);
+
+      for (let i = 0; i < count; i++) {
+        const y = spacing * 0.55 + i * spacing;
+        const phase = (y / wavelength) * Math.PI * 2;
+        // S-curve position and its tangent, so each print points where the
+        // trail is heading.
+        const curveX = Math.sin(phase) * amplitude;
+        const lean =
+          Math.atan(Math.cos(phase) * amplitude * ((Math.PI * 2) / wavelength)) *
+          (180 / Math.PI);
+        // Alternate left/right feet across the walking line, each foot using
+        // its own print. The assets already face down the page.
+        const foot = i % 2 === 0 ? -1 : 1;
+        const x = curveX + foot * stepWidth;
+        const rot = lean + foot * 5 + wobble(i, 1) * 7;
+
+        const el = document.createElement("span");
+        el.className = `fp ${foot < 0 ? "fp--left" : "fp--right"}`;
+        el.style.setProperty("--fp-x", `${x.toFixed(1)}px`);
+        el.style.setProperty("--fp-y", `${Math.round(y)}px`);
+        el.style.setProperty("--fp-rot", `${rot.toFixed(1)}deg`);
+        rail.appendChild(el);
+        marks.push({ el, y, stamped: false });
+      }
+    };
+
+    const update = (instant = false) => {
+      // The trail tip tracks the middle of the viewport: scrolling down lays
+      // prints top-to-bottom, scrolling up picks them back up tip-first.
+      // Batches that qualify in the same frame get a small cascading delay so
+      // fast scrolling still reads as steps, not a blob.
+      const threshold = window.scrollY + window.innerHeight * 0.5;
+      const appearing: Mark[] = [];
+      const leaving: Mark[] = [];
+
+      for (const mark of marks) {
+        if (!mark.stamped && mark.y <= threshold) appearing.push(mark);
+        else if (mark.stamped && mark.y > threshold) leaving.push(mark);
+      }
+
+      // marks is ordered top-to-bottom, so appearing already stamps in walking
+      // order; retracting removes the most recent (lowest) print first.
+      leaving.reverse();
+
+      appearing.forEach((mark, i) => {
+        mark.stamped = true;
+        mark.el.style.transitionDelay = instant
+          ? "0ms"
+          : `${Math.min(i * 90, 630)}ms`;
+        mark.el.classList.add("is-stamped");
+      });
+
+      leaving.forEach((mark, i) => {
+        mark.stamped = false;
+        mark.el.style.transitionDelay = instant
+          ? "0ms"
+          : `${Math.min(i * 70, 490)}ms`;
+        mark.el.classList.remove("is-stamped");
+      });
+    };
+
+    const rebuild = (instant: boolean) => {
+      build();
+      if (instant) rail.classList.add("no-anim");
+      update(instant);
+      if (instant) {
+        // Flush styles so already-passed prints appear without replaying.
+        void rail.offsetWidth;
+        rail.classList.remove("no-anim");
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
+      });
+    };
+
+    rebuild(false);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Page height moves as images load or the viewport changes; re-lay the
+    // trail, keeping already-passed prints visible without re-animating.
+    let resizeTimer: number | undefined;
+    const observer = new ResizeObserver(() => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        if (Math.abs(document.documentElement.scrollHeight - builtHeight) > 64) {
+          rebuild(true);
+        }
+      }, 180);
+    });
+    observer.observe(document.documentElement);
+  }
+</script>

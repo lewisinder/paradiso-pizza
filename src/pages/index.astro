@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
+import ScrollFootprints from "@/components/ScrollFootprints.astro";
 import rooster from "@/assets/paradiso-rooster.jpg";
 import { addOns, desserts, dips, pizzas } from "@/data/menu";
 import { googleReviews } from "@/data/reviews";
@@ -17,6 +18,8 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
 ---
 
 <BaseLayout title={site.name} description={site.description}>
+  <ScrollFootprints />
+
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero-grid">
       <div>
