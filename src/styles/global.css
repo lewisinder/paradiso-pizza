@@ -381,17 +381,50 @@ code {
   justify-content: center;
 }
 
-.proof-marks,
-.footer-marks,
-.field-marks {
-  color: var(--menu-red);
-  letter-spacing: 0.45em;
+.footprint-trail {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
-.proof-marks {
-  margin-top: 34px;
-  font-family: var(--font-hand);
-  font-size: 1.4rem;
+.footprint-trail--hero {
+  margin-top: 36px;
+}
+
+.footprint-trail--center {
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.footprint-trail--footer {
+  justify-content: flex-end;
+}
+
+.footprint-mark {
+  width: 28px;
+  aspect-ratio: 1;
+  display: inline-block;
+  flex: none;
+  background: url("../assets/paradiso_footprint.webp") no-repeat center / contain;
+  opacity: 0.82;
+}
+
+.footprint-mark:nth-child(2n) {
+  transform: rotate(22deg);
+}
+
+.footprint-mark:nth-child(3n) {
+  transform: rotate(-18deg) translateY(3px);
+}
+
+.footprint-mark:nth-child(4n) {
+  transform: rotate(14deg) translateY(-2px);
+}
+
+.footprint-mark--single {
+  width: 30px;
+  margin: 0 auto 12px;
+  transform: rotate(-14deg);
 }
 
 .print-frame {

@@ -30,7 +30,12 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
           <a class="btn btn--ghost" href={withBase("#menu")}>View Menu</a>
           <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Online</a>
         </div>
-        <p class="proof-marks" aria-hidden="true">/ * / *</p>
+        <div class="footprint-trail footprint-trail--hero" aria-hidden="true">
+          <span class="footprint-mark"></span>
+          <span class="footprint-mark"></span>
+          <span class="footprint-mark"></span>
+          <span class="footprint-mark"></span>
+        </div>
       </div>
 
       <figure class="print-frame">
@@ -147,7 +152,7 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
         <div class="oven-card">
           <div class="oven-placeholder">
             <div>
-              <p class="field-marks">/</p>
+              <span class="footprint-mark footprint-mark--single" aria-hidden="true"></span>
               <p>our wood-fired oven</p>
             </div>
           </div>
@@ -156,7 +161,7 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
         <div class="oven-card oven-card--team">
           <div class="oven-placeholder">
             <div>
-              <p class="field-marks">*</p>
+              <span class="footprint-mark footprint-mark--single" aria-hidden="true"></span>
               <p>the Paradiso team</p>
             </div>
           </div>
@@ -194,7 +199,11 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
         <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Paradiso</a>
         <a class="btn btn--ghost" href={`tel:${site.phone}`}>Call {site.phoneDisplay}</a>
       </div>
-      <p class="proof-marks" aria-hidden="true">* / * / *</p>
+      <div class="footprint-trail footprint-trail--center" aria-hidden="true">
+        <span class="footprint-mark"></span>
+        <span class="footprint-mark"></span>
+        <span class="footprint-mark"></span>
+      </div>
     </div>
   </section>
 </BaseLayout>
