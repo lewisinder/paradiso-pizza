@@ -41,7 +41,7 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
           sizes="(max-width: 720px) 80vw, 430px"
           loading="eager"
         />
-        <figcaption class="print-caption">our mascot, Bruno.</figcaption>
+        <figcaption class="print-caption">our mascot</figcaption>
       </figure>
     </div>
   </section>
@@ -63,6 +63,9 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
               <span class="price">{pizza.price}</span>
               <span class="muted">wood-fired</span>
             </div>
+            {pizza.orderUrl && (
+              <a class="text-link order-card-link" href={pizza.orderUrl}>Order this pizza</a>
+            )}
           </article>
         ))}
       </div>
@@ -140,33 +143,43 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
 
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="container about-grid">
-      <div class="oven-card" aria-hidden="true">
-        <div class="oven-placeholder">
-          <div>
-            <p class="field-marks">/</p>
-            <p>our wood-fired oven</p>
+      <div class="about-prints" aria-label="Paradiso photo placeholders">
+        <div class="oven-card">
+          <div class="oven-placeholder">
+            <div>
+              <p class="field-marks">/</p>
+              <p>our wood-fired oven</p>
+            </div>
           </div>
+          <p class="print-caption">the heart of the kitchen</p>
         </div>
-        <p class="print-caption">the heart of the kitchen</p>
+        <div class="oven-card oven-card--team">
+          <div class="oven-placeholder">
+            <div>
+              <p class="field-marks">*</p>
+              <p>the Paradiso team</p>
+            </div>
+          </div>
+          <p class="print-caption">team photo coming soon</p>
+        </div>
       </div>
 
       <div>
-        <h2 class="scrawl" id="about-title">A little slice of paradise</h2>
+        <h2 class="scrawl" id="about-title">A little about us</h2>
         <p>
-          Paradiso makes pizza, cannoli and tiramisu for Titirangi locals, with a
-          tight menu built around good dough, San Marzano tomato, fior di latte and
-          house-made sweets.
+          Paradiso is a small Titirangi pizza spot making pizza, cannoli and
+          tiramisu for the neighbourhood.
         </p>
         <p>
-          The menu keeps things simple: ten pizzas named from Dante, fired hot, plus
-          cannoli, tiramisu, dips and add-ons for the table.
+          We keep the menu tight: good dough, San Marzano tomato, fior di latte,
+          a hot oven and a few house-made sweets for after.
         </p>
         <p>
-          The proof is local and current: established in 2026, rated 5.0 from 71
-          Google reviews, and open from 4pm until sold out.
+          We opened in 2026 and have been lucky to be backed by Titirangi locals
+          from day one, with a 5.0 Google rating from 71 reviews.
         </p>
         <p class="pull-quote">"Pizza, cannoli and tiramisu in the heart of Titirangi."</p>
-        <p class="muted">Find us where dinner plans become a pizza order.</p>
+        <p class="muted">Open from 4pm until sold out. Check Facebook for the latest updates.</p>
       </div>
     </div>
   </section>

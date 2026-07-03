@@ -264,6 +264,21 @@ code {
   background: var(--paper-strong);
 }
 
+.text-link {
+  display: inline-flex;
+  width: fit-content;
+  color: var(--menu-red);
+  font-size: 0.82rem;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--menu-red) 42%, transparent);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.text-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -462,6 +477,10 @@ code {
   margin-top: 24px;
 }
 
+.order-card-link {
+  margin-top: 18px;
+}
+
 .price {
   color: var(--menu-red);
   font-family: var(--font-hand);
@@ -571,14 +590,19 @@ code {
 
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1fr);
   gap: clamp(42px, 10vw, 120px);
   align-items: center;
 }
 
+.about-prints {
+  position: relative;
+  min-height: clamp(520px, 48vw, 640px);
+}
+
 .oven-card {
-  width: min(100%, 390px);
-  min-height: 390px;
+  width: min(82%, 380px);
+  min-height: 360px;
   display: grid;
   align-content: center;
   justify-items: center;
@@ -587,6 +611,24 @@ code {
   background: var(--paper-strong);
   box-shadow: 7px 7px 0 var(--ink);
   transform: rotate(-1.5deg);
+}
+
+.about-prints .oven-card {
+  position: absolute;
+  left: 0;
+  top: 18px;
+}
+
+.about-prints .oven-card--team {
+  left: auto;
+  right: 0;
+  top: 182px;
+  transform: rotate(2deg);
+  z-index: 1;
+}
+
+.about-prints .oven-card--team .oven-placeholder {
+  background: #ded2bd;
 }
 
 .oven-placeholder {
@@ -943,6 +985,19 @@ code {
 
   .oven-card {
     min-height: 280px;
+  }
+
+  .about-prints {
+    min-height: auto;
+    display: grid;
+    gap: 28px;
+  }
+
+  .about-prints .oven-card,
+  .oven-card--team {
+    position: static;
+    width: min(100%, 390px);
+    margin-inline: auto;
   }
 
   .footer-bottom {

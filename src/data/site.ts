@@ -50,7 +50,6 @@ export const site = {
   nav: [
     { label: "Menu", href: "#menu" },
     { label: "About", href: "#about" },
-    { label: "Desserts", href: "#desserts" },
     { label: "Contact", href: "#contact" },
   ] satisfies NavItem[],
 

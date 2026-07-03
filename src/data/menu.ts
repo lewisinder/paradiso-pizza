@@ -8,6 +8,7 @@ export type MenuItem = {
   name: string;
   price: string;
   description?: string;
+  orderUrl?: string;
 };
 
 export const pizzas: MenuItem[] = [
@@ -15,18 +16,24 @@ export const pizzas: MenuItem[] = [
     name: "Paradiso",
     price: "$24",
     description: "San Marzano tomato, fior di latte, basil, parmesan",
+    orderUrl:
+      "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/dbfdebcf-137c-45ac-84c7-71596c9fb5ba/new",
   },
   {
     name: "Beatrice",
     price: "$27",
     description:
       "Lemon crème fraîche, roast mushrooms & leeks, truffle oil, rocket, pesto, parmesan",
+    orderUrl:
+      "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b9bac62c-c44d-4065-a9ba-bf0dde0b6d36/new",
   },
   {
     name: "Inferno",
     price: "$27",
     description:
       "San Marzano tomato, chorizo, fior di latte, smoked provolone, hot honey",
+    orderUrl:
+      "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/265c8c0d-a800-4f8a-9d6e-5b060b93eb85/new",
   },
   {
     name: "Virgilio",
@@ -38,6 +45,8 @@ export const pizzas: MenuItem[] = [
     price: "$29",
     description:
       "Free range pork and fennel sausage, confit garlic spread, parmesan, fior di latte, onion jam",
+    orderUrl:
+      "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b2d0b708-4db5-41a0-9d49-dd40f91bff73/new",
   },
   {
     name: "Ginevra",
