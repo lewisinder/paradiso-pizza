@@ -1,59 +1,39 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import ServiceCard from "@/components/ServiceCard.astro";
-import ContactForm from "@/components/ContactForm.astro";
-import FaqItem from "@/components/FaqItem.astro";
-import { services } from "@/data/services";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// THE DESIGN SYSTEM PAGE IS THE CONTRACT.
-// Every page on the site is built only from what appears here. If a new
-// section needs something the system can't express, extend global.css and
-// SHOW IT HERE FIRST — then use it on the page.
-// On build day this page is restyled for the client (tokens, fonts, signature)
-// before any other page is touched.
-// ─────────────────────────────────────────────────────────────────────────────
+import { pizzas } from "@/data/menu";
+import { site } from "@/data/site";
+import { withBase } from "@/lib/base";
 
 const colorTokens = [
-  ["--ink", "#1d2025", "Main reading text on light surfaces"],
-  ["--muted", "#5c6169", "Secondary copy, captions, small print"],
-  ["--line", "#d9d6cf", "Borders, dividers, field edges"],
-  ["--bg", "#f5f3ee", "Page background"],
-  ["--surface", "#fffdf9", "Cards, forms, panels"],
-  ["--dark", "#23262b", "Dark section bands and footer"],
-  ["--dark-ink", "#f2f0eb", "Text on dark surfaces"],
-  ["--brand", "#305d63", "Primary action — buttons, links, focus"],
-  ["--brand-dark", "#234649", "Hover/active state of --brand"],
-  ["--accent", "#b4552d", "Highlights, markers, small emphasis"],
+  ["--ink", "#1a1a1a", "Typewriter ink, borders and rough shadows"],
+  ["--ash", "#5a5a4a", "Muted captions and secondary notes"],
+  ["--paper", "#f7f5ef", "Graph-paper page background"],
+  ["--paper-strong", "#fbfaf5", "Menu cards and raised paper blocks"],
+  ["--cream", "#f0ede4", "Rooster matting and warm print surfaces"],
+  ["--menu-red", "#d42b2b", "Handwritten headings, rules and primary actions"],
+  ["--brand-red", "#760201", "Logo red, reserved for brand lockups"],
 ];
 
-const typeRoles = [
-  ["Display", "h1", "A page headline set in the display face"],
-  ["Section", "h2", "A section heading that frames a band of content"],
-  ["Card", "h3", "A card or panel title"],
-  ["Body", "p", "Body copy should be plain, specific, and useful — written for the customer, not for the business."],
-  ["Utility", ".overline", "SECTION CONTEXT LABEL"],
-];
+const featured = pizzas.slice(0, 2);
 ---
 
 <BaseLayout
   title="Design System"
-  description="Internal design-system reference for this site."
+  description="Internal Paradiso Pizza design-system reference."
   robots="noindex, nofollow"
 >
   <section class="hero">
     <div class="container">
       <span class="overline">Internal reference</span>
-      <h1>Design system</h1>
+      <h1 class="scrawl">Design system</h1>
       <p class="lead">
-        The single source of truth for this site. Pages are assembled only from the
-        tokens, type roles, and components on this page.
+        The public site is a one-page menu experience based on Paradiso's printed
+        menu: graph paper, red hand lettering, typewriter copy and rough print boxes.
       </p>
       <div class="ds-note">
-        <strong>Build-day note for the agent:</strong> restyle this page first — replace
-        the colour tokens, font roles, and design signature for the client's brand in
-        <code>src/styles/global.css</code>, review it here, and only then build out the
-        real pages. Record the chosen design signature below.
+        <strong>Signature:</strong> the website behaves like an expanded version of
+        the printed menu, with the rooster print, red-ruled dessert board and
+        typewriter price lists carrying the brand across the page.
       </div>
     </div>
   </section>
@@ -62,30 +42,7 @@ const typeRoles = [
     <div class="container">
       <div class="section-heading">
         <span class="overline">Foundation</span>
-        <h2>Design signature</h2>
-        <p class="lead">
-          Every build picks one memorable visual idea tied to the business's real
-          subject matter (material, place, process, or proof) and carries it through
-          the site. Describe it here once chosen.
-        </p>
-      </div>
-      <div class="ds-note">
-        <strong>Signature:</strong> not yet chosen — this template ships neutral on
-        purpose. If the finished design could be pasted onto any generic local-service
-        or SaaS site unchanged, it isn't done.
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-heading">
-        <span class="overline">Tokens</span>
         <h2>Colour roles</h2>
-        <p class="lead">
-          Named variables in <code>:root</code>, one per role. Components reference
-          tokens, never raw hex.
-        </p>
       </div>
       <div class="swatch-grid">
         {colorTokens.map(([token, hex, role]) => (
@@ -102,43 +59,22 @@ const typeRoles = [
     </div>
   </section>
 
-  <section class="section section--surface">
-    <div class="container">
-      <div class="section-heading">
-        <span class="overline">Tokens</span>
-        <h2>Typography roles</h2>
-        <p class="lead">
-          One display face for headings, one body face for everything else — chosen
-          deliberately per project.
-        </p>
-      </div>
-      {typeRoles.map(([role, selector, sample]) => (
-        <div style="margin-bottom: 28px;">
-          <span class="overline">{role} — <code>{selector}</code></span>
-          {selector === "h1" && <h1 style="margin:0;">{sample}</h1>}
-          {selector === "h2" && <h2 style="margin:0;">{sample}</h2>}
-          {selector === "h3" && <h3 style="margin:0;">{sample}</h3>}
-          {selector === "p" && <p style="margin:0; max-width:58ch;">{sample}</p>}
-          {selector === ".overline" && <span class="overline">{sample}</span>}
-        </div>
-      ))}
-    </div>
-  </section>
-
   <section class="section">
     <div class="container">
       <div class="section-heading">
-        <span class="overline">Components</span>
-        <h2>Buttons</h2>
+        <span class="overline">Typography</span>
+        <h2>Type roles</h2>
       </div>
-      <div class="hero-actions">
-        <a class="btn btn--primary" href="#buttons">Primary action</a>
-        <a class="btn btn--ghost" href="#buttons">Secondary action</a>
+      <div class="grid">
+        <div>
+          <h3>Hand lettering</h3>
+          <p class="lead">Caveat, used for the red headline voice and menu item names.</p>
+        </div>
+        <div>
+          <h3 class="type-sample">Typewriter copy</h3>
+          <p class="lead">Special Elite, used for body text, prices, buttons and utility copy.</p>
+        </div>
       </div>
-      <p class="muted" style="margin-top: 16px;">
-        Labels state the action: "Get a quote", "Book a measure" — never "Learn more"
-        on a primary button.
-      </p>
     </div>
   </section>
 
@@ -146,91 +82,48 @@ const typeRoles = [
     <div class="container">
       <div class="section-heading">
         <span class="overline">Components</span>
-        <h2>Service cards</h2>
-        <p class="lead">
-          Cards are for repeated items only — never the default wrapper for every
-          section. No nested cards.
-        </p>
+        <h2>Buttons and cards</h2>
       </div>
-      <div class="grid">
-        {services.slice(0, 3).map((service) => (
-          <ServiceCard service={service} />
+      <div class="hero-actions">
+        <a class="btn btn--ghost" href={withBase("#menu")}>View Menu</a>
+        <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Online</a>
+      </div>
+      <div class="featured-grid ds-space-top">
+        {featured.map((pizza) => (
+          <article class="rough-card">
+            <h3>{pizza.name}</h3>
+            <div class="card-rule" aria-hidden="true"></div>
+            <p>{pizza.description}</p>
+            <div class="price-row">
+              <span class="price">{pizza.price}</span>
+              <span class="muted">wood-fired</span>
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container split">
-      <div>
-        <div class="section-heading">
-          <span class="overline">Components</span>
-          <h2>Form fields</h2>
-        </div>
-        <ContactForm />
-      </div>
-      <div>
-        <div class="section-heading">
-          <span class="overline">Components</span>
-          <h2>FAQ / disclosure</h2>
-        </div>
-        <FaqItem
-          question="How does the FAQ component behave?"
-          answer="It uses a native details/summary element, so it's keyboard-accessible with no JavaScript."
-        />
-        <FaqItem
-          question="Where does FAQ content live?"
-          answer="In src/data/faqs.ts — it also feeds FAQPage structured data for search engines."
-        />
-
-        <div class="section-heading" style="margin-top: 40px;">
-          <span class="overline">Components</span>
-          <h2>Checklist</h2>
-        </div>
-        <ul class="checklist">
-          <li>Used for what's-included lists and proof points</li>
-          <li>Markers use the accent token</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--dark">
     <div class="container">
       <div class="section-heading">
-        <span class="overline">Patterns</span>
-        <h2>Dark section band</h2>
-        <p class="lead">
-          Sections alternate: default background, surface band, and this dark band for
-          the closing call-to-action. Ghost buttons adapt automatically.
-        </p>
+        <span class="overline">Components</span>
+        <h2>Menu list and red board</h2>
       </div>
-      <a class="btn btn--ghost" href="#dark">Ghost button on dark</a>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container split">
-      <div>
-        <h2>Do</h2>
-        <ul class="checklist">
-          <li>Reference tokens, never raw hex, in components</li>
-          <li>Build every page from classes shown on this page</li>
-          <li>Keep repeated content in <code>src/data/*.ts</code></li>
-          <li>Use Lucide SVG icons through the icon map</li>
-          <li>Write plain, specific copy with action-stating buttons</li>
-          <li>Respect <code>prefers-reduced-motion</code></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Don't</h2>
-        <ul class="checklist">
-          <li>Add one-off inline styles or per-page CSS for things the system covers</li>
-          <li>Use emoji as icons, fake metrics, or meaningless badges</li>
-          <li>Wrap every section in a card, or nest cards</li>
-          <li>Use purple gradients or generic AI-template hero layouts</li>
-          <li>Hardcode business details — they live in <code>src/data/site.ts</code></li>
-        </ul>
+      <div class="menu-layout">
+        <ol class="menu-list">
+          {pizzas.slice(0, 3).map((pizza) => (
+            <li class="menu-entry">
+              <h3>{pizza.name}</h3>
+              <span class="price">{pizza.price}</span>
+              <p>{pizza.description}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="red-board">
+          <h3>Desserts</h3>
+          <p class="lead">Red-ruled boxes are reserved for the dessert/add-on board and strong calls to action.</p>
+        </div>
       </div>
     </div>
   </section>

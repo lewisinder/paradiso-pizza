@@ -4,12 +4,13 @@ import { site } from "@/data/site";
 import { withBase, pathnameWithoutBase } from "@/lib/base";
 
 const pathname = pathnameWithoutBase(Astro.url.pathname);
-const isCurrent = (href: string) => (href.replace(/\/$/, "") || "/") === pathname;
+const isCurrent = (href: string) =>
+  !href.startsWith("#") && (href.replace(/\/$/, "") || "/") === pathname;
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={withBase("/")}>{site.name}</a>
+    <a class="brand" href={withBase("/")}>Paradiso Pizza</a>
     <button
       class="nav-toggle"
       type="button"
@@ -45,5 +46,12 @@ const isCurrent = (href: string) => (href.replace(/\/$/, "") || "/") === pathnam
   toggle?.addEventListener("click", () => {
     const open = nav?.classList.toggle("is-open");
     toggle.setAttribute("aria-expanded", String(Boolean(open)));
+  });
+
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("is-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
   });
 </script>

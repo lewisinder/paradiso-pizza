@@ -1,38 +1,47 @@
 ---
 import { site } from "@/data/site";
-import { services } from "@/data/services";
 import { withBase } from "@/lib/base";
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
+<footer class="site-footer" id="contact">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h4>{site.name}</h4>
-        <p class="muted">{site.tagline}</p>
+        <h4 class="footer-brand">Paradiso</h4>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <p class="muted">Pizza, cannoli and tiramisu in the heart of Titirangi.</p>
       </div>
       <div>
-        <h4>Services</h4>
+        <h4>Find us</h4>
         <ul>
-          {services.map((service) => (
-            <li><a href={withBase(`/services/${service.slug}/`)}>{service.name}</a></li>
-          ))}
+          <li>{site.address.locality}, {site.address.region}</li>
+          <li>{site.areas.join(" · ")}</li>
+          <li><a href={withBase(site.social[0].href)}>Facebook updates</a></li>
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h4>Hours</h4>
+        <ul>
+          {site.hours.map((hours) => (
+            <li>{hours}</li>
+          ))}
+          <li class="muted">Check Facebook for daily sell-out updates.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Order</h4>
         <ul>
           <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
-          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li>{site.areas.join(" · ")}</li>
+          {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+          <li><a href={withBase(site.orderUrl)}>Order online</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {year} {site.legalName}</span>
-      <span>{site.address.locality}, {site.address.region}</span>
+      <span>© {year} {site.legalName}. Made with love and flour.</span>
+      <span class="footer-marks" aria-hidden="true">* / * / *</span>
     </div>
   </div>
 </footer>
