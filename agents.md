@@ -5,13 +5,22 @@ instructions for all work in this project.
 
 ## Project Context
 
-> Fill this in from docs/01-project-brief.md at kickoff. Replace this block.
-
-- **Business:** <name> — <what they do in one sentence>.
-- **Audience:** <who is buying / who the site is for>.
-- **Real subject matter to lean on:** <the concrete stuff — materials, places,
-  process, proof, product detail, transformation>.
-- **Primary action:** <Get a quote / Book / Contact / Buy>.
+- **Business:** Paradiso Pizza — pizza, cannoli and tiramisù in the heart of
+  Titirangi, West Auckland.
+- **Audience:** Titirangi locals deciding what's for dinner; the site's job is
+  to show the menu and get them to order online (HeyBustle) or call.
+- **Real subject matter to lean on:** the printed menu itself — grid paper,
+  typewriter-style type, red hand-scrawled headings, red-ruled boxes, and a
+  hand-drawn rooster print (their mascot, `src/assets/paradiso-rooster.jpg`).
+  Ten pizzas named from Dante's Divine Comedy (Paradiso, Inferno, Dante,
+  Beatrice, Virgilio, Cerberus, Seneca, Francesca V, Ginevra, Marinara).
+  Cannoli in two fillings; classic tiramisù. Brand colours: deep red #760201
+  (their logo background), cool grey #a0a6b0. Proof: est. 2026, 5.0 from 71
+  Google reviews. Menu data lives in `src/data/menu.ts`.
+- **Primary action:** Order now → https://venues.heybustle.com/NZ/paradiso-pizza
+  (external link; `withBase()` passes absolute URLs through untouched).
+- **Tone:** simple and bold, like their printed menu — no AI-style writing.
+  Photos are Unsplash placeholders until the client supplies real ones.
 
 Do not produce a generic SaaS, agency, or AI-template website. Avoid default-looking
 hero sections, purple gradients, overused centered layouts, excessive rounded cards,
