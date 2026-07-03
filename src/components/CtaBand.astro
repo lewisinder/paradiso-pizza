@@ -1,0 +1,26 @@
+---
+import { site } from "@/data/site";
+import { withBase } from "@/lib/base";
+
+// The closing call-to-action band used at the bottom of most pages.
+type Props = {
+  heading?: string;
+  text?: string;
+};
+
+const {
+  heading = "Ready to get started?",
+  text = `Get in touch and tell us what you need — we'll come back to you with clear next steps.`,
+} = Astro.props;
+---
+
+<section class="section section--dark cta-band">
+  <div class="container">
+    <h2>{heading}</h2>
+    <p class="lead">{text}</p>
+    <div class="hero-actions">
+      <a class="btn btn--primary" href={withBase(site.primaryCta.href)}>{site.primaryCta.label}</a>
+      <a class="btn btn--ghost" href={`tel:${site.phone}`}>Call {site.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

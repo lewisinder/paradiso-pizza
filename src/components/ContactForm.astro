@@ -1,0 +1,50 @@
+---
+import { site } from "@/data/site";
+
+// The form posts to Web3Forms (web3forms.com), which emails the enquiry
+// straight to the client's inbox — works on any host (Netlify, Cloudflare
+// Pages, anywhere). Set `formAccessKey` in src/data/site.ts per client.
+// The hidden `botcheck` checkbox is a spam honeypot.
+// Note: after submitting, Web3Forms redirects to the live thank-you page
+// (built from site.url), so test the form on the deployed site, not localhost.
+---
+
+<form class="form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value={site.formAccessKey} />
+  <input type="hidden" name="subject" value={`New website enquiry — ${site.name}`} />
+  <input type="hidden" name="from_name" value={`${site.name} website`} />
+  <input type="hidden" name="redirect" value={`${site.url}/thank-you/`} />
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="visually-hidden"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <div class="field">
+    <label for="contact-name">Name</label>
+    <input id="contact-name" name="name" type="text" autocomplete="name" required />
+  </div>
+
+  <div class="field">
+    <label for="contact-email">Email</label>
+    <input id="contact-email" name="email" type="email" autocomplete="email" required />
+  </div>
+
+  <div class="field">
+    <label for="contact-phone">Phone <span class="field-hint">(optional)</span></label>
+    <input id="contact-phone" name="phone" type="tel" autocomplete="tel" />
+  </div>
+
+  <div class="field">
+    <label for="contact-message">What do you need?</label>
+    <textarea id="contact-message" name="message" required></textarea>
+    <span class="field-hint">A sentence or two is plenty — we'll follow up with any questions.</span>
+  </div>
+
+  <div>
+    <button class="btn btn--primary" type="submit">Send enquiry</button>
+  </div>
+</form>

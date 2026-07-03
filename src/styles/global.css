@@ -1,0 +1,652 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOBAL STYLESHEET — the design system lives here.
+
+   Rules of the system:
+   1. All colours, fonts, spacing and radii are TOKENS in :root below.
+      Components reference tokens — never raw hex values.
+   2. Pages are built from the CLASSES in this file. If a page needs something
+      the system can't express, extend the system here first, show it on
+      /design-system, then use it.
+   3. On build day the agent restyles the site by changing the tokens and the
+      font import, then adjusting component rules — not by adding one-off
+      inline styles.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Font roles: one display face (headings), one body face (everything else).
+   Replace per project — chosen deliberately, not defaulted. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+
+/* ── 1. DESIGN TOKENS ────────────────────────────────────────────────────── */
+:root {
+  /* Colour roles — rename per project to something meaningful to the brand
+     (e.g. --wool, --clay for a carpet business), but keep one token per role. */
+  --ink: #1d2025;          /* main reading text on light surfaces */
+  --muted: #5c6169;        /* secondary copy, captions, small print */
+  --line: #d9d6cf;         /* borders, dividers, field edges */
+  --bg: #f5f3ee;           /* warm page background */
+  --surface: #fffdf9;      /* cards, forms, panels */
+  --dark: #23262b;         /* dark section bands, footer */
+  --dark-ink: #f2f0eb;     /* text on dark surfaces */
+  --brand: #305d63;        /* primary action colour — buttons, links, focus */
+  --brand-dark: #234649;   /* hover/active state of --brand */
+  --accent: #b4552d;       /* highlights, active markers, small emphasis */
+
+  /* Typography roles */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  /* Shape & layout */
+  --radius: 6px;
+  --container: 1200px;
+  --shadow: 0 14px 40px rgba(29, 32, 37, 0.1);
+
+  /* Vertical rhythm for page sections */
+  --section-pad: clamp(56px, 9vw, 104px);
+
+  color-scheme: light;
+}
+
+/* ── 2. BASE / RESET ─────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+/* Accessible skip link — first focusable element on every page */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 18px;
+  background: var(--dark);
+  color: var(--dark-ink);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  top: 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── 3. TYPOGRAPHY ROLES ─────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+/* Small uppercase label above headings — sets context for a section */
+.overline {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* Larger intro paragraph under a heading */
+.lead {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 58ch;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ── 4. LAYOUT PRIMITIVES ────────────────────────────────────────────────── */
+.container {
+  width: min(100% - 48px, var(--container));
+  margin-inline: auto;
+}
+
+/* Every page block is a .section; bands alternate with modifiers */
+.section {
+  padding-block: var(--section-pad);
+}
+
+.section--surface {
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+}
+
+.section--dark {
+  background: var(--dark);
+  color: var(--dark-ink);
+}
+
+.section--dark .lead,
+.section--dark .muted {
+  color: color-mix(in srgb, var(--dark-ink) 75%, transparent);
+}
+
+.section-heading {
+  max-width: 62ch;
+  margin-bottom: 40px;
+}
+
+/* Responsive card grid: pass the column minimum via --grid-min if needed */
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 280px), 100%), 1fr));
+}
+
+.split {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  align-items: start;
+}
+
+/* ── 5. BUTTONS ──────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn--primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--brand-dark);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--ink);
+}
+
+.section--dark .btn--ghost {
+  color: var(--dark-ink);
+  border-color: color-mix(in srgb, var(--dark-ink) 40%, transparent);
+}
+
+.section--dark .btn--ghost:hover {
+  border-color: var(--dark-ink);
+}
+
+/* ── 6. HEADER & NAV ─────────────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.site-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-nav a:hover {
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.site-nav .nav-cta {
+  margin-left: 8px;
+}
+
+@media (max-width: 820px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    inset: 100% 0 auto 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    padding: 16px 24px 24px;
+  }
+
+  .site-nav.is-open {
+    display: block;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-nav a {
+    padding: 12px 14px;
+  }
+
+  .site-nav .nav-cta {
+    margin: 8px 0 0;
+    justify-content: center;
+  }
+}
+
+/* ── 7. HERO ─────────────────────────────────────────────────────────────── */
+.hero {
+  padding-block: clamp(64px, 11vw, 140px);
+}
+
+.hero .lead {
+  margin-block: 20px 32px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ── 8. CARDS & PANELS ───────────────────────────────────────────────────── */
+/* Cards are for repeated items (services, proof) — not a default wrapper. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.card--link {
+  display: block;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card--link:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow);
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--brand);
+  margin-bottom: 18px;
+}
+
+.card h3 {
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+/* Simple checklist with brand markers (what's included, why us) */
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.checklist li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.checklist li::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ── 9. FORMS ────────────────────────────────────────────────────────────── */
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.field-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ── 10. FAQ ─────────────────────────────────────────────────────────────── */
+.faq {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.faq + .faq {
+  margin-top: 12px;
+}
+
+.faq summary {
+  padding: 18px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  color: var(--brand);
+  flex: none;
+}
+
+.faq[open] summary::after {
+  content: "–";
+}
+
+.faq-answer {
+  padding: 0 22px 18px;
+  color: var(--muted);
+}
+
+/* ── 11. CTA BAND ────────────────────────────────────────────────────────── */
+.cta-band {
+  text-align: center;
+}
+
+.cta-band .lead {
+  margin-inline: auto;
+}
+
+.cta-band .hero-actions {
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* ── 12. FOOTER ──────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--dark);
+  color: var(--dark-ink);
+  padding-block: 56px 32px;
+  font-size: 0.95rem;
+}
+
+.footer-grid {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  margin-bottom: 40px;
+}
+
+.site-footer h4 {
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.site-footer a {
+  color: color-mix(in srgb, var(--dark-ink) 80%, transparent);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--dark-ink);
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  border-top: 1px solid color-mix(in srgb, var(--dark-ink) 18%, transparent);
+  padding-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  color: color-mix(in srgb, var(--dark-ink) 65%, transparent);
+}
+
+/* ── 13. DESIGN-SYSTEM PAGE HELPERS (only used on /design-system) ────────── */
+.swatch-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.swatch {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.swatch-chip {
+  height: 72px;
+}
+
+.swatch-meta {
+  padding: 12px 14px;
+  font-size: 0.85rem;
+}
+
+.swatch-meta code {
+  font-weight: 700;
+}
+
+.ds-note {
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  padding: 18px 22px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* ── 14. MOTION ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

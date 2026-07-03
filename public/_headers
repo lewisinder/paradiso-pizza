@@ -1,0 +1,12 @@
+# Security and caching headers — read by BOTH Netlify and Cloudflare Pages,
+# so this file is the single source of truth for headers on any host.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Astro fingerprints files in /_astro/, so they can be cached forever.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

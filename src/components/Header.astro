@@ -1,0 +1,49 @@
+---
+import { Menu } from "@lucide/astro";
+import { site } from "@/data/site";
+import { withBase, pathnameWithoutBase } from "@/lib/base";
+
+const pathname = pathnameWithoutBase(Astro.url.pathname);
+const isCurrent = (href: string) => (href.replace(/\/$/, "") || "/") === pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={withBase("/")}>{site.name}</a>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+    >
+      <Menu size={22} aria-hidden="true" />
+      <span class="visually-hidden">Menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        {site.nav.map((item) => (
+          <li>
+            <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a class="btn btn--primary nav-cta" href={withBase(site.primaryCta.href)}>
+            {site.primaryCta.label}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Mobile nav toggle — the only JavaScript on the site.
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("site-nav");
+  toggle?.addEventListener("click", () => {
+    const open = nav?.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(Boolean(open)));
+  });
+</script>

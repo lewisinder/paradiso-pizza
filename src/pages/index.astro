@@ -1,0 +1,67 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import CtaBand from "@/components/CtaBand.astro";
+import { site } from "@/data/site";
+import { services } from "@/data/services";
+import { withBase } from "@/lib/base";
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <!-- HERO: the first viewport must say who this business is and what it does.
+       On build day, replace the copy and consider a real photo/video of the
+       actual work — not stock. -->
+  <section class="hero">
+    <div class="container">
+      <span class="overline">{site.address.locality} · {site.areas[0]}</span>
+      <h1>{site.tagline}</h1>
+      <p class="lead">
+        Two or three sentences that a first-time visitor needs: what you do, who you do
+        it for, and why they can trust you. Specific beats clever.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href={withBase(site.primaryCta.href)}>{site.primaryCta.label}</a>
+        <a class="btn btn--ghost" href={withBase("/services/")}>View services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES: rendered from src/data/services.ts -->
+  <section class="section section--surface">
+    <div class="container">
+      <div class="section-heading">
+        <span class="overline">What we do</span>
+        <h2>Services</h2>
+        <p class="lead">One sentence framing the service range.</p>
+      </div>
+      <div class="grid">
+        {services.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF / WHY US: replace with the business's real proof — years operating,
+       real numbers, guarantees, credentials, named locations. No fake metrics. -->
+  <section class="section">
+    <div class="container split">
+      <div>
+        <span class="overline">Why choose us</span>
+        <h2>Real reasons customers pick this business</h2>
+        <p class="lead">
+          A short paragraph of genuine background: how long they've operated, who runs
+          it, what they're known for locally.
+        </p>
+      </div>
+      <ul class="checklist">
+        <li>A specific, verifiable claim (e.g. "Serving X since 2008")</li>
+        <li>A concrete guarantee or standard of work</li>
+        <li>A real credential, membership, or insurance detail</li>
+        <li>Something customers repeatedly praise in reviews</li>
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

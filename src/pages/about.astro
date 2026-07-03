@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CtaBand from "@/components/CtaBand.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout
+  title={`About ${site.name}`}
+  description={`Who ${site.name} is, how the business started, and the people behind the work. Replace with a real 150–160 character description.`}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="overline">About</span>
+      <h1>The story behind {site.name}</h1>
+      <p class="lead">
+        One or two sentences summarising who the business is and what it stands for.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container split">
+      <div>
+        <h2>How it started</h2>
+        <p>
+          Real history: when the business began, who founded it, and how it got to where
+          it is. People buy from people — names and places make this credible.
+        </p>
+        <p>
+          A second paragraph about how the business works today: the team, the standards
+          they hold, the area they cover.
+        </p>
+      </div>
+      <div>
+        <h2>Where we work</h2>
+        <p>Areas served, written as prose for people and search engines:</p>
+        <ul class="checklist">
+          {site.areas.map((area) => (
+            <li>{area}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

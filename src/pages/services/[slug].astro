@@ -1,0 +1,54 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CtaBand from "@/components/CtaBand.astro";
+import { site } from "@/data/site";
+import { services } from "@/data/services";
+import { withBase } from "@/lib/base";
+
+// One template renders every service detail page from src/data/services.ts.
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<BaseLayout title={service.name} description={service.summary}>
+  <section class="hero">
+    <div class="container">
+      <span class="overline">Service</span>
+      <h1>{service.name}</h1>
+      <p class="lead">{service.summary}</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href={withBase(site.primaryCta.href)}>{site.primaryCta.label}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container split">
+      <div>
+        <h2>About this service</h2>
+        {service.description.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      <div>
+        <h2>What's included</h2>
+        <ul class="checklist">
+          {service.includes.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading={`Need ${service.name.toLowerCase()}?`}
+    text="Tell us what you need and we'll come back with clear next steps."
+  />
+</BaseLayout>

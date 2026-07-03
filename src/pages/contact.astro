@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactForm from "@/components/ContactForm.astro";
+import FaqItem from "@/components/FaqItem.astro";
+import { site } from "@/data/site";
+import { faqs } from "@/data/faqs";
+import { faqSchema } from "@/lib/seo";
+---
+
+<BaseLayout
+  title={`Contact ${site.name}`}
+  description={`Get in touch with ${site.name} — phone, email, or the enquiry form. Replace with a real 150–160 character description.`}
+  schemas={[faqSchema(faqs)]}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="overline">Contact</span>
+      <h1>Get in touch</h1>
+      <p class="lead">
+        Call, email, or send the form — whichever suits. Say roughly what you need and
+        we'll take it from there.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container split">
+      <div>
+        <h2>Send an enquiry</h2>
+        <ContactForm />
+      </div>
+      <div>
+        <h2>Direct</h2>
+        <ul class="checklist">
+          <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li>Serving {site.areas.join(", ")}</li>
+        </ul>
+
+        <h2 style="margin-top: 40px;">Common questions</h2>
+        {faqs.map((faq) => (
+          <FaqItem question={faq.question} answer={faq.answer} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

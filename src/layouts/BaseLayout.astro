@@ -1,0 +1,62 @@
+---
+import "../styles/global.css";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { site } from "@/data/site";
+import { localBusinessSchema } from "@/lib/seo";
+import { withBase, pathnameWithoutBase } from "@/lib/base";
+
+// Every page renders through this layout, which owns the whole <head>:
+// title, meta description, canonical URL, Open Graph tags, robots directive,
+// and LocalBusiness structured data. Pages only supply title + description.
+type Props = {
+  title: string;
+  description: string;
+  robots?: string; // pass "noindex, nofollow" on utility pages
+  // Extra JSON-LD blocks (e.g. faqSchema) a page wants to add.
+  schemas?: Record<string, unknown>[];
+};
+
+const { title, description, schemas = [] } = Astro.props;
+
+// GitHub Pages preview builds are never indexed — they're a working copy of
+// the real site. Canonical still points at the production domain.
+const isPreviewBuild = process.env.DEPLOY_TARGET === "github-pages";
+const robots = isPreviewBuild ? "noindex, nofollow" : (Astro.props.robots ?? "index, follow");
+
+const pathname = pathnameWithoutBase(Astro.url.pathname);
+const canonical = `${site.url}${pathname === "/" ? "/" : `${pathname}/`}`;
+const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
+const allSchemas = [localBusinessSchema(), ...schemas];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href={withBase("/assets/favicon.svg")} type="image/svg+xml" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href={withBase("/sitemap-index.xml")} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {allSchemas.map((schema) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

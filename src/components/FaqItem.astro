@@ -1,0 +1,10 @@
+---
+// Native <details>/<summary> — accessible and keyboard-friendly with zero JS.
+type Props = { question: string; answer: string };
+const { question, answer } = Astro.props;
+---
+
+<details class="faq">
+  <summary>{question}</summary>
+  <p class="faq-answer">{answer}</p>
+</details>

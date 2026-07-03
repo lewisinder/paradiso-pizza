@@ -1,0 +1,27 @@
+---
+import { ArrowRight, ClipboardCheck, Sparkles, Wrench, CircleQuestionMark } from "@lucide/astro";
+import type { Service } from "@/data/services";
+import { withBase } from "@/lib/base";
+
+// Icons are professional SVGs from Lucide — never emoji.
+// Add entries here when services in src/data/services.ts use new icon names.
+const icons: Record<string, typeof Wrench> = {
+  wrench: Wrench,
+  "clipboard-check": ClipboardCheck,
+  sparkles: Sparkles,
+};
+
+type Props = { service: Service };
+const { service } = Astro.props;
+const Icon = icons[service.icon] ?? CircleQuestionMark;
+---
+
+<a class="card card--link" href={withBase(`/services/${service.slug}/`)}>
+  <span class="card-icon"><Icon size={24} aria-hidden="true" /></span>
+  <h3>{service.name}</h3>
+  <p>{service.summary}</p>
+  <span class="card-more">
+    Learn more
+    <ArrowRight size={16} aria-hidden="true" />
+  </span>
+</a>

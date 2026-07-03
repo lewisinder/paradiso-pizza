@@ -1,0 +1,5 @@
+# Netlify build settings (only used if the site is deployed to Netlify).
+# Headers live in public/_headers, which Netlify and Cloudflare Pages both read.
+[build]
+  command = "npm run build"
+  publish = "dist"

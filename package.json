@@ -1,0 +1,21 @@
+{
+  "name": "website-in-a-day",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "check": "astro check",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@lucide/astro": "^1.21.0",
+    "astro": "^6.4.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.6.3"
+  }
+}
