@@ -1,8 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReviewCard from "@/components/ReviewCard.astro";
 import rooster from "@/assets/paradiso-rooster.jpg";
 import { addOns, desserts, dips, pizzas } from "@/data/menu";
+import { googleReviews } from "@/data/reviews";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
 
@@ -11,6 +13,7 @@ const featured = pizzas.filter(({ name }) =>
 );
 const midpoint = Math.ceil(pizzas.length / 2);
 const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
+const scrollingReviews = [...googleReviews, ...googleReviews];
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -142,6 +145,30 @@ const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
             advise of any allergies.
           </p>
         </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
+    <div class="container reviews-heading">
+      <div>
+        <span class="overline">Google reviews</span>
+        <h2 class="scrawl" id="reviews-title">Locals love it</h2>
+      </div>
+      <div class="rating-stamp" aria-label="Rated 5.0 based on 71 Google reviews">
+        <span class="rating-stamp__score">5.0</span>
+        <span class="rating-stamp__stars" aria-hidden="true">★★★★★</span>
+        <span class="rating-stamp__copy">based on 71 reviews</span>
+      </div>
+    </div>
+
+    <div class="reviews-marquee" aria-label="Customer reviews">
+      <div class="reviews-marquee__track">
+        {scrollingReviews.map((review, index) => (
+          <div class="reviews-marquee__item" aria-hidden={index >= googleReviews.length ? "true" : undefined}>
+            <ReviewCard name={review.name} review={review.review} color={review.color} />
+          </div>
+        ))}
       </div>
     </div>
   </section>

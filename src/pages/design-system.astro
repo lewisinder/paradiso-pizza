@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReviewCard from "@/components/ReviewCard.astro";
 import { pizzas } from "@/data/menu";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
@@ -124,6 +125,25 @@ const featured = pizzas.slice(0, 2);
           <h3>Desserts</h3>
           <p class="lead">Red-ruled boxes are reserved for the dessert/add-on board and strong calls to action.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <div class="section-heading">
+        <span class="overline">Components</span>
+        <h2>Review tile</h2>
+        <p class="lead">
+          Square social-proof tile for the upcoming Google reviews strip.
+        </p>
+      </div>
+      <div class="review-card-demo">
+        <ReviewCard
+          name="Mia"
+          color="blue"
+          review="Best pizza in Titirangi. The dough is perfect and the tiramisu is worth adding every time."
+        />
       </div>
     </div>
   </section>

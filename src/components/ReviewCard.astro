@@ -1,0 +1,26 @@
+---
+interface Props {
+  name: string;
+  review: string;
+  initial?: string;
+  color?: "blue" | "red" | "yellow" | "green";
+}
+
+const { name, review, initial = name.charAt(0), color = "blue" } = Astro.props;
+---
+
+<article class="review-card" aria-label={`Google review from ${name}`}>
+  <header class="review-card__header">
+    <span class={`review-card__avatar review-card__avatar--${color}`} aria-hidden="true">
+      {initial}
+    </span>
+    <div>
+      <h3 class="review-card__name">{name}</h3>
+      <p class="review-card__source">Google review</p>
+    </div>
+  </header>
+  <div class="review-card__stars" aria-label="5 out of 5 stars">
+    <span aria-hidden="true">★★★★★</span>
+  </div>
+  <p class="review-card__quote">"{review}"</p>
+</article>
