@@ -443,6 +443,8 @@ code {
   inset: 0 clamp(8px, 2.2vw, 30px) 0 auto;
   z-index: 0;
   width: 76px;
+  overflow: clip;
+  contain: paint;
   pointer-events: none;
   --fp-size: 17px;
   --fp-spacing: 96;
@@ -580,6 +582,72 @@ code {
   line-height: 1;
 }
 
+.menu-switch {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 28px auto 0;
+  padding: 8px;
+  border: 2px solid var(--ink);
+  background: var(--paper-strong);
+  box-shadow: var(--shadow-ink);
+  transform: rotate(-0.4deg);
+}
+
+.menu-switch__button {
+  min-height: 48px;
+  min-width: clamp(126px, 16vw, 180px);
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-type);
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.menu-switch__button:hover {
+  color: var(--menu-red);
+  transform: translateY(-1px);
+}
+
+.menu-switch__button.is-active {
+  border-color: var(--ink);
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.menu-switch__button--kids.is-active {
+  border-color: var(--menu-red);
+  background: var(--menu-red);
+  color: #fff;
+  box-shadow: 2px 2px 0 #8b1a1a;
+}
+
+.menu-panel[hidden] {
+  display: none;
+}
+
+.menu-panel.is-active {
+  animation: menu-panel-in 0.24s ease-out;
+}
+
+@keyframes menu-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .menu-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 0.9fr);
@@ -653,6 +721,91 @@ code {
 .red-board h3 {
   color: var(--menu-red);
   letter-spacing: 0.04em;
+}
+
+.kids-menu-sheet {
+  position: relative;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: clamp(24px, 5vw, 54px);
+  border: 3px solid var(--menu-red);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 34%),
+    var(--menu-red);
+  box-shadow: var(--shadow-red);
+  color: #fff;
+  transform: rotate(0.35deg);
+}
+
+.kids-menu-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid color-mix(in srgb, #fff 42%, transparent);
+  pointer-events: none;
+}
+
+.kids-menu-sheet__masthead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: clamp(24px, 4vw, 42px);
+  color: #fff;
+}
+
+.kids-menu-sheet__masthead span,
+.kids-menu-sheet__masthead strong {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.kids-menu-sheet__masthead span {
+  color: #f0de92;
+  font-size: clamp(3.2rem, 8vw, 7.2rem);
+}
+
+.kids-menu-sheet__masthead strong {
+  color: #fff;
+  font-size: clamp(2.6rem, 5vw, 4.9rem);
+  transform: rotate(-4deg);
+}
+
+.kids-menu-sheet__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.74fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.kids-menu-list .menu-entry {
+  border-color: color-mix(in srgb, #fff 26%, transparent);
+}
+
+.kids-menu-list .menu-entry h3,
+.kids-menu-list .price {
+  color: #fff;
+}
+
+.kids-menu-list .menu-entry p {
+  color: color-mix(in srgb, #fff 82%, transparent);
+}
+
+.kids-red-board {
+  border-color: #fff;
+  background: color-mix(in srgb, var(--brand-red) 74%, transparent);
+  box-shadow: 4px 4px 0 color-mix(in srgb, #fff 72%, transparent);
+}
+
+.kids-red-board h3,
+.kids-red-board .price,
+.kids-red-board .side-list {
+  color: #fff;
 }
 
 .review-card-demo {
@@ -1155,6 +1308,7 @@ code {
   .hero-grid,
   .menu-layout,
   .about-grid,
+  .kids-menu-sheet__grid,
   .reviews-heading,
   .split {
     grid-template-columns: 1fr;
@@ -1233,6 +1387,24 @@ code {
 
   .btn {
     width: 100%;
+  }
+
+  .menu-switch {
+    width: 100%;
+  }
+
+  .menu-switch__button {
+    min-width: 0;
+    padding-inline: 12px;
+  }
+
+  .kids-menu-sheet {
+    margin-inline: -4px;
+  }
+
+  .kids-menu-sheet__masthead {
+    align-items: start;
+    flex-direction: column;
   }
 
   .featured-grid,

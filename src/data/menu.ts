@@ -73,6 +73,12 @@ export const pizzas: MenuItem[] = [
     price: "$20",
     description: "San Marzano tomato, garlic, oregano, extra virgin olive oil",
   },
+  {
+    name: "Acciughina",
+    price: "$29",
+    description:
+      "Burnt peppers & goat cheese cream, pancetta, olives, fior di latte, basil pesto, lime zest & anchovies",
+  },
 ];
 
 export const desserts: MenuItem[] = [
@@ -103,4 +109,45 @@ export const dips: MenuItem[] = [
   { name: "Roast confit garlic", price: "$5" },
   { name: "Parmesan ranch", price: "$5" },
   { name: "Russian sauce", price: "$5" },
+];
+
+export const kidsPizzas: MenuItem[] = [
+  {
+    name: "Margherita",
+    price: "$15",
+    description: "Tomato, fior di latte, basil, Parmesan",
+  },
+  {
+    name: "Pepperoni",
+    price: "$17",
+    description: "Pepperoni, fior di latte, tomato, Parmesan",
+  },
+  {
+    name: "Just Cheese",
+    price: "$15",
+    description: "mozzarella, Parmesan, cream base",
+  },
+  {
+    name: "Garlic & Cheese",
+    price: "$15",
+    description: "mozzarella, Parmesan, garlic butter base",
+  },
+  {
+    name: "Hawaiian",
+    price: "$17",
+    description: "Pineapple, smoked ham, fior di latte, tomato base",
+  },
+];
+
+export const kidsDips: MenuItem[] = [
+  { name: "Roast confit garlic", price: "$5" },
+  { name: "Parmesan ranch", price: "$5" },
+  { name: "Hot honey ranch", price: "$5" },
+  { name: "Russian sauce", price: "$5" },
+];
+
+export const kidsAddOns: MenuItem[] = [
+  { name: "Chorizo", price: "$6" },
+  { name: "Prosciutto", price: "$6" },
+  { name: "Pepperoni", price: "$6" },
 ];

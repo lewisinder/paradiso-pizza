@@ -35,7 +35,11 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
           {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
-          <li><a href={withBase(site.orderUrl)}>Order online</a></li>
+          <li>
+            <a href={withBase(site.orderUrl)} target="_blank" rel="noopener noreferrer">
+              Order online
+            </a>
+          </li>
         </ul>
       </div>
     </div>

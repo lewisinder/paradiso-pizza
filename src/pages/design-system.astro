@@ -87,7 +87,14 @@ const featured = pizzas.slice(0, 2);
       </div>
       <div class="hero-actions">
         <a class="btn btn--ghost" href={withBase("#menu")}>View Menu</a>
-        <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Online</a>
+        <a
+          class="btn btn--primary"
+          href={withBase(site.orderUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Order Online
+        </a>
       </div>
       <div class="featured-grid ds-space-top">
         {featured.map((pizza) => (
@@ -97,7 +104,6 @@ const featured = pizzas.slice(0, 2);
             <p>{pizza.description}</p>
             <div class="price-row">
               <span class="price">{pizza.price}</span>
-              <span class="muted">wood-fired</span>
             </div>
           </article>
         ))}

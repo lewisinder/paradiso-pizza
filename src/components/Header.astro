@@ -30,7 +30,12 @@ const isCurrent = (href: string) =>
           </li>
         ))}
         <li>
-          <a class="btn btn--primary nav-cta" href={withBase(site.primaryCta.href)}>
+          <a
+            class="btn btn--primary nav-cta"
+            href={withBase(site.primaryCta.href)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {site.primaryCta.label}
           </a>
         </li>

@@ -4,7 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
 import rooster from "@/assets/paradiso-rooster.jpg";
-import { addOns, desserts, dips, pizzas } from "@/data/menu";
+import { addOns, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, pizzas } from "@/data/menu";
 import { googleReviews } from "@/data/reviews";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
@@ -23,7 +23,7 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero-grid">
       <div>
-        <span class="overline">Wood-fired · Handmade</span>
+        <span class="overline">Handmade</span>
         <h1 class="hero-title scrawl" id="hero-title">
           <span>Paradiso</span>
           <span>Pizza</span>
@@ -34,7 +34,14 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
         </p>
         <div class="hero-actions">
           <a class="btn btn--ghost" href={withBase("#menu")}>View Menu</a>
-          <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Online</a>
+          <a
+            class="btn btn--primary"
+            href={withBase(site.orderUrl)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Order Online
+          </a>
         </div>
         <div class="footprint-trail footprint-trail--hero" aria-hidden="true">
           <span class="footprint-mark"></span>
@@ -72,10 +79,16 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
             <p>{pizza.description}</p>
             <div class="price-row">
               <span class="price">{pizza.price}</span>
-              <span class="muted">wood-fired</span>
             </div>
             {pizza.orderUrl && (
-              <a class="text-link order-card-link" href={pizza.orderUrl}>Order this pizza</a>
+              <a
+                class="text-link order-card-link"
+                href={pizza.orderUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Order this pizza
+              </a>
             )}
           </article>
         ))}
@@ -91,64 +104,152 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
     <div class="container">
       <div class="section-heading section-heading--center">
         <h2 class="scrawl" id="menu-title">The Menu</h2>
+        <div class="menu-switch" role="tablist" aria-label="Choose menu">
+          <button
+            class="menu-switch__button is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="main-menu-panel"
+            data-menu-target="main"
+          >
+            Main menu
+          </button>
+          <button
+            class="menu-switch__button menu-switch__button--kids"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="kids-menu-panel"
+            data-menu-target="kids"
+          >
+            Kids menu
+          </button>
+        </div>
       </div>
 
-      <div class="menu-layout">
-        <div>
-          <div class="menu-category-title">Pizza</div>
-          <div class="menu-columns">
-            {pizzaColumns.map((column) => (
+      <div class="menu-panel is-active" id="main-menu-panel" role="tabpanel" data-menu-panel="main">
+        <div class="menu-layout">
+          <div>
+            <div class="menu-category-title">Pizza</div>
+            <div class="menu-columns">
+              {pizzaColumns.map((column) => (
+                <ol class="menu-list">
+                  {column.map((pizza) => (
+                    <li class="menu-entry">
+                      <h3>{pizza.name}</h3>
+                      <span class="price">{pizza.price}</span>
+                      <p>{pizza.description}</p>
+                    </li>
+                  ))}
+                </ol>
+              ))}
+            </div>
+          </div>
+
+          <aside class="red-board" id="desserts" aria-labelledby="desserts-title">
+            <div class="red-board-section">
+              <h3 id="desserts-title">Desserts</h3>
               <ol class="menu-list">
-                {column.map((pizza) => (
+                {desserts.map((item) => (
                   <li class="menu-entry">
-                    <h3>{pizza.name}</h3>
-                    <span class="price">{pizza.price}</span>
-                    <p>{pizza.description}</p>
+                    <h3>{item.name}</h3>
+                    <span class="price">{item.price}</span>
+                    <p>{item.description}</p>
                   </li>
                 ))}
               </ol>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <aside class="red-board" id="desserts" aria-labelledby="desserts-title">
-          <div class="red-board-section">
-            <h3 id="desserts-title">Desserts</h3>
-            <ol class="menu-list">
-              {desserts.map((item) => (
+            <div class="red-board-section">
+              <h3>Add-ons</h3>
+              <ol class="side-list">
+                {addOns.map((item) => (
+                  <li>{item.name} {item.price}</li>
+                ))}
+              </ol>
+            </div>
+
+            <div class="red-board-section">
+              <h3>Dips <span class="price">$5</span></h3>
+              <ol class="side-list">
+                {dips.map((item) => (
+                  <li>{item.name}</li>
+                ))}
+              </ol>
+            </div>
+
+            <p class="menu-note">
+              All pizzas are 12". Gluten-free base available +$3. Please advise of
+              any allergies.
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="kids-menu-panel" role="tabpanel" data-menu-panel="kids" hidden>
+        <div class="kids-menu-sheet">
+          <div class="kids-menu-sheet__masthead">
+            <span>Paradiso</span>
+            <strong>Kids menu</strong>
+          </div>
+
+          <div class="kids-menu-sheet__grid">
+            <ol class="menu-list kids-menu-list">
+              {kidsPizzas.map((pizza) => (
                 <li class="menu-entry">
-                  <h3>{item.name}</h3>
-                  <span class="price">{item.price}</span>
-                  <p>{item.description}</p>
+                  <h3>{pizza.name}</h3>
+                  <span class="price">{pizza.price}</span>
+                  <p>{pizza.description}</p>
                 </li>
               ))}
             </ol>
-          </div>
 
-          <div class="red-board-section">
-            <h3>Add-ons</h3>
-            <ol class="side-list">
-              {addOns.map((item) => (
-                <li>{item.name} {item.price}</li>
-              ))}
-            </ol>
-          </div>
+            <aside class="red-board kids-red-board" aria-labelledby="kids-extras-title">
+              <div class="red-board-section">
+                <h3 id="kids-extras-title">Dips <span class="price">$5</span></h3>
+                <ol class="side-list">
+                  {kidsDips.map((item) => (
+                    <li>{item.name}</li>
+                  ))}
+                </ol>
+              </div>
 
-          <div class="red-board-section">
-            <h3>Dips <span class="price">$5</span></h3>
-            <ol class="side-list">
-              {dips.map((item) => (
-                <li>{item.name}</li>
-              ))}
-            </ol>
+              <div class="red-board-section">
+                <h3>Add-ons</h3>
+                <ol class="side-list">
+                  {kidsAddOns.map((item) => (
+                    <li>{item.name} {item.price}</li>
+                  ))}
+                </ol>
+              </div>
+            </aside>
           </div>
-
-          <p class="menu-note">
-            All pizzas are 12" wood-fired. Gluten-free base available +$3. Please
-            advise of any allergies.
-          </p>
-        </aside>
+        </div>
       </div>
+
+      <script>
+        const menuSwitchButtons = document.querySelectorAll<HTMLButtonElement>("[data-menu-target]");
+        const menuPanels = document.querySelectorAll<HTMLElement>("[data-menu-panel]");
+
+        menuSwitchButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const target = button.dataset.menuTarget;
+
+            menuSwitchButtons.forEach((item) => {
+              const isActive = item === button;
+              item.classList.toggle("is-active", isActive);
+              item.setAttribute("aria-selected", String(isActive));
+            });
+
+            menuPanels.forEach((panel) => {
+              const isActive = panel.dataset.menuPanel === target;
+              panel.classList.toggle("is-active", isActive);
+              panel.hidden = !isActive;
+            });
+          });
+        });
+      </script>
     </div>
   </section>
 
@@ -183,7 +284,7 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
           <div class="oven-placeholder">
             <div>
               <span class="footprint-mark footprint-mark--single" aria-hidden="true"></span>
-              <p>our wood-fired oven</p>
+              <p>our oven</p>
             </div>
           </div>
           <p class="print-caption">the heart of the kitchen</p>
@@ -226,7 +327,14 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
         Order online for pickup or delivery. Fresh out of the oven, while the dough lasts.
       </p>
       <div class="hero-actions">
-        <a class="btn btn--primary" href={withBase(site.orderUrl)}>Order Paradiso</a>
+        <a
+          class="btn btn--primary"
+          href={withBase(site.orderUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Order Paradiso
+        </a>
         <a class="btn btn--ghost" href={`tel:${site.phone}`}>Call {site.phoneDisplay}</a>
       </div>
       <div class="footprint-trail footprint-trail--center" aria-hidden="true">
