@@ -1130,6 +1130,7 @@ code {
 }
 
 .cta-title {
+  margin-bottom: clamp(10px, 1.8vw, 22px);
   font-size: clamp(5.25rem, 14vw, 13rem);
 }
 
