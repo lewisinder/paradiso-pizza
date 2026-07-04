@@ -9,15 +9,14 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h4 class="footer-brand">Paradiso</h4>
+        <h4 class="footer-brand">Paradiso Pizza</h4>
         <span class="footer-rule" aria-hidden="true"></span>
         <p class="muted">Pizza, cannoli and tiramisu in the heart of Titirangi.</p>
       </div>
       <div>
         <h4>Find us</h4>
         <ul>
-          <li>{site.address.locality}, {site.address.region}</li>
-          <li>{site.areas.join(" · ")}</li>
+          <li>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</li>
           <li><a href={withBase(site.social[0].href)}>Facebook updates</a></li>
         </ul>
       </div>
@@ -27,7 +26,6 @@ const year = new Date().getFullYear();
           {site.hours.map((hours) => (
             <li>{hours}</li>
           ))}
-          <li class="muted">Check Facebook for daily sell-out updates.</li>
         </ul>
       </div>
       <div>

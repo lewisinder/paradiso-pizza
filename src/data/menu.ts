@@ -9,6 +9,7 @@ export type MenuItem = {
   price: string;
   description?: string;
   orderUrl?: string;
+  dietary?: "VG" | "V";
 };
 
 export const pizzas: MenuItem[] = [
@@ -39,6 +40,7 @@ export const pizzas: MenuItem[] = [
     name: "Virgilio",
     price: "$28",
     description: "Gorgonzola dolce, fior di latte, pecorino, parmesan, honey, pears",
+    dietary: "VG",
   },
   {
     name: "Dante",
@@ -52,6 +54,7 @@ export const pizzas: MenuItem[] = [
     name: "Ginevra",
     price: "$24",
     description: "Confit garlic cream, fior di latte, cheddar, parmesan",
+    dietary: "VG",
   },
   {
     name: "Cerberus",
@@ -64,14 +67,16 @@ export const pizzas: MenuItem[] = [
     description: "San Marzano tomato, smoked ham, pineapple, parmesan, fior di latte",
   },
   {
-    name: "Francesca V",
+    name: "Francesca",
     price: "$26",
     description: "Roast pumpkin, green goddess, pistachio & parsley salsa",
+    dietary: "V",
   },
   {
     name: "Marinara",
     price: "$20",
     description: "San Marzano tomato, garlic, oregano, extra virgin olive oil",
+    dietary: "V",
   },
   {
     name: "Acciughina",

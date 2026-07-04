@@ -679,6 +679,45 @@ code {
   background: color-mix(in srgb, var(--menu-red) 45%, transparent);
 }
 
+.dietary-legend {
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: -10px 0 18px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  background: color-mix(in srgb, var(--paper-strong) 58%, transparent);
+  color: var(--ash);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.dietary-legend div {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dietary-legend dt,
+.dietary-legend dd {
+  margin: 0;
+}
+
+.dietary-legend dt,
+.dietary-mark {
+  min-width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+  border: 1px solid color-mix(in srgb, var(--menu-red) 62%, transparent);
+  color: var(--menu-red);
+  font-family: var(--font-type);
+  font-size: 0.58rem;
+  line-height: 1.1;
+}
+
 .menu-list {
   display: grid;
   gap: 0;
@@ -696,8 +735,15 @@ code {
 }
 
 .menu-entry h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--ink);
   font-size: clamp(1.45rem, 2.3vw, 1.95rem);
+}
+
+.dietary-mark {
+  transform: rotate(-2deg) translateY(-1px);
 }
 
 .menu-entry .price {
@@ -1000,38 +1046,73 @@ code {
 
 .about-prints {
   position: relative;
-  min-height: clamp(520px, 48vw, 640px);
+  min-height: clamp(610px, 52vw, 720px);
 }
 
-.oven-card {
-  width: min(82%, 380px);
-  min-height: 360px;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  padding: 14px 14px 44px;
+.about-photo-card {
+  position: absolute;
+  width: min(58%, 320px);
+  margin: 0;
+  padding: 12px;
   border: 3px solid var(--ink);
   background: var(--paper-strong);
   box-shadow: 7px 7px 0 var(--ink);
-  transform: rotate(-1.5deg);
-}
-
-.about-prints .oven-card {
-  position: absolute;
-  left: 0;
-  top: 18px;
-}
-
-.about-prints .oven-card--team {
-  left: auto;
-  right: 0;
-  top: 182px;
-  transform: rotate(2deg);
   z-index: 1;
 }
 
-.about-prints .oven-card--team .oven-placeholder {
-  background: #ded2bd;
+.about-photo-card:has(.print-caption) {
+  padding-bottom: 42px;
+}
+
+.about-photo-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: saturate(0.95) contrast(1.04);
+}
+
+.about-photo-card--storefront {
+  left: 0;
+  top: 24px;
+  width: min(64%, 350px);
+  transform: rotate(-1.8deg);
+  z-index: 2;
+}
+
+.about-photo-card--storefront img {
+  aspect-ratio: 3 / 4;
+  object-position: 52% 54%;
+}
+
+.about-photo-card--counter {
+  left: auto;
+  right: 2px;
+  top: 0;
+  width: min(45%, 245px);
+  transform: rotate(3deg);
+  z-index: 3;
+}
+
+.about-photo-card--counter img {
+  object-position: 54% 36%;
+}
+
+.about-photo-card--napoli {
+  left: auto;
+  right: 34px;
+  bottom: 18px;
+  width: min(46%, 255px);
+  transform: rotate(-2.5deg);
+  z-index: 4;
+}
+
+.about-photo-card--napoli img {
+  object-position: 46% 36%;
+}
+
+.about-photo-card .print-caption {
+  margin-top: 10px;
 }
 
 .oven-placeholder {
@@ -1316,12 +1397,27 @@ code {
 
   .reviews-heading {
     display: grid;
-    align-items: start;
-    justify-items: start;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .reviews-heading .overline {
+    justify-content: center;
   }
 
   .print-frame {
     width: min(100%, 380px);
+    margin-inline: auto;
+  }
+
+  .about-grid > div:last-child {
+    order: 1;
+  }
+
+  .about-prints {
+    order: 2;
+    width: min(100%, 620px);
     margin-inline: auto;
   }
 
@@ -1389,6 +1485,33 @@ code {
     width: 100%;
   }
 
+  .reviews-heading {
+    gap: 22px;
+    margin-bottom: 30px;
+  }
+
+  .rating-stamp {
+    width: min(100%, 174px);
+    min-width: 0;
+    padding: 12px 14px;
+    border-width: 2px;
+    box-shadow: 3px 3px 0 var(--menu-red);
+  }
+
+  .rating-stamp__score {
+    font-size: 3rem;
+  }
+
+  .rating-stamp__stars {
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+
+  .rating-stamp__copy {
+    margin-top: 6px;
+    font-size: 0.68rem;
+  }
+
   .menu-switch {
     width: 100%;
   }
@@ -1424,21 +1547,43 @@ code {
     --fp-opacity: 0.42;
   }
 
-  .oven-card {
-    min-height: 280px;
-  }
-
   .about-prints {
     min-height: auto;
     display: grid;
-    gap: 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 18px;
   }
 
-  .about-prints .oven-card,
-  .oven-card--team {
+  .about-photo-card,
+  .about-photo-card--storefront,
+  .about-photo-card--counter,
+  .about-photo-card--napoli {
     position: static;
-    width: min(100%, 390px);
-    margin-inline: auto;
+    width: 100%;
+    transform: none;
+  }
+
+  .about-photo-card {
+    padding: 9px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+
+  .about-photo-card:has(.print-caption) {
+    padding-bottom: 34px;
+  }
+
+  .about-photo-card--storefront {
+    grid-column: 1 / -1;
+  }
+
+  .about-photo-card--storefront img {
+    aspect-ratio: 16 / 11;
+  }
+
+  .about-photo-card .print-caption {
+    margin-top: 7px;
+    font-size: 0.72rem;
   }
 
   .footer-bottom {

@@ -3,7 +3,10 @@ import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
+import cannoliCounter from "@/assets/paradiso-cannoli-counter.jpg";
+import napoliTable from "@/assets/paradiso-napoli-table.jpg";
 import rooster from "@/assets/paradiso-rooster.jpg";
+import storefrontParkRd from "@/assets/paradiso-storefront-park-rd.jpg";
 import { addOns, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, pizzas } from "@/data/menu";
 import { googleReviews } from "@/data/reviews";
 import { site } from "@/data/site";
@@ -15,6 +18,24 @@ const featured = pizzas.filter(({ name }) =>
 const midpoint = Math.ceil(pizzas.length / 2);
 const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
 const scrollingReviews = [...googleReviews, ...googleReviews];
+const aboutPhotos = [
+  {
+    src: storefrontParkRd,
+    alt: "Paradiso Pizza storefront below the Park Road street sign",
+    caption: "Park Road, Titirangi",
+    modifier: "about-photo-card--storefront",
+  },
+  {
+    src: cannoliCounter,
+    alt: "Paradiso team member serving cannoli behind the counter",
+    modifier: "about-photo-card--counter",
+  },
+  {
+    src: napoliTable,
+    alt: "Napoli table scene with a glass of aperitivo",
+    modifier: "about-photo-card--napoli",
+  },
+];
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -132,12 +153,33 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
         <div class="menu-layout">
           <div>
             <div class="menu-category-title">Pizza</div>
+            <dl class="dietary-legend" aria-label="Dietary legend">
+              <div>
+                <dt>VG</dt>
+                <dd>vegetarian</dd>
+              </div>
+              <div>
+                <dt>V</dt>
+                <dd>vegan</dd>
+              </div>
+              <div>
+                <dt>GFO</dt>
+                <dd>gluten free +$3</dd>
+              </div>
+            </dl>
             <div class="menu-columns">
               {pizzaColumns.map((column) => (
                 <ol class="menu-list">
                   {column.map((pizza) => (
                     <li class="menu-entry">
-                      <h3>{pizza.name}</h3>
+                      <h3>
+                        <span>{pizza.name}</span>
+                        {pizza.dietary && (
+                          <span class="dietary-mark" aria-label={pizza.dietary === "VG" ? "vegetarian" : "vegan"}>
+                            {pizza.dietary}
+                          </span>
+                        )}
+                      </h3>
                       <span class="price">{pizza.price}</span>
                       <p>{pizza.description}</p>
                     </li>
@@ -179,10 +221,11 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
               </ol>
             </div>
 
-            <p class="menu-note">
-              All pizzas are 12". Gluten-free base available +$3. Please advise of
-              any allergies.
-            </p>
+          <p class="menu-note">
+            All pizzas are 12".<br />
+            Gluten-free base available +$3.<br />
+            Please advise of any allergies.
+          </p>
           </aside>
         </div>
       </div>
@@ -279,25 +322,19 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
 
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="container about-grid">
-      <div class="about-prints" aria-label="Paradiso photo placeholders">
-        <div class="oven-card">
-          <div class="oven-placeholder">
-            <div>
-              <span class="footprint-mark footprint-mark--single" aria-hidden="true"></span>
-              <p>our oven</p>
-            </div>
-          </div>
-          <p class="print-caption">the heart of the kitchen</p>
-        </div>
-        <div class="oven-card oven-card--team">
-          <div class="oven-placeholder">
-            <div>
-              <span class="footprint-mark footprint-mark--single" aria-hidden="true"></span>
-              <p>the Paradiso team</p>
-            </div>
-          </div>
-          <p class="print-caption">team photo coming soon</p>
-        </div>
+      <div class="about-prints" aria-label="Photos from Paradiso Pizza">
+        {aboutPhotos.map((photo) => (
+          <figure class={`about-photo-card ${photo.modifier}`}>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[220, 320, 440, 620]}
+              sizes="(max-width: 720px) 76vw, 320px"
+              loading="lazy"
+            />
+            {photo.caption && <figcaption class="print-caption">{photo.caption}</figcaption>}
+          </figure>
+        ))}
       </div>
 
       <div>
@@ -314,8 +351,6 @@ const scrollingReviews = [...googleReviews, ...googleReviews];
           We opened in 2026 and have been lucky to be backed by Titirangi locals
           from day one, with a 5.0 Google rating from 71 reviews.
         </p>
-        <p class="pull-quote">"Pizza, cannoli and tiramisu in the heart of Titirangi."</p>
-        <p class="muted">Open from 4pm until sold out. Check Facebook for the latest updates.</p>
       </div>
     </div>
   </section>

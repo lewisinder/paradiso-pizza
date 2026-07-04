@@ -26,15 +26,20 @@ export const site = {
 
   // Location (used in structured data and the footer)
   address: {
+    street: "120 Park Road",
     locality: "Titirangi",
     region: "Auckland",
+    postalCode: "0604",
     country: "NZ",
   },
   areas: ["Titirangi", "West Auckland"],
 
   // Online ordering (HeyBustle) — the primary action everywhere on the site.
   orderUrl: "https://venues.heybustle.com/NZ/paradiso-pizza",
-  hours: ["Monday-Saturday from 4pm until sold out"],
+  hours: [
+    "Monday-Saturday from 4pm until sold out",
+    "Sunday from 12pm until sold out",
+  ],
 
   // Contact form (Web3Forms): create a free access key at web3forms.com using
   // the CLIENT'S email address — enquiries go straight to that inbox.
