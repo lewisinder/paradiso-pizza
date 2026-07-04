@@ -1053,22 +1053,17 @@ code {
   position: absolute;
   width: min(58%, 320px);
   margin: 0;
-  padding: 12px;
+  padding: 12px 12px 42px;
   border: 3px solid var(--ink);
   background: var(--paper-strong);
   box-shadow: 7px 7px 0 var(--ink);
   z-index: 1;
 }
 
-.about-photo-card:has(.print-caption) {
-  padding-bottom: 42px;
-}
-
 .about-photo-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  height: auto;
   filter: saturate(0.95) contrast(1.04);
 }
 
@@ -1080,11 +1075,6 @@ code {
   z-index: 2;
 }
 
-.about-photo-card--storefront img {
-  aspect-ratio: 3 / 4;
-  object-position: 52% 54%;
-}
-
 .about-photo-card--counter {
   left: auto;
   right: 2px;
@@ -1094,10 +1084,6 @@ code {
   z-index: 3;
 }
 
-.about-photo-card--counter img {
-  object-position: 54% 36%;
-}
-
 .about-photo-card--napoli {
   left: auto;
   right: 34px;
@@ -1105,10 +1091,6 @@ code {
   width: min(46%, 255px);
   transform: rotate(-2.5deg);
   z-index: 4;
-}
-
-.about-photo-card--napoli img {
-  object-position: 46% 36%;
 }
 
 .about-photo-card .print-caption {
@@ -1565,20 +1547,12 @@ code {
   }
 
   .about-photo-card {
-    padding: 9px;
+    padding: 9px 9px 34px;
     box-shadow: 5px 5px 0 var(--ink);
-  }
-
-  .about-photo-card:has(.print-caption) {
-    padding-bottom: 34px;
   }
 
   .about-photo-card--storefront {
     grid-column: 1 / -1;
-  }
-
-  .about-photo-card--storefront img {
-    aspect-ratio: 16 / 11;
   }
 
   .about-photo-card .print-caption {
