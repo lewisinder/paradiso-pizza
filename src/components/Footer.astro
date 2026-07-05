@@ -1,10 +1,14 @@
 ---
 import FacebookIcon from "@/components/FacebookIcon.astro";
+import InstagramIcon from "@/components/InstagramIcon.astro";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
 
 const year = new Date().getFullYear();
-const facebook = site.social.find((item) => item.label.toLowerCase() === "facebook") ?? site.social[0];
+const socialIcons: Record<string, typeof FacebookIcon> = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+};
 ---
 
 <footer class="site-footer" id="contact">
@@ -19,19 +23,22 @@ const facebook = site.social.find((item) => item.label.toLowerCase() === "facebo
         <h4>Find us</h4>
         <ul>
           <li>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</li>
-          {facebook && (
-            <li>
-              <a
-                class="social-link"
-                href={withBase(facebook.href)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FacebookIcon class="social-link__icon" size={18} />
-                <span>Facebook updates</span>
-              </a>
-            </li>
-          )}
+          {site.social.map((item) => {
+            const Icon = socialIcons[item.label.toLowerCase()];
+            return (
+              <li>
+                <a
+                  class="social-link"
+                  href={withBase(item.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {Icon && <Icon class="social-link__icon" size={18} />}
+                  <span>{item.label} updates</span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div>

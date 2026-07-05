@@ -1194,8 +1194,14 @@ code {
   color: var(--menu-red);
 }
 
-.about-social-link {
+.about-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
   margin-top: 2px;
+}
+
+.about-social-link {
   color: var(--ink);
   text-decoration: none;
 }

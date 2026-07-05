@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import FacebookIcon from "@/components/FacebookIcon.astro";
+import InstagramIcon from "@/components/InstagramIcon.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
 import chickenHero from "@/assets/paradiso-chicken-hero.webp";
@@ -19,7 +20,10 @@ const featured = pizzas.filter(({ name }) =>
 const midpoint = Math.ceil(pizzas.length / 2);
 const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
 const scrollingReviews = [...googleReviews, ...googleReviews];
-const facebook = site.social.find((item) => item.label.toLowerCase() === "facebook") ?? site.social[0];
+const socialIcons: Record<string, typeof FacebookIcon> = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+};
 const aboutPhotos = [
   {
     src: storefrontParkRd,
@@ -227,7 +231,7 @@ const aboutPhotos = [
             </div>
 
           <p class="menu-note">
-            All pizzas are 12".<br />
+            All pizzas are 12". Kids pizzas are 9".<br />
             Gluten-free base available +$3.<br />
             Please advise of any allergies.
           </p>
@@ -356,17 +360,22 @@ const aboutPhotos = [
           We opened in 2026 and have been lucky to be backed by Titirangi locals
           from day one.
         </p>
-        {facebook && (
-          <a
-            class="social-link about-social-link"
-            href={withBase(facebook.href)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FacebookIcon class="social-link__icon" size={20} />
-            <span>Facebook updates</span>
-          </a>
-        )}
+        <div class="about-social-links">
+          {site.social.map((item) => {
+            const Icon = socialIcons[item.label.toLowerCase()];
+            return (
+              <a
+                class="social-link about-social-link"
+                href={withBase(item.href)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {Icon && <Icon class="social-link__icon" size={20} />}
+                <span>{item.label} updates</span>
+              </a>
+            );
+          })}
+        </div>
       </div>
     </div>
   </section>
