@@ -1,0 +1,128 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { site } from "@/data/site";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How Paradiso Pizza collects, uses and protects personal information for enquiries, online ordering, website analytics, social embeds and customer requests."
+>
+  <section class="section policy-section" aria-labelledby="privacy-title">
+    <div class="container policy-layout">
+      <header class="policy-header">
+        <span class="overline">Privacy</span>
+        <h1 class="scrawl" id="privacy-title">Privacy Policy</h1>
+        <p class="lead">Last updated: 5th July 2026</p>
+      </header>
+
+      <div class="policy-body">
+        <p>
+          Paradiso Pizza respects your privacy. This policy explains how we collect, use
+          and protect personal information when you use our website, contact us, follow
+          our social pages, or order online.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          Paradiso Pizza<br />
+          {site.address.street}<br />
+          {site.address.locality}, {site.address.region} {site.address.postalCode}<br />
+          New Zealand
+        </p>
+        <p>
+          Email: <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          Phone: <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+        </p>
+
+        <h2>Information we collect</h2>
+        <p>We may collect personal information when you:</p>
+        <ul>
+          <li>contact us by phone or email</li>
+          <li>place an order through our online ordering provider</li>
+          <li>interact with our Facebook or Instagram pages</li>
+          <li>use our website</li>
+        </ul>
+        <p>
+          This may include your name, phone number, email address, order details,
+          delivery or pickup details, messages you send us, and basic website usage
+          information.
+        </p>
+
+        <h2>How we use your information</h2>
+        <p>We use personal information to:</p>
+        <ul>
+          <li>respond to enquiries</li>
+          <li>prepare and manage orders</li>
+          <li>contact you about an order</li>
+          <li>improve our website and customer experience</li>
+          <li>keep our business records</li>
+          <li>meet legal, tax and accounting obligations</li>
+        </ul>
+        <p>We only collect personal information where it is needed for our business.</p>
+
+        <h2>Online ordering</h2>
+        <p>
+          Online ordering is provided through Bustle / HeyBustle. When you place an
+          order, your information may be collected and processed by Bustle so they can
+          handle the ordering and payment process.
+        </p>
+        <p>
+          You can read Bustle's privacy policy here:
+          <a href="https://www.heybustle.com/privacy-policy" target="_blank" rel="noopener noreferrer">
+            heybustle.com/privacy-policy
+          </a>.
+        </p>
+
+        <h2>Website, cookies and analytics</h2>
+        <p>
+          Our website may use basic cookies, analytics, embedded content, or third-party
+          services to help the site work properly and understand how people use it.
+        </p>
+        <p>
+          Embedded content, such as Facebook, may collect information according to that
+          provider's own privacy policy.
+        </p>
+
+        <h2>Sharing your information</h2>
+        <p>We do not sell personal information.</p>
+        <p>
+          We may share personal information with trusted service providers where needed
+          to run our business, such as online ordering, payment, website hosting, email,
+          analytics, accounting, or legal services.
+        </p>
+        <p>We may also share information if required by law.</p>
+
+        <h2>Keeping your information safe</h2>
+        <p>
+          We take reasonable steps to protect personal information from loss,
+          unauthorised access, misuse, or disclosure.
+        </p>
+
+        <h2>How long we keep information</h2>
+        <p>
+          We keep personal information only for as long as we need it for the purpose it
+          was collected, including business, tax, accounting, and legal requirements.
+        </p>
+
+        <h2>Accessing or correcting your information</h2>
+        <p>
+          You can ask us to access or correct the personal information we hold about you.
+          To make a request, contact us at <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+
+        <h2>Privacy contact</h2>
+        <p>
+          If you have a privacy question or concern, contact us at
+          <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+        <p>
+          If you are not happy with our response, you can contact the Office of the
+          Privacy Commissioner:
+          <a href="https://www.privacy.org.nz" target="_blank" rel="noopener noreferrer">
+            privacy.org.nz
+          </a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

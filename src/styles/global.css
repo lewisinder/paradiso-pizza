@@ -1183,6 +1183,60 @@ code {
   font-weight: 700;
 }
 
+.policy-section {
+  padding-block-start: clamp(64px, 9vw, 110px);
+}
+
+.policy-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1fr);
+  gap: clamp(36px, 7vw, 96px);
+  align-items: start;
+}
+
+.policy-header {
+  position: sticky;
+  top: 112px;
+}
+
+.policy-header h1 {
+  margin-bottom: 22px;
+  font-size: clamp(3.8rem, 8vw, 7rem);
+}
+
+.policy-body {
+  max-width: 780px;
+  padding-top: 8px;
+  color: var(--ink);
+}
+
+.policy-body h2 {
+  margin: 44px 0 14px;
+  color: var(--menu-red);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+}
+
+.policy-body h2:first-child {
+  margin-top: 0;
+}
+
+.policy-body p,
+.policy-body li {
+  font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+  line-height: 1.85;
+}
+
+.policy-body ul {
+  margin: 0 0 1.2rem;
+  padding-left: 1.25rem;
+}
+
+.policy-body a {
+  color: var(--menu-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .cta-band {
   position: relative;
   overflow: hidden;
@@ -1501,6 +1555,14 @@ code {
 
   .about-grid > div:last-child {
     order: 1;
+  }
+
+  .policy-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .policy-header {
+    position: static;
   }
 
   .about-prints {
