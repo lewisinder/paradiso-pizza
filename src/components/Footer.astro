@@ -1,8 +1,10 @@
 ---
+import FacebookIcon from "@/components/FacebookIcon.astro";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
 
 const year = new Date().getFullYear();
+const facebook = site.social.find((item) => item.label.toLowerCase() === "facebook") ?? site.social[0];
 ---
 
 <footer class="site-footer" id="contact">
@@ -17,7 +19,19 @@ const year = new Date().getFullYear();
         <h4>Find us</h4>
         <ul>
           <li>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</li>
-          <li><a href={withBase(site.social[0].href)}>Facebook updates</a></li>
+          {facebook && (
+            <li>
+              <a
+                class="social-link"
+                href={withBase(facebook.href)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookIcon class="social-link__icon" size={18} />
+                <span>Facebook updates</span>
+              </a>
+            </li>
+          )}
         </ul>
       </div>
       <div>

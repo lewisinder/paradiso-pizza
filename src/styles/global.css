@@ -1182,7 +1182,30 @@ code {
   text-decoration: none;
 }
 
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+}
+
+.social-link__icon {
+  flex: 0 0 auto;
+  color: var(--menu-red);
+}
+
+.about-social-link {
+  margin-top: 2px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
 .site-footer a:hover {
+  color: var(--menu-red);
+  text-decoration: underline;
+}
+
+.about-social-link:hover {
   color: var(--menu-red);
   text-decoration: underline;
 }

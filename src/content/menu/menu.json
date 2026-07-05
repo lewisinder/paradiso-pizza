@@ -68,12 +68,12 @@
     {
       "name": "Tiramisù",
       "price": "$14",
-      "description": "The classic - made in house"
+      "description": "The classic - handmade"
     },
     {
       "name": "Cannoli",
       "price": "$8 ea",
-      "description": "Ricotta, orange zest, pistachio & choc chips\nLimoncello filling"
+      "description": "Ricotta, orange zest, pistachio & choc chips\n\nLimoncello filling"
     }
   ],
   "addOns": [
