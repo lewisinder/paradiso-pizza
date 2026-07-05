@@ -26,12 +26,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm install
-      - run: npx astro build
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build:cms
         env:
           DEPLOY_TARGET: github-pages
-      - uses: actions/upload-pages-artifact@v3
+          TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -43,4 +47,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
