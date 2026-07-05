@@ -3,9 +3,9 @@ import { site } from "@/data/site";
 
 // Served at /robots.txt.
 // Production: allows crawling and points to the sitemap from @astrojs/sitemap.
-// GitHub Pages preview builds: blocks all crawling - the preview is a
-// duplicate of the real site and must never be indexed.
-const isPreviewBuild = process.env.DEPLOY_TARGET === "github-pages";
+// Preview builds: blocks all crawling - the preview is a duplicate of the real
+// site and must never be indexed.
+const isPreviewBuild = process.env.DEPLOY_TARGET === "preview";
 
 export const GET: APIRoute = () => {
   const body = isPreviewBuild

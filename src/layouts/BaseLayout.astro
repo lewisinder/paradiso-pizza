@@ -19,9 +19,9 @@ type Props = {
 
 const { title, description, schemas = [] } = Astro.props;
 
-// GitHub Pages preview builds are never indexed - they're a working copy of
-// the real site. Canonical still points at the production domain.
-const isPreviewBuild = process.env.DEPLOY_TARGET === "github-pages";
+// Preview builds are never indexed - they're a working copy of the real site.
+// Canonical still points at the production domain.
+const isPreviewBuild = process.env.DEPLOY_TARGET === "preview";
 const robots = isPreviewBuild ? "noindex, nofollow" : (Astro.props.robots ?? "index, follow");
 
 const pathname = pathnameWithoutBase(Astro.url.pathname);

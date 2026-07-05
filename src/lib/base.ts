@@ -1,7 +1,6 @@
-// Base-path helpers. On the GitHub Pages preview the site lives under
-// /<repo-name>/ instead of the domain root, so EVERY internal href and asset
-// path must go through withBase(). On production and in local dev, base is
-// "/" and withBase() is a no-op.
+// Base-path helpers. Cloudflare Pages serves this site from the domain root, so
+// base is "/" in production and local dev. Keep internal hrefs and assets going
+// through withBase() so the code stays safe if a subpath preview is ever added.
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 

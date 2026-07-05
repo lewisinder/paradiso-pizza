@@ -13,7 +13,7 @@ Copy this folder, fill in the brief, paste the kickoff prompt, and build.
 | `src/styles/global.css` | The design system: every colour/font/spacing token and every class the site is allowed to use |
 | `src/data/` | All business details and content as simple data files — the agent edits these, not scattered markup |
 | `.claude/skills/` | The two design skills pre-installed: `ui-ux-pro-max` and `frontend-design` (sources + reinstall: [docs/06-install-skills.md](docs/06-install-skills.md)) |
-| `.github/workflows/` | Auto-deploys every push to a GitHub Pages preview — watch progress live, doubles as a backup |
+| `.github/workflows/` | Auto-deploys every push to Cloudflare Pages when Cloudflare secrets are configured |
 | `agents.md` | Standing instructions the agent follows on every build |
 | `docs/` | The build-day paperwork: brief, kickoff prompt, ship runbook, launch checklist, CMS playbook, skills guide |
 
@@ -30,10 +30,8 @@ renders as plain HTML that Google can read without running JavaScript.
    ~12 plain questions about the business. This is the only writing you have to do.
 4. **Paste the kickoff prompt** from
    [docs/02-kickoff-prompt.md](docs/02-kickoff-prompt.md) to the agent. It sets up
-   the GitHub repo first thing, so from the first milestone onwards you can watch
-   the site take shape at `https://<your-username>.github.io/<project-name>/` —
-   that preview updates on every push, acts as an off-machine backup, and is
-   automatically hidden from Google.
+   the GitHub repo first thing. Connect the repo to Cloudflare Pages, or add the
+   Cloudflare deploy secrets, so pushes to `main` publish automatically.
 5. Review the design system page and homepage in the preview, give feedback, iterate.
 6. When it looks right, follow [docs/03-ship-runbook.md](docs/03-ship-runbook.md) to
    put the real site on Netlify or Cloudflare Pages (the agent can run it for you).

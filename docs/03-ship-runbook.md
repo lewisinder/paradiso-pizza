@@ -60,23 +60,19 @@ netlify deploy --build --prod
 ## 3b. Deploy — Cloudflare Pages
 
 **Dashboard:** dash.cloudflare.com → Workers & Pages → Create → Pages →
-Connect to Git → pick the repo. Choose the **Astro** framework preset (or set build
-command `npm run build`, output directory `dist`). Deploy.
+Connect to Git → pick the repo. Choose the **Astro** framework preset, or set build
+command `npm run build` and output directory `dist`. Deploy.
 
-**Or CLI:**
+**Or direct upload from GitHub Actions:**
 
-```bash
-npm i -g wrangler
-wrangler login
-wrangler pages project create <repo-name>
-npm run build && wrangler pages deploy dist --project-name <repo-name>
-```
+1. Create a Cloudflare API token with Cloudflare Pages edit access.
+2. Add these repository secrets in GitHub:
+   - `CLOUDFLARE_ACCOUNT_ID`
+   - `CLOUDFLARE_API_TOKEN`
+3. Push to `main`, or run the `Deploy to Cloudflare Pages` workflow manually.
 
-(For push-to-deploy, use the dashboard Git connection — the CLI route deploys only
-when you run it.)
-
-Either way, from now on **every push to `main` deploys automatically** (when
-connected via Git).
+The workflow builds with `npm run build` and uploads `dist/` to the configured
+Cloudflare Pages project.
 
 ## 4. Test the contact form (don't skip)
 
