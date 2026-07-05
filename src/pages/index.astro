@@ -4,9 +4,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import FacebookIcon from "@/components/FacebookIcon.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
+import chickenHero from "@/assets/paradiso-chicken-hero.webp";
 import cannoliCounter from "@/assets/paradiso-cannoli-counter.jpg";
 import napoliTable from "@/assets/paradiso-napoli-table.jpg";
-import rooster from "@/assets/paradiso-rooster.jpg";
 import storefrontParkRd from "@/assets/paradiso-storefront-park-rd.jpg";
 import { addOns, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, pizzas } from "@/data/menu";
 import { googleReviews } from "@/data/reviews";
@@ -79,7 +79,7 @@ const aboutPhotos = [
 
       <figure class="print-frame">
         <Image
-          src={rooster}
+          src={chickenHero}
           alt="Hand-drawn rooster illustration used on the Paradiso Pizza menu"
           widths={[320, 480, 640]}
           sizes="(max-width: 720px) 80vw, 430px"
