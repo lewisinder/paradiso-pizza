@@ -1013,10 +1013,6 @@ code {
   flex: 0 0 auto;
 }
 
-.facebook-section {
-  background: color-mix(in srgb, var(--paper) 88%, var(--cream));
-}
-
 .facebook-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(320px, 500px);
