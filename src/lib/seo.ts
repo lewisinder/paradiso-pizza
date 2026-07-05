@@ -3,6 +3,7 @@ import type { Faq } from "@/data/faqs";
 import { addOns, desserts, dips, pizzas } from "@/data/menu";
 
 const menuItems = [...pizzas, ...desserts, ...addOns, ...dips];
+const menuUrl = `${site.url}/#menu`;
 
 // Restaurant structured data (JSON-LD), rendered on every page by BaseLayout.
 // Google reads this to understand who the business is, where it operates,
@@ -16,7 +17,7 @@ export function localBusinessSchema() {
     legalName: site.legalName,
     url: site.url,
     telephone: site.phone,
-    servesCuisine: ["Pizza", "Italian"],
+    servesCuisine: ["Pizza", "Italian", "Dessert"],
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
@@ -28,9 +29,16 @@ export function localBusinessSchema() {
     },
     areaServed: site.areas.map((area) => ({ "@type": "Place", name: area })),
     openingHours: site.hours,
+    openingHoursSpecification: site.openingHoursSpecification.map((hours) => ({
+      "@type": "OpeningHoursSpecification",
+      ...hours,
+    })),
+    menu: menuUrl,
     hasMenu: {
       "@type": "Menu",
+      "@id": `${site.url}/#menu-schema`,
       name: "Paradiso Pizza menu",
+      url: menuUrl,
       hasMenuItem: menuItems.map((item) => ({
         "@type": "MenuItem",
         name: item.name,
@@ -43,6 +51,17 @@ export function localBusinessSchema() {
       })),
     },
     acceptsReservations: false,
+    potentialAction: {
+      "@type": "OrderAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: site.orderUrl,
+        actionPlatform: [
+          "https://schema.org/DesktopWebPlatform",
+          "https://schema.org/MobileWebPlatform",
+        ],
+      },
+    },
     ...(site.email ? { email: site.email } : {}),
     ...(site.social.length > 0 ? { sameAs: site.social.map((s) => s.href) } : {}),
   };

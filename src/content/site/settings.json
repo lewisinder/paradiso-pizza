@@ -20,6 +20,16 @@
     "Monday-Saturday from 4pm until sold out",
     "Sunday from 12pm until sold out"
   ],
+  "openingHoursSpecification": [
+    {
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "16:00"
+    },
+    {
+      "dayOfWeek": "Sunday",
+      "opens": "12:00"
+    }
+  ],
   "formAccessKey": "REPLACE_WITH_WEB3FORMS_ACCESS_KEY",
   "primaryCta": {
     "label": "Order now",

@@ -21,6 +21,11 @@ type SiteSettings = {
   areas: string[];
   orderUrl: string;
   hours: string[];
+  openingHoursSpecification: {
+    dayOfWeek: string | string[];
+    opens: string;
+    closes?: string;
+  }[];
   formAccessKey: string;
   primaryCta: {
     label: string;
