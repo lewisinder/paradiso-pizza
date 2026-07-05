@@ -10,6 +10,8 @@ const branch =
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.GITHUB_REF_NAME ||
   "main";
+const tinaBasePath =
+  process.env.DEPLOY_TARGET === "github-pages" ? "paradiso-pizza" : undefined;
 
 const singleDocumentActions = {
   create: false,
@@ -158,6 +160,7 @@ export default defineConfig({
   build: {
     outputFolder: "admin",
     publicFolder: "public",
+    basePath: tinaBasePath,
   },
   media: {
     tina: {
