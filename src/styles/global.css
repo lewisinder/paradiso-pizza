@@ -1013,6 +1013,61 @@ code {
   flex: 0 0 auto;
 }
 
+.facebook-section {
+  background: color-mix(in srgb, var(--paper) 88%, var(--cream));
+}
+
+.facebook-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 500px);
+  gap: clamp(36px, 7vw, 88px);
+  align-items: center;
+}
+
+.facebook-copy {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+}
+
+.facebook-copy .lead {
+  margin-bottom: 0;
+}
+
+.facebook-copy .btn {
+  width: fit-content;
+}
+
+.facebook-frame-wrap {
+  padding: 12px;
+  border: 3px solid var(--ink);
+  background: var(--paper-strong);
+  box-shadow: 7px 7px 0 var(--ink);
+  transform: rotate(0.45deg);
+}
+
+.facebook-feed {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  min-height: 620px;
+  background: #fff;
+}
+
+.facebook-fallback {
+  margin: 12px 0 0;
+  color: var(--ash);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.facebook-fallback a {
+  color: var(--menu-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 @keyframes reviews-scroll {
   from {
     transform: translateX(0);
@@ -1419,6 +1474,7 @@ code {
   .about-grid,
   .kids-menu-sheet__grid,
   .reviews-heading,
+  .facebook-grid,
   .split {
     grid-template-columns: 1fr;
   }
@@ -1432,6 +1488,10 @@ code {
 
   .reviews-heading .overline {
     justify-content: center;
+  }
+
+  .facebook-frame-wrap {
+    display: none;
   }
 
   .print-frame {
@@ -1538,6 +1598,20 @@ code {
   .rating-stamp__copy {
     margin-top: 6px;
     font-size: 0.68rem;
+  }
+
+  .facebook-copy .btn {
+    width: 100%;
+  }
+
+  .facebook-frame-wrap {
+    padding: 8px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transform: none;
+  }
+
+  .facebook-feed {
+    min-height: 560px;
   }
 
   .menu-switch {

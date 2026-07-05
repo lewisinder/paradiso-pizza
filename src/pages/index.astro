@@ -20,6 +20,12 @@ const featured = pizzas.filter(({ name }) =>
 const midpoint = Math.ceil(pizzas.length / 2);
 const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
 const scrollingReviews = [...googleReviews, ...googleReviews];
+const facebookUrl =
+  site.social.find((item) => item.label.toLowerCase() === "facebook")?.href ??
+  "https://www.facebook.com/profile.php?id=61561287820379";
+const facebookPluginSrc = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
+  facebookUrl,
+)}&tabs=timeline&width=500&height=620&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`;
 const socialIcons: Record<string, typeof FacebookIcon> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
@@ -325,6 +331,45 @@ const aboutPhotos = [
             <ReviewCard name={review.name} review={review.review} color={review.color} />
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section facebook-section" id="facebook" aria-labelledby="facebook-title">
+    <div class="container facebook-grid">
+      <div class="facebook-copy">
+        <span class="overline">Fresh from Facebook</span>
+        <h2 class="scrawl" id="facebook-title">Tonight's word</h2>
+        <p class="lead">
+          Specials, sell-out notes and fresh-from-the-oven updates from the Paradiso page.
+        </p>
+        <a
+          class="btn btn--ghost"
+          href={withBase(facebookUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open Facebook
+        </a>
+      </div>
+
+      <div class="facebook-frame-wrap">
+        <iframe
+          class="facebook-feed"
+          title="Latest Facebook posts from Paradiso Pizza"
+          src={facebookPluginSrc}
+          width="500"
+          height="620"
+          style="border:none;overflow:hidden"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        ></iframe>
+        <p class="facebook-fallback">
+          If the feed is blocked, open the
+          <a href={withBase(facebookUrl)} target="_blank" rel="noopener noreferrer">
+            Paradiso Facebook page
+          </a>.
+        </p>
       </div>
     </div>
   </section>
