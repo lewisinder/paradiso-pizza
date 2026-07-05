@@ -26,7 +26,7 @@ const robots = isPreviewBuild ? "noindex, nofollow" : (Astro.props.robots ?? "in
 
 const pathname = pathnameWithoutBase(Astro.url.pathname);
 const canonical = `${site.url}${pathname === "/" ? "/" : `${pathname}/`}`;
-const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
+const pageTitle = title.startsWith(site.name) ? title : `${title} | ${site.name}`;
 const allSchemas = [localBusinessSchema(), ...schemas];
 ---
 
