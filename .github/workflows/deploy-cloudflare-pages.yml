@@ -26,7 +26,12 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build site with Tina CMS admin
+        run: npm run build:cms
+        env:
+          TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          TINA_SEARCH_TOKEN: ${{ secrets.TINA_SEARCH_TOKEN }}
       - name: Ensure Cloudflare Pages project exists
         run: |
           npx wrangler pages project create "$CLOUDFLARE_PROJECT_NAME" --production-branch=main || true
