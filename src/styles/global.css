@@ -168,6 +168,12 @@ code {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* Hero already carries generous vertical padding; ease the first section up
+   against it so the same-colour join doesn't read as one big empty gap. */
+.hero + .section {
+  padding-block-start: clamp(32px, 4.5vw, 60px);
+}
+
 .section--surface {
   background: color-mix(in srgb, var(--paper-strong) 78%, transparent);
 }
@@ -359,7 +365,10 @@ code {
   min-height: calc(100svh - 80px);
   display: grid;
   align-items: center;
-  padding-block: clamp(54px, 8vw, 96px);
+  padding-block-start: clamp(54px, 8vw, 96px);
+  /* Tighter bottom padding so the hero joins the first section more closely
+     (they share the same background, so a large gap reads as empty space). */
+  padding-block-end: clamp(28px, 4vw, 52px);
 }
 
 .hero-grid {
@@ -1224,6 +1233,12 @@ code {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: color-mix(in srgb, var(--ash) 80%, transparent);
   font-size: 0.78rem;
+}
+
+.site-footer .footer-credit {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .swatch-grid {
