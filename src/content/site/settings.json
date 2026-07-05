@@ -1,0 +1,39 @@
+{
+  "name": "Paradiso Pizza",
+  "legalName": "Paradiso Pizza",
+  "tagline": "Pizza, cannoli and tiramisu in the heart of Titirangi.",
+  "url": "https://www.example.com",
+  "description": "Paradiso Pizza serves handmade pizza, cannoli and tiramisu in Titirangi village, with online ordering and a menu inspired by Dante.",
+  "email": "",
+  "phone": "+64211507740",
+  "phoneDisplay": "021 150 7740",
+  "address": {
+    "street": "120 Park Road",
+    "locality": "Titirangi",
+    "region": "Auckland",
+    "postalCode": "0604",
+    "country": "NZ"
+  },
+  "areas": ["Titirangi", "West Auckland"],
+  "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza",
+  "hours": [
+    "Monday-Saturday from 4pm until sold out",
+    "Sunday from 12pm until sold out"
+  ],
+  "formAccessKey": "REPLACE_WITH_WEB3FORMS_ACCESS_KEY",
+  "primaryCta": {
+    "label": "Order now",
+    "href": "https://venues.heybustle.com/NZ/paradiso-pizza"
+  },
+  "nav": [
+    { "label": "Menu", "href": "#menu" },
+    { "label": "About", "href": "#about" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "social": [
+    {
+      "label": "Facebook",
+      "href": "https://www.facebook.com/p/Paradiso-Pizza-61561287820379/"
+    }
+  ]
+}

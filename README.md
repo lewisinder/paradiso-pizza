@@ -54,7 +54,43 @@ renders as plain HTML that Google can read without running JavaScript.
 
 ```bash
 npm install      # once, after copying the folder
-npm run dev      # local preview at http://localhost:4321
+npm run dev      # local preview + Tina CMS at http://localhost:4321/admin/index.html
+npm run dev:astro # Astro only, without Tina
 npm run build    # production build into dist/
+npm run build:cms # Tina Cloud admin build + production build, requires Tina credentials
 npm run check    # type/error check
+```
+
+## Tina CMS
+
+This site now has a local Tina CMS setup. The editable documents live in:
+
+- `src/content/site/settings.json`
+- `src/content/menu/menu.json`
+- `src/content/reviews/google.json`
+
+The Astro site still imports content through `src/data/site.ts`,
+`src/data/menu.ts`, and `src/data/reviews.ts`, so page code does not need to know
+about the CMS.
+
+For local editing, run:
+
+```bash
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:4321/admin/index.html
+```
+
+For production editing through Tina Cloud, set these environment variables in the
+hosting/GitHub build environment, then use `npm run build:cms` as the build
+command:
+
+```bash
+TINA_PUBLIC_CLIENT_ID=...
+TINA_TOKEN=...
+TINA_SEARCH_TOKEN=...
 ```

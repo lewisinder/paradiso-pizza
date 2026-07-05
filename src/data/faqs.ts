@@ -7,7 +7,7 @@ export const faqs: Faq[] = [
   {
     question: "A question customers actually ask before getting in touch?",
     answer:
-      "A plain, direct answer. No sales language — just the information the customer needs.",
+      "A plain, direct answer. No sales language - just the information the customer needs.",
   },
   {
     question: "Another common question, e.g. about pricing or timing?",

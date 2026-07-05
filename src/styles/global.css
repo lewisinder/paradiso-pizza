@@ -755,6 +755,7 @@ code {
   max-width: 52ch;
   color: var(--ash);
   font-size: 0.92rem;
+  white-space: pre-line;
 }
 
 .red-board {

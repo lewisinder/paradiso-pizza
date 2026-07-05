@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// SERVICES — repeated content lives as typed data, never hardcoded markup.
+// SERVICES - repeated content lives as typed data, never hardcoded markup.
 // Pages map over this array; one component renders each item.
 // Adding a service = adding one entry here. This also keeps a later move
 // to a CMS clean.
@@ -14,7 +14,7 @@ export type Service = {
   description: string[];
   // Short bullet points: what's included, what to expect.
   includes: string[];
-  // Lucide icon name — must exist in the icon map in ServiceCard.astro.
+  // Lucide icon name - must exist in the icon map in ServiceCard.astro.
   icon: string;
 };
 
@@ -25,7 +25,7 @@ export const services: Service[] = [
     summary: "One plain sentence saying what this service is and who it's for.",
     description: [
       "First paragraph: what the service is and the problem it solves, in the customer's language.",
-      "Second paragraph: how it works — the process, timeframes, and what the customer needs to do.",
+      "Second paragraph: how it works - the process, timeframes, and what the customer needs to do.",
     ],
     includes: [
       "A concrete thing that's included",

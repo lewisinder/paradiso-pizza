@@ -2,7 +2,7 @@
 import { site } from "@/data/site";
 
 // The form posts to Web3Forms (web3forms.com), which emails the enquiry
-// straight to the client's inbox — works on any host (Netlify, Cloudflare
+// straight to the client's inbox - works on any host (Netlify, Cloudflare
 // Pages, anywhere). Set `formAccessKey` in src/data/site.ts per client.
 // The hidden `botcheck` checkbox is a spam honeypot.
 // Note: after submitting, Web3Forms redirects to the live thank-you page
@@ -11,7 +11,7 @@ import { site } from "@/data/site";
 
 <form class="form" action="https://api.web3forms.com/submit" method="POST">
   <input type="hidden" name="access_key" value={site.formAccessKey} />
-  <input type="hidden" name="subject" value={`New website enquiry — ${site.name}`} />
+  <input type="hidden" name="subject" value={`New website enquiry - ${site.name}`} />
   <input type="hidden" name="from_name" value={`${site.name} website`} />
   <input type="hidden" name="redirect" value={`${site.url}/thank-you/`} />
   <input
@@ -41,7 +41,7 @@ import { site } from "@/data/site";
   <div class="field">
     <label for="contact-message">What do you need?</label>
     <textarea id="contact-message" name="message" required></textarea>
-    <span class="field-hint">A sentence or two is plenty — we'll follow up with any questions.</span>
+    <span class="field-hint">A sentence or two is plenty - we'll follow up with any questions.</span>
   </div>
 
   <div>
