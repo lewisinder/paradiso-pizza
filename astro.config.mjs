@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
-const productionSite = process.env.PUBLIC_SITE_URL ?? "https://paradiso-pizza.pages.dev";
+const productionSite = process.env.PUBLIC_SITE_URL ?? "https://paradisopizza.co.nz";
 
 export default defineConfig({
   site: productionSite,
