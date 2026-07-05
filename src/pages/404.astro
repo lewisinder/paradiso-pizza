@@ -19,8 +19,13 @@ import { withBase } from "@/lib/base";
       </p>
       <div class="hero-actions">
         <a class="btn btn--primary" href={withBase("/")}>Back to the homepage</a>
-        <a class="btn btn--ghost" href={withBase(site.primaryCta.href)}>Contact us</a>
+        <a class="btn btn--ghost" href={`tel:${site.phone}`}>Call {site.phoneDisplay}</a>
       </div>
+      {site.email && (
+        <p class="lead">
+          Or email <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+      )}
     </div>
   </section>
 </BaseLayout>
