@@ -1,40 +1,62 @@
 {
+  "legend": [
+    {
+      "code": "VG",
+      "label": "vegetarian"
+    },
+    {
+      "code": "V",
+      "label": "vegan"
+    },
+    {
+      "code": "GFO",
+      "label": "gluten free +$3"
+    }
+  ],
   "pizzas": [
     {
       "name": "Paradiso",
       "price": "$24",
       "description": "San Marzano tomato, fior di latte, basil, parmesan",
-      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/dbfdebcf-137c-45ac-84c7-71596c9fb5ba/new"
+      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/dbfdebcf-137c-45ac-84c7-71596c9fb5ba/new",
+      "featured": true
     },
     {
       "name": "Beatrice",
       "price": "$27",
       "description": "Lemon crème fraîche, roast mushrooms & leeks, truffle oil, rocket, pesto, parmesan",
-      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b9bac62c-c44d-4065-a9ba-bf0dde0b6d36/new"
+      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b9bac62c-c44d-4065-a9ba-bf0dde0b6d36/new",
+      "featured": true
     },
     {
       "name": "Inferno",
       "price": "$28",
       "description": "San Marzano tomato, chorizo, fior di latte, smoked provolone, hot honey",
-      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/265c8c0d-a800-4f8a-9d6e-5b060b93eb85/new"
+      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/265c8c0d-a800-4f8a-9d6e-5b060b93eb85/new",
+      "featured": true
     },
     {
       "name": "Virgilio",
       "price": "$28",
       "description": "Gorgonzola dolce, fior di latte, pecorino, parmesan, honey, pears",
-      "dietary": "VG"
+      "badges": [
+        "VG"
+      ]
     },
     {
       "name": "Dante",
       "price": "$29",
       "description": "Free range pork and fennel sausage, confit garlic spread, parmesan, fior di latte, onion jam",
-      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b2d0b708-4db5-41a0-9d49-dd40f91bff73/new"
+      "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza/e4793e42-aa2e-4c53-a71b-2aa941c384cd/b2d0b708-4db5-41a0-9d49-dd40f91bff73/new",
+      "featured": true
     },
     {
       "name": "Ginevra",
       "price": "$24",
       "description": "Confit garlic cream, fior di latte, cheddar, parmesan",
-      "dietary": "VG"
+      "badges": [
+        "VG"
+      ]
     },
     {
       "name": "Cerberus",
@@ -50,13 +72,17 @@
       "name": "Francesca",
       "price": "$26",
       "description": "Roast pumpkin, green goddess, pistachio & parsley salsa",
-      "dietary": "V"
+      "badges": [
+        "V"
+      ]
     },
     {
       "name": "Marinara",
       "price": "$20",
       "description": "San Marzano tomato, garlic, oregano, extra virgin olive oil",
-      "dietary": "V"
+      "badges": [
+        "V"
+      ]
     },
     {
       "name": "Acciughina",
@@ -77,18 +103,48 @@
     }
   ],
   "addOns": [
-    { "name": "Chorizo", "price": "$6" },
-    { "name": "Hot honey", "price": "$3" },
-    { "name": "Prosciutto", "price": "$6" },
-    { "name": "Pepperoni", "price": "$5" },
-    { "name": "Smoked ham", "price": "$5" },
-    { "name": "Pork & fennel sausage", "price": "$7" },
-    { "name": "Gorgonzola", "price": "$4.50" }
+    {
+      "name": "Chorizo",
+      "price": "$6"
+    },
+    {
+      "name": "Hot honey",
+      "price": "$3"
+    },
+    {
+      "name": "Prosciutto",
+      "price": "$6"
+    },
+    {
+      "name": "Pepperoni",
+      "price": "$5"
+    },
+    {
+      "name": "Smoked ham",
+      "price": "$5"
+    },
+    {
+      "name": "Pork & fennel sausage",
+      "price": "$7"
+    },
+    {
+      "name": "Gorgonzola",
+      "price": "$4.50"
+    }
   ],
   "dips": [
-    { "name": "Roast confit garlic", "price": "$5" },
-    { "name": "Parmesan ranch", "price": "$5" },
-    { "name": "Russian sauce", "price": "$5" }
+    {
+      "name": "Roast confit garlic",
+      "price": "$5"
+    },
+    {
+      "name": "Parmesan ranch",
+      "price": "$5"
+    },
+    {
+      "name": "Russian sauce",
+      "price": "$5"
+    }
   ],
   "kidsPizzas": [
     {
@@ -118,14 +174,35 @@
     }
   ],
   "kidsDips": [
-    { "name": "Roast confit garlic", "price": "$5" },
-    { "name": "Parmesan ranch", "price": "$5" },
-    { "name": "Hot honey ranch", "price": "$5" },
-    { "name": "Russian sauce", "price": "$5" }
+    {
+      "name": "Roast confit garlic",
+      "price": "$5"
+    },
+    {
+      "name": "Parmesan ranch",
+      "price": "$5"
+    },
+    {
+      "name": "Hot honey ranch",
+      "price": "$5"
+    },
+    {
+      "name": "Russian sauce",
+      "price": "$5"
+    }
   ],
   "kidsAddOns": [
-    { "name": "Chorizo", "price": "$6" },
-    { "name": "Prosciutto", "price": "$6" },
-    { "name": "Pepperoni", "price": "$6" }
+    {
+      "name": "Chorizo",
+      "price": "$6"
+    },
+    {
+      "name": "Prosciutto",
+      "price": "$6"
+    },
+    {
+      "name": "Pepperoni",
+      "price": "$6"
+    }
   ]
 }

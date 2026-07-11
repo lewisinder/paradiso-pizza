@@ -36,6 +36,13 @@ type SiteSettings = {
     label: string;
     href: string;
   }[];
+  footer: {
+    findUsHeading: string;
+    hoursHeading: string;
+    contactHeading: string;
+    orderLinkLabel: string;
+    bottomNote: string;
+  };
 };
 
 export const site = siteSettings as SiteSettings;

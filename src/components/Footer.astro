@@ -15,12 +15,12 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h4 class="footer-brand">Paradiso Pizza</h4>
+        <h4 class="footer-brand">{site.name}</h4>
         <span class="footer-rule" aria-hidden="true"></span>
-        <p class="muted">Pizza, cannoli and tiramisu in the heart of Titirangi.</p>
+        <p class="muted">{site.tagline}</p>
       </div>
       <div>
-        <h4>Find us</h4>
+        <h4>{site.footer.findUsHeading}</h4>
         <ul>
           <li>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</li>
           {site.social.map((item) => {
@@ -42,7 +42,7 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
         </ul>
       </div>
       <div>
-        <h4>Hours</h4>
+        <h4>{site.footer.hoursHeading}</h4>
         <ul>
           {site.hours.map((hours) => (
             <li>{hours}</li>
@@ -50,13 +50,13 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h4>{site.footer.contactHeading}</h4>
         <ul>
           <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
           {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
           <li>
             <a href={withBase(site.orderUrl)} target="_blank" rel="noopener noreferrer">
-              Order online
+              {site.footer.orderLinkLabel}
             </a>
           </li>
         </ul>
@@ -64,7 +64,7 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
     </div>
     <div class="footer-bottom">
       <span>
-        © {year} {site.legalName}. Made with love and flour. ·
+        © {year} {site.legalName}. {site.footer.bottomNote} ·
         <a
           class="footer-credit"
           href="https://theblueprintcollective.co.nz/"

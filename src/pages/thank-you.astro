@@ -1,24 +1,30 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { thankYouPage } from "@/data/pages";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
 ---
 
 <BaseLayout
-  title="Thank you"
+  title={thankYouPage.heading}
   description="Your enquiry has been received."
   robots="noindex, nofollow"
 >
   <section class="hero">
     <div class="container">
-      <span class="overline">Enquiry sent</span>
-      <h1>Thanks - we've got your message</h1>
+      <span class="overline">{thankYouPage.overline}</span>
+      <h1>{thankYouPage.heading}</h1>
       <p class="lead">
-        We'll come back to you as soon as we can. If it's urgent, call
-        <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>.
+        {thankYouPage.message}
+        {thankYouPage.phoneNote && (
+          <>
+            {" "}{thankYouPage.phoneNote}
+            <a href={`tel:${site.phone}`}> {site.phoneDisplay}</a>.
+          </>
+        )}
       </p>
       <div class="hero-actions">
-        <a class="btn btn--ghost" href={withBase("/")}>Back to the homepage</a>
+        <a class="btn btn--ghost" href={withBase("/")}>{thankYouPage.homeButtonLabel}</a>
       </div>
     </div>
   </section>

@@ -14,7 +14,10 @@
     "postalCode": "0604",
     "country": "NZ"
   },
-  "areas": ["Titirangi", "West Auckland"],
+  "areas": [
+    "Titirangi",
+    "West Auckland"
+  ],
   "orderUrl": "https://venues.heybustle.com/NZ/paradiso-pizza",
   "hours": [
     "Monday-Saturday from 4pm until sold out",
@@ -22,7 +25,14 @@
   ],
   "openingHoursSpecification": [
     {
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
       "opens": "16:00"
     },
     {
@@ -36,9 +46,18 @@
     "href": "https://venues.heybustle.com/NZ/paradiso-pizza"
   },
   "nav": [
-    { "label": "Menu", "href": "#menu" },
-    { "label": "About", "href": "#about" },
-    { "label": "Contact", "href": "#contact" }
+    {
+      "label": "Menu",
+      "href": "#menu"
+    },
+    {
+      "label": "About",
+      "href": "#about"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
   ],
   "social": [
     {
@@ -49,5 +68,12 @@
       "label": "Instagram",
       "href": "https://www.instagram.com/paradiso.titirangi/"
     }
-  ]
+  ],
+  "footer": {
+    "findUsHeading": "Find us",
+    "hoursHeading": "Hours",
+    "contactHeading": "Contact",
+    "orderLinkLabel": "Order online",
+    "bottomNote": "Made with love and flour."
+  }
 }

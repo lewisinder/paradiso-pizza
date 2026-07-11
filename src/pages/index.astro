@@ -1,22 +1,16 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import FacebookIcon from "@/components/FacebookIcon.astro";
 import InstagramIcon from "@/components/InstagramIcon.astro";
 import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
-import chickenHero from "@/assets/paradiso-chicken-hero.webp";
-import cannoliCounter from "@/assets/paradiso-cannoli-counter.jpg";
-import napoliTable from "@/assets/paradiso-napoli-table.jpg";
-import storefrontParkRd from "@/assets/paradiso-storefront-park-rd.jpg";
-import { addOns, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, pizzas } from "@/data/menu";
+import { addOns, badgeLabel, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, legend, pizzas } from "@/data/menu";
 import { googleReviews } from "@/data/reviews";
+import { home } from "@/data/home";
 import { site } from "@/data/site";
 import { withBase } from "@/lib/base";
 
-const featured = pizzas.filter(({ name }) =>
-  ["Paradiso", "Inferno", "Dante", "Beatrice"].includes(name),
-);
+const featured = pizzas.filter((pizza) => pizza.featured);
 const midpoint = Math.ceil(pizzas.length / 2);
 const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
 const scrollingReviews = [...googleReviews, ...googleReviews];
@@ -30,55 +24,38 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
 };
-const aboutPhotos = [
-  {
-    src: storefrontParkRd,
-    alt: "Paradiso Pizza storefront below the Park Road street sign",
-    caption: "Park Road, Titirangi",
-    modifier: "about-photo-card--storefront",
-  },
-  {
-    src: cannoliCounter,
-    alt: "Paradiso team member serving cannoli behind the counter",
-    caption: "Paulina",
-    modifier: "about-photo-card--counter",
-  },
-  {
-    src: napoliTable,
-    alt: "Napoli table scene with a glass of aperitivo",
-    caption: "Daniele",
-    modifier: "about-photo-card--napoli",
-  },
+// Rotation/size styling cycles through these as photos are added in the CMS.
+const photoModifiers = [
+  "about-photo-card--storefront",
+  "about-photo-card--counter",
+  "about-photo-card--napoli",
 ];
+const menuNoteLines = (home.menuSection.note ?? "").split("\n").filter(Boolean);
 ---
 
 <BaseLayout
-  title="Handmade Pizza in Titirangi"
-  description={site.description}
+  title={home.seo.title}
+  description={home.seo.description || site.description}
 >
   <ScrollFootprints />
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero-grid">
       <div>
-        <span class="overline">Handmade</span>
+        <span class="overline">{home.hero.overline}</span>
         <h1 class="hero-title scrawl" id="hero-title">
-          <span>Paradiso</span>
-          <span>Pizza</span>
+          {home.hero.titleLines.map((line) => <span>{line}</span>)}
         </h1>
-        <p class="lead">
-          Pizza, cannoli and tiramisu in Titirangi village. Order online, pick up hot,
-          and keep an eye on Facebook for the latest specials.
-        </p>
+        <p class="lead">{home.hero.lead}</p>
         <div class="hero-actions">
-          <a class="btn btn--ghost" href={withBase("#menu")}>View Menu</a>
+          <a class="btn btn--ghost" href={withBase("#menu")}>{home.hero.menuButtonLabel}</a>
           <a
             class="btn btn--primary"
             href={withBase(site.orderUrl)}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Order Online
+            {home.hero.orderButtonLabel}
           </a>
         </div>
         <div class="footprint-trail footprint-trail--hero" aria-hidden="true">
@@ -90,14 +67,15 @@ const aboutPhotos = [
       </div>
 
       <figure class="print-frame">
-        <Image
-          src={chickenHero}
-          alt="Hand-drawn rooster illustration used on the Paradiso Pizza menu"
-          widths={[320, 480, 640]}
-          sizes="(max-width: 720px) 80vw, 430px"
+        <img
+          src={withBase(home.hero.image)}
+          alt={home.hero.imageAlt}
           loading="eager"
+          decoding="async"
         />
-        <figcaption class="print-caption">our mascot</figcaption>
+        {home.hero.imageCaption && (
+          <figcaption class="print-caption">{home.hero.imageCaption}</figcaption>
+        )}
       </figure>
     </div>
   </section>
@@ -105,8 +83,8 @@ const aboutPhotos = [
   <section class="section" aria-labelledby="featured-title">
     <div class="container">
       <div class="section-heading">
-        <h2 class="scrawl" id="featured-title">Pizza</h2>
-        <p class="lead">A few favourites from the menu.</p>
+        <h2 class="scrawl" id="featured-title">{home.featured.heading}</h2>
+        <p class="lead">{home.featured.lead}</p>
       </div>
 
       <div class="featured-grid">
@@ -125,7 +103,7 @@ const aboutPhotos = [
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Order this pizza
+                {home.featured.orderLinkLabel}
               </a>
             )}
           </article>
@@ -133,7 +111,7 @@ const aboutPhotos = [
       </div>
 
       <div class="button-row button-row--center">
-        <a class="btn btn--ghost" href={withBase("#menu")}>See full menu</a>
+        <a class="btn btn--ghost" href={withBase("#menu")}>{home.featured.buttonLabel}</a>
       </div>
     </div>
   </section>
@@ -141,7 +119,7 @@ const aboutPhotos = [
   <section class="section section--surface" id="menu" aria-labelledby="menu-title">
     <div class="container">
       <div class="section-heading section-heading--center">
-        <h2 class="scrawl" id="menu-title">The Menu</h2>
+        <h2 class="scrawl" id="menu-title">{home.menuSection.heading}</h2>
         <div class="menu-switch" role="tablist" aria-label="Choose menu">
           <button
             class="menu-switch__button is-active"
@@ -151,7 +129,7 @@ const aboutPhotos = [
             aria-controls="main-menu-panel"
             data-menu-target="main"
           >
-            Main menu
+            {home.menuSection.mainTabLabel}
           </button>
           <button
             class="menu-switch__button menu-switch__button--kids"
@@ -161,7 +139,7 @@ const aboutPhotos = [
             aria-controls="kids-menu-panel"
             data-menu-target="kids"
           >
-            Kids menu
+            {home.menuSection.kidsTabLabel}
           </button>
         </div>
       </div>
@@ -169,20 +147,14 @@ const aboutPhotos = [
       <div class="menu-panel is-active" id="main-menu-panel" role="tabpanel" data-menu-panel="main">
         <div class="menu-layout">
           <div>
-            <div class="menu-category-title">Pizza</div>
+            <div class="menu-category-title">{home.menuSection.pizzasHeading}</div>
             <dl class="dietary-legend" aria-label="Dietary legend">
-              <div>
-                <dt>VG</dt>
-                <dd>vegetarian</dd>
-              </div>
-              <div>
-                <dt>V</dt>
-                <dd>vegan</dd>
-              </div>
-              <div>
-                <dt>GFO</dt>
-                <dd>gluten free +$3</dd>
-              </div>
+              {legend.map((entry) => (
+                <div>
+                  <dt>{entry.code}</dt>
+                  <dd>{entry.label}</dd>
+                </div>
+              ))}
             </dl>
             <div class="menu-columns">
               {pizzaColumns.map((column) => (
@@ -191,11 +163,11 @@ const aboutPhotos = [
                     <li class="menu-entry">
                       <h3>
                         <span>{pizza.name}</span>
-                        {pizza.dietary && (
-                          <span class="dietary-mark" aria-label={pizza.dietary === "VG" ? "vegetarian" : "vegan"}>
-                            {pizza.dietary}
+                        {pizza.badges?.map((badge) => (
+                          <span class="dietary-mark" aria-label={badgeLabel(badge)}>
+                            {badge}
                           </span>
-                        )}
+                        ))}
                       </h3>
                       <span class="price">{pizza.price}</span>
                       <p>{pizza.description}</p>
@@ -208,11 +180,18 @@ const aboutPhotos = [
 
           <aside class="red-board" id="desserts" aria-labelledby="desserts-title">
             <div class="red-board-section">
-              <h3 id="desserts-title">Desserts</h3>
+              <h3 id="desserts-title">{home.menuSection.dessertsHeading}</h3>
               <ol class="menu-list">
                 {desserts.map((item) => (
                   <li class="menu-entry">
-                    <h3>{item.name}</h3>
+                    <h3>
+                      <span>{item.name}</span>
+                      {item.badges?.map((badge) => (
+                        <span class="dietary-mark" aria-label={badgeLabel(badge)}>
+                          {badge}
+                        </span>
+                      ))}
+                    </h3>
                     <span class="price">{item.price}</span>
                     <p>{item.description}</p>
                   </li>
@@ -221,7 +200,7 @@ const aboutPhotos = [
             </div>
 
             <div class="red-board-section">
-              <h3>Add-ons</h3>
+              <h3>{home.menuSection.addOnsHeading}</h3>
               <ol class="side-list">
                 {addOns.map((item) => (
                   <li>{item.name} {item.price}</li>
@@ -230,7 +209,10 @@ const aboutPhotos = [
             </div>
 
             <div class="red-board-section">
-              <h3>Dips <span class="price">$5</span></h3>
+              <h3>
+                {home.menuSection.dipsHeading}
+                {home.menuSection.dipsPrice && <span class="price">{home.menuSection.dipsPrice}</span>}
+              </h3>
               <ol class="side-list">
                 {dips.map((item) => (
                   <li>{item.name}</li>
@@ -238,11 +220,16 @@ const aboutPhotos = [
               </ol>
             </div>
 
-          <p class="menu-note">
-            All pizzas are 12". Kids pizzas are 9".<br />
-            Gluten-free base available +$3.<br />
-            Please advise of any allergies.
-          </p>
+          {menuNoteLines.length > 0 && (
+            <p class="menu-note">
+              {menuNoteLines.map((line, index) => (
+                <>
+                  {index > 0 && <br />}
+                  {line}
+                </>
+              ))}
+            </p>
+          )}
           </aside>
         </div>
       </div>
@@ -250,15 +237,22 @@ const aboutPhotos = [
       <div class="menu-panel" id="kids-menu-panel" role="tabpanel" data-menu-panel="kids" hidden>
         <div class="kids-menu-sheet">
           <div class="kids-menu-sheet__masthead">
-            <span>Paradiso</span>
-            <strong>Kids menu</strong>
+            <span>{home.menuSection.kidsMastheadSmall}</span>
+            <strong>{home.menuSection.kidsMastheadTitle}</strong>
           </div>
 
           <div class="kids-menu-sheet__grid">
             <ol class="menu-list kids-menu-list">
               {kidsPizzas.map((pizza) => (
                 <li class="menu-entry">
-                  <h3>{pizza.name}</h3>
+                  <h3>
+                    <span>{pizza.name}</span>
+                    {pizza.badges?.map((badge) => (
+                      <span class="dietary-mark" aria-label={badgeLabel(badge)}>
+                        {badge}
+                      </span>
+                    ))}
+                  </h3>
                   <span class="price">{pizza.price}</span>
                   <p>{pizza.description}</p>
                 </li>
@@ -267,7 +261,12 @@ const aboutPhotos = [
 
             <aside class="red-board kids-red-board" aria-labelledby="kids-extras-title">
               <div class="red-board-section">
-                <h3 id="kids-extras-title">Dips <span class="price">$5</span></h3>
+                <h3 id="kids-extras-title">
+                  {home.menuSection.kidsDipsHeading}
+                  {home.menuSection.kidsDipsPrice && (
+                    <span class="price">{home.menuSection.kidsDipsPrice}</span>
+                  )}
+                </h3>
                 <ol class="side-list">
                   {kidsDips.map((item) => (
                     <li>{item.name}</li>
@@ -276,7 +275,7 @@ const aboutPhotos = [
               </div>
 
               <div class="red-board-section">
-                <h3>Add-ons</h3>
+                <h3>{home.menuSection.kidsAddOnsHeading}</h3>
                 <ol class="side-list">
                   {kidsAddOns.map((item) => (
                     <li>{item.name} {item.price}</li>
@@ -316,13 +315,13 @@ const aboutPhotos = [
   <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
     <div class="container reviews-heading">
       <div>
-        <span class="overline">Google reviews</span>
-        <h2 class="scrawl" id="reviews-title">Locals love it</h2>
+        <span class="overline">{home.reviews.overline}</span>
+        <h2 class="scrawl" id="reviews-title">{home.reviews.heading}</h2>
       </div>
-      <div class="rating-stamp" aria-label="Rated 5.0 based on 71 Google reviews">
-        <span class="rating-stamp__score">5.0</span>
+      <div class="rating-stamp" aria-label={`Rated ${home.reviews.score} ${home.reviews.countText}`}>
+        <span class="rating-stamp__score">{home.reviews.score}</span>
         <span class="rating-stamp__stars" aria-hidden="true">★★★★★</span>
-        <span class="rating-stamp__copy">based on 71 reviews</span>
+        <span class="rating-stamp__copy">{home.reviews.countText}</span>
       </div>
     </div>
 
@@ -340,18 +339,16 @@ const aboutPhotos = [
   <section class="section facebook-section" id="facebook" aria-labelledby="facebook-title">
     <div class="container facebook-grid">
       <div class="facebook-copy">
-        <span class="overline">Fresh from Facebook</span>
-        <h2 class="scrawl" id="facebook-title">Tonight's word</h2>
-        <p class="lead">
-          Specials, sell-out notes and fresh-from-the-oven updates from the Paradiso page.
-        </p>
+        <span class="overline">{home.facebook.overline}</span>
+        <h2 class="scrawl" id="facebook-title">{home.facebook.heading}</h2>
+        <p class="lead">{home.facebook.lead}</p>
         <a
           class="btn btn--ghost"
           href={withBase(facebookUrl)}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Open Facebook
+          {home.facebook.buttonLabel}
         </a>
       </div>
 
@@ -367,9 +364,9 @@ const aboutPhotos = [
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         ></iframe>
         <p class="facebook-fallback">
-          If the feed is blocked, open the
+          {home.facebook.fallbackLead}
           <a href={withBase(facebookUrl)} target="_blank" rel="noopener noreferrer">
-            Paradiso Facebook page
+            {home.facebook.fallbackLinkLabel}
           </a>.
         </p>
       </div>
@@ -379,14 +376,13 @@ const aboutPhotos = [
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="container about-grid">
       <div class="about-prints" aria-label="Photos from Paradiso Pizza">
-        {aboutPhotos.map((photo) => (
-          <figure class={`about-photo-card ${photo.modifier}`}>
-            <Image
-              src={photo.src}
+        {home.about.photos.map((photo, index) => (
+          <figure class={`about-photo-card ${photoModifiers[index % photoModifiers.length]}`}>
+            <img
+              src={withBase(photo.image)}
               alt={photo.alt}
-              widths={[220, 320, 440, 620]}
-              sizes="(max-width: 720px) 76vw, 320px"
               loading="lazy"
+              decoding="async"
             />
             {photo.caption && <figcaption class="print-caption">{photo.caption}</figcaption>}
           </figure>
@@ -394,19 +390,8 @@ const aboutPhotos = [
       </div>
 
       <div>
-        <h2 class="scrawl" id="about-title">A little about us</h2>
-        <p>
-          Paradiso is a small Titirangi pizza spot making pizza, cannoli and
-          tiramisu for the neighbourhood.
-        </p>
-        <p>
-          We keep the menu tight: good dough, San Marzano tomato, fior di latte,
-          a hot oven and a few house-made sweets for after.
-        </p>
-        <p>
-          We opened in 2026 and have been lucky to be backed by Titirangi locals
-          from day one.
-        </p>
+        <h2 class="scrawl" id="about-title">{home.about.heading}</h2>
+        {home.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
         <div class="about-social-links">
           {site.social.map((item) => {
             const Icon = socialIcons[item.label.toLowerCase()];
@@ -429,10 +414,8 @@ const aboutPhotos = [
 
   <section class="section cta-band" id="order" aria-labelledby="order-title">
     <div class="container">
-      <h2 class="cta-title" id="order-title">Hungry?</h2>
-      <p class="lead">
-        Order online for pickup or delivery. Fresh out of the oven, while the dough lasts.
-      </p>
+      <h2 class="cta-title" id="order-title">{home.cta.heading}</h2>
+      <p class="lead">{home.cta.lead}</p>
       <div class="hero-actions">
         <a
           class="btn btn--primary"
@@ -440,9 +423,9 @@ const aboutPhotos = [
           target="_blank"
           rel="noopener noreferrer"
         >
-          Order Paradiso
+          {home.cta.orderButtonLabel}
         </a>
-        <a class="btn btn--ghost" href={`tel:${site.phone}`}>Call {site.phoneDisplay}</a>
+        <a class="btn btn--ghost" href={`tel:${site.phone}`}>{home.cta.callButtonLabel} {site.phoneDisplay}</a>
       </div>
       <div class="footprint-trail footprint-trail--center" aria-hidden="true">
         <span class="footprint-mark"></span>

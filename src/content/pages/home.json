@@ -1,0 +1,83 @@
+{
+  "seo": {
+    "title": "Handmade Pizza in Titirangi",
+    "description": ""
+  },
+  "hero": {
+    "overline": "Handmade",
+    "titleLines": ["Paradiso", "Pizza"],
+    "lead": "Pizza, cannoli and tiramisu in Titirangi village. Order online, pick up hot, and keep an eye on Facebook for the latest specials.",
+    "menuButtonLabel": "View Menu",
+    "orderButtonLabel": "Order Online",
+    "image": "/assets/paradiso-chicken-hero.webp",
+    "imageAlt": "Hand-drawn rooster illustration used on the Paradiso Pizza menu",
+    "imageCaption": "our mascot"
+  },
+  "featured": {
+    "heading": "Pizza",
+    "lead": "A few favourites from the menu.",
+    "orderLinkLabel": "Order this pizza",
+    "buttonLabel": "See full menu"
+  },
+  "menuSection": {
+    "heading": "The Menu",
+    "mainTabLabel": "Main menu",
+    "kidsTabLabel": "Kids menu",
+    "pizzasHeading": "Pizza",
+    "dessertsHeading": "Desserts",
+    "addOnsHeading": "Add-ons",
+    "dipsHeading": "Dips",
+    "dipsPrice": "$5",
+    "note": "All pizzas are 12\". Kids pizzas are 9\".\nGluten-free base available +$3.\nPlease advise of any allergies.",
+    "kidsMastheadSmall": "Paradiso",
+    "kidsMastheadTitle": "Kids menu",
+    "kidsDipsHeading": "Dips",
+    "kidsDipsPrice": "$5",
+    "kidsAddOnsHeading": "Add-ons"
+  },
+  "reviews": {
+    "overline": "Google reviews",
+    "heading": "Locals love it",
+    "score": "5.0",
+    "countText": "based on 71 reviews"
+  },
+  "facebook": {
+    "overline": "Fresh from Facebook",
+    "heading": "Tonight's word",
+    "lead": "Specials, sell-out notes and fresh-from-the-oven updates from the Paradiso page.",
+    "buttonLabel": "Open Facebook",
+    "fallbackLead": "If the feed is blocked, open the",
+    "fallbackLinkLabel": "Paradiso Facebook page"
+  },
+  "about": {
+    "heading": "A little about us",
+    "paragraphs": [
+      "Paradiso is a small Titirangi pizza spot making pizza, cannoli and tiramisu for the neighbourhood.",
+      "We keep the menu tight: good dough, San Marzano tomato, fior di latte, a hot oven and a few house-made sweets for after.",
+      "We opened in 2026 and have been lucky to be backed by Titirangi locals from day one."
+    ],
+    "photos": [
+      {
+        "image": "/assets/paradiso-storefront-park-rd.jpg",
+        "alt": "Paradiso Pizza storefront below the Park Road street sign",
+        "caption": "Park Road, Titirangi"
+      },
+      {
+        "image": "/assets/paradiso-cannoli-counter.jpg",
+        "alt": "Paradiso team member serving cannoli behind the counter",
+        "caption": "Paulina"
+      },
+      {
+        "image": "/assets/paradiso-napoli-table.jpg",
+        "alt": "Napoli table scene with a glass of aperitivo",
+        "caption": "Daniele"
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Hungry?",
+    "lead": "Order online for pickup or delivery. Fresh out of the oven, while the dough lasts.",
+    "orderButtonLabel": "Order Paradiso",
+    "callButtonLabel": "Call"
+  }
+}
