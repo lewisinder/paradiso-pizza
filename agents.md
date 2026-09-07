@@ -66,6 +66,11 @@ standards below directly.
   as a Cloudflare Worker through `.github/workflows/deploy-cloudflare-worker.yml`.
   This server-capable deployment is required for Tina's same-origin visual editing
   route. Commit and push after each approved milestone so production stays current.
+- **Tina menu editing:** Main menu and Kids menu are separate documents at
+  `src/content/menu/main.json` and `src/content/menu/kids.json`. Do not mark the
+  composite homepage Tina island as primary: doing so forces editors back to the
+  Homepage form when they select another document. Preserve the selected menu tab
+  across Tina's live island refreshes.
 - **Icons** are Lucide SVGs via `@lucide/astro`, mapped by name in
   `ServiceCard.astro`. Never emoji.
 - **Images:** put content images in `src/assets/` and render them with Astro's

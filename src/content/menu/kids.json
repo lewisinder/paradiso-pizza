@@ -1,0 +1,20 @@
+{
+  "kidsPizzas": [
+    { "name": "Margherita", "price": "$15", "description": "Tomato, fior di latte, basil, Parmesan" },
+    { "name": "Pepperoni", "price": "$17", "description": "Pepperoni, fior di latte, tomato, Parmesan" },
+    { "name": "Just Cheese", "price": "$15", "description": "mozzarella, Parmesan, cream base" },
+    { "name": "Garlic & Cheese", "price": "$15", "description": "mozzarella, Parmesan, garlic butter base" },
+    { "name": "Hawaiian", "price": "$17", "description": "Pineapple, smoked ham, fior di latte, tomato base" }
+  ],
+  "kidsDips": [
+    { "name": "Roast confit garlic", "price": "$5" },
+    { "name": "Parmesan ranch", "price": "$5" },
+    { "name": "Hot honey ranch", "price": "$5" },
+    { "name": "Russian sauce", "price": "$5" }
+  ],
+  "kidsAddOns": [
+    { "name": "Chorizo", "price": "$6" },
+    { "name": "Prosciutto", "price": "$6" },
+    { "name": "Pepperoni", "price": "$6" }
+  ]
+}

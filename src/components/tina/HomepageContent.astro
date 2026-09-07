@@ -7,18 +7,20 @@ import { tinaField } from "@tinacms/astro/tina-field";
 import type {
   GoogleReviewsQuery,
   HomepageQuery,
-  MenuQuery,
+  KidsMenuQuery,
+  MainMenuQuery,
   SiteSettingsQuery,
 } from "../../../tina/__generated__/types";
 
 type Props = {
   home: HomepageQuery["homepage"];
-  menu: MenuQuery["menu"];
+  mainMenu: MainMenuQuery["mainMenu"];
+  kidsMenu: KidsMenuQuery["kidsMenu"];
   reviews: GoogleReviewsQuery["googleReviews"];
   site: SiteSettingsQuery["siteSettings"];
 };
 
-const { home, menu, reviews, site } = Astro.props;
+const { home, mainMenu, kidsMenu, reviews, site } = Astro.props;
 const hero = home.hero;
 const featuredContent = home.featured;
 const menuContent = home.menuSection;
@@ -42,14 +44,14 @@ if (
 const compact = <T,>(items: Array<T | null> | null | undefined): T[] =>
   (items ?? []).filter((item): item is T => item !== null);
 
-const pizzas = compact(menu.pizzas);
-const desserts = compact(menu.desserts);
-const addOns = compact(menu.addOns);
-const dips = compact(menu.dips);
-const kidsPizzas = compact(menu.kidsPizzas);
-const kidsDips = compact(menu.kidsDips);
-const kidsAddOns = compact(menu.kidsAddOns);
-const legend = compact(menu.legend);
+const pizzas = compact(mainMenu.pizzas);
+const desserts = compact(mainMenu.desserts);
+const addOns = compact(mainMenu.addOns);
+const dips = compact(mainMenu.dips);
+const kidsPizzas = compact(kidsMenu.kidsPizzas);
+const kidsDips = compact(kidsMenu.kidsDips);
+const kidsAddOns = compact(kidsMenu.kidsAddOns);
+const legend = compact(mainMenu.legend);
 const reviewItems = compact(reviews.reviews);
 const socialItems = compact(site.social);
 const photos = compact(aboutContent.photos);
@@ -207,9 +209,10 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
           aria-selected="true"
           aria-controls="main-menu-panel"
           data-menu-target="main"
-          data-tina-field={tinaField(menuContent, "mainTabLabel")}
         >
-          {menuContent.mainTabLabel ?? ""}
+          <span data-tina-field={tinaField(menuContent, "mainTabLabel")}>
+            {menuContent.mainTabLabel ?? ""}
+          </span>
         </button>
         <button
           class="menu-switch__button menu-switch__button--kids"
@@ -218,9 +221,10 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
           aria-selected="false"
           aria-controls="kids-menu-panel"
           data-menu-target="kids"
-          data-tina-field={tinaField(menuContent, "kidsTabLabel")}
         >
-          {menuContent.kidsTabLabel ?? ""}
+          <span data-tina-field={tinaField(menuContent, "kidsTabLabel")}>
+            {menuContent.kidsTabLabel ?? ""}
+          </span>
         </button>
       </div>
     </div>
@@ -268,13 +272,13 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
               {desserts.map((item) => (
                 <li class="menu-entry" data-tina-field={tinaField(item)}>
                   <h3>
-                    <span>{item.name}</span>
+                    <span data-tina-field={tinaField(item, "name")}>{item.name}</span>
                     {compact(item.badges).map((badge) => (
                       <span class="dietary-mark" aria-label={badgeLabel(badge)}>{badge}</span>
                     ))}
                   </h3>
-                  <span class="price">{item.price}</span>
-                  <p>{item.description ?? ""}</p>
+                  <span class="price" data-tina-field={tinaField(item, "price")}>{item.price}</span>
+                  <p data-tina-field={tinaField(item, "description")}>{item.description ?? ""}</p>
                 </li>
               ))}
             </ol>
@@ -285,7 +289,12 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
               {menuContent.addOnsHeading ?? ""}
             </h3>
             <ol class="side-list">
-              {addOns.map((item) => <li data-tina-field={tinaField(item)}>{item.name} {item.price}</li>)}
+              {addOns.map((item) => (
+                <li data-tina-field={tinaField(item)}>
+                  <span data-tina-field={tinaField(item, "name")}>{item.name}</span>{" "}
+                  <span data-tina-field={tinaField(item, "price")}>{item.price}</span>
+                </li>
+              ))}
             </ol>
           </div>
 
@@ -295,7 +304,11 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
               {menuContent.dipsPrice && <span class="price">{menuContent.dipsPrice}</span>}
             </h3>
             <ol class="side-list">
-              {dips.map((item) => <li data-tina-field={tinaField(item)}>{item.name}</li>)}
+              {dips.map((item) => (
+                <li data-tina-field={tinaField(item)}>
+                  <span data-tina-field={tinaField(item, "name")}>{item.name}</span>
+                </li>
+              ))}
             </ol>
           </div>
 
@@ -326,13 +339,13 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
             {kidsPizzas.map((pizza) => (
               <li class="menu-entry" data-tina-field={tinaField(pizza)}>
                 <h3>
-                  <span>{pizza.name}</span>
+                  <span data-tina-field={tinaField(pizza, "name")}>{pizza.name}</span>
                   {compact(pizza.badges).map((badge) => (
                     <span class="dietary-mark" aria-label={badgeLabel(badge)}>{badge}</span>
                   ))}
                 </h3>
-                <span class="price">{pizza.price}</span>
-                <p>{pizza.description ?? ""}</p>
+                <span class="price" data-tina-field={tinaField(pizza, "price")}>{pizza.price}</span>
+                <p data-tina-field={tinaField(pizza, "description")}>{pizza.description ?? ""}</p>
               </li>
             ))}
           </ol>
@@ -344,7 +357,11 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
                 {menuContent.kidsDipsPrice && <span class="price">{menuContent.kidsDipsPrice}</span>}
               </h3>
               <ol class="side-list">
-                {kidsDips.map((item) => <li data-tina-field={tinaField(item)}>{item.name}</li>)}
+                {kidsDips.map((item) => (
+                  <li data-tina-field={tinaField(item)}>
+                    <span data-tina-field={tinaField(item, "name")}>{item.name}</span>
+                  </li>
+                ))}
               </ol>
             </div>
 
@@ -353,7 +370,12 @@ const reviewColor = (color: string | null | undefined): "blue" | "red" | "yellow
                 {menuContent.kidsAddOnsHeading ?? ""}
               </h3>
               <ol class="side-list">
-                {kidsAddOns.map((item) => <li data-tina-field={tinaField(item)}>{item.name} {item.price}</li>)}
+                {kidsAddOns.map((item) => (
+                  <li data-tina-field={tinaField(item)}>
+                    <span data-tina-field={tinaField(item, "name")}>{item.name}</span>{" "}
+                    <span data-tina-field={tinaField(item, "price")}>{item.price}</span>
+                  </li>
+                ))}
               </ol>
             </div>
           </aside>

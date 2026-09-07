@@ -102,7 +102,7 @@ const simpleMenuItemFields: any[] = [
   },
 ];
 
-const menuFields: any[] = [
+const mainMenuFields: any[] = [
   {
     type: "object",
     name: "legend",
@@ -157,11 +157,15 @@ const menuFields: any[] = [
     },
     fields: simpleMenuItemFields,
   },
+];
+
+const kidsMenuFields: any[] = [
   {
     type: "object",
     name: "kidsPizzas",
     label: "Kids pizzas",
     list: true,
+    description: "The pizzas shown when the Kids menu tab is selected.",
     ui: {
       itemProps: listLabel("Kids pizza"),
     },
@@ -415,18 +419,32 @@ export default defineConfig({
         fields: homepageFields,
       },
       {
-        name: "menu",
-        label: "Menu",
+        name: "mainMenu",
+        label: "Main menu",
         path: "src/content/menu",
         format: "json",
         match: {
-          include: "menu",
+          include: "main",
         },
         ui: {
           allowedActions: singleDocumentActions,
-          router: () => "/#menu",
+          router: () => "/?menu=main#menu",
         },
-        fields: menuFields,
+        fields: mainMenuFields,
+      },
+      {
+        name: "kidsMenu",
+        label: "Kids menu",
+        path: "src/content/menu",
+        format: "json",
+        match: {
+          include: "kids",
+        },
+        ui: {
+          allowedActions: singleDocumentActions,
+          router: () => "/?menu=kids#menu",
+        },
+        fields: kidsMenuFields,
       },
       {
         name: "siteSettings",

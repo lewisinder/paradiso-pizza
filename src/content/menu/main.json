@@ -1,17 +1,8 @@
 {
   "legend": [
-    {
-      "code": "VG",
-      "label": "vegetarian"
-    },
-    {
-      "code": "V",
-      "label": "vegan"
-    },
-    {
-      "code": "GFO",
-      "label": "gluten free +$3"
-    }
+    { "code": "VG", "label": "vegetarian" },
+    { "code": "V", "label": "vegan" },
+    { "code": "GFO", "label": "gluten free +$3" }
   ],
   "pizzas": [
     {
@@ -39,9 +30,7 @@
       "name": "Virgilio",
       "price": "$28",
       "description": "Gorgonzola dolce, fior di latte, pecorino, parmesan, honey, pears",
-      "badges": [
-        "VG"
-      ]
+      "badges": ["VG"]
     },
     {
       "name": "Dante",
@@ -54,9 +43,7 @@
       "name": "Ginevra",
       "price": "$24",
       "description": "Confit garlic cream, fior di latte, cheddar, parmesan",
-      "badges": [
-        "VG"
-      ]
+      "badges": ["VG"]
     },
     {
       "name": "Cerberus",
@@ -72,17 +59,13 @@
       "name": "Francesca",
       "price": "$26",
       "description": "Roast pumpkin, green goddess, pistachio & parsley salsa",
-      "badges": [
-        "V"
-      ]
+      "badges": ["V"]
     },
     {
       "name": "Marinara",
       "price": "$20",
       "description": "San Marzano tomato, garlic, oregano, extra virgin olive oil",
-      "badges": [
-        "V"
-      ]
+      "badges": ["V"]
     },
     {
       "name": "Acciughina",
@@ -91,118 +74,21 @@
     }
   ],
   "desserts": [
-    {
-      "name": "Tiramisù",
-      "price": "$14",
-      "description": "The classic - handmade"
-    },
-    {
-      "name": "Cannoli",
-      "price": "$8 ea",
-      "description": "Ricotta, orange zest, pistachio & choc chips"
-    }
+    { "name": "Tiramisù", "price": "$14", "description": "The classic - handmade" },
+    { "name": "Cannoli", "price": "$8 ea", "description": "Ricotta, orange zest, pistachio & choc chips" }
   ],
   "addOns": [
-    {
-      "name": "Chorizo",
-      "price": "$6"
-    },
-    {
-      "name": "Hot honey",
-      "price": "$3"
-    },
-    {
-      "name": "Prosciutto",
-      "price": "$6"
-    },
-    {
-      "name": "Pepperoni",
-      "price": "$5"
-    },
-    {
-      "name": "Smoked ham",
-      "price": "$5"
-    },
-    {
-      "name": "Pork & fennel sausage",
-      "price": "$7"
-    },
-    {
-      "name": "Gorgonzola",
-      "price": "$4.50"
-    }
+    { "name": "Chorizo", "price": "$6" },
+    { "name": "Hot honey", "price": "$3" },
+    { "name": "Prosciutto", "price": "$6" },
+    { "name": "Pepperoni", "price": "$5" },
+    { "name": "Smoked ham", "price": "$5" },
+    { "name": "Pork & fennel sausage", "price": "$7" },
+    { "name": "Gorgonzola", "price": "$4.50" }
   ],
   "dips": [
-    {
-      "name": "Roast confit garlic",
-      "price": "$5"
-    },
-    {
-      "name": "Parmesan ranch",
-      "price": "$5"
-    },
-    {
-      "name": "Russian sauce",
-      "price": "$5"
-    }
-  ],
-  "kidsPizzas": [
-    {
-      "name": "Margherita",
-      "price": "$15",
-      "description": "Tomato, fior di latte, basil, Parmesan"
-    },
-    {
-      "name": "Pepperoni",
-      "price": "$17",
-      "description": "Pepperoni, fior di latte, tomato, Parmesan"
-    },
-    {
-      "name": "Just Cheese",
-      "price": "$15",
-      "description": "mozzarella, Parmesan, cream base"
-    },
-    {
-      "name": "Garlic & Cheese",
-      "price": "$15",
-      "description": "mozzarella, Parmesan, garlic butter base"
-    },
-    {
-      "name": "Hawaiian",
-      "price": "$17",
-      "description": "Pineapple, smoked ham, fior di latte, tomato base"
-    }
-  ],
-  "kidsDips": [
-    {
-      "name": "Roast confit garlic",
-      "price": "$5"
-    },
-    {
-      "name": "Parmesan ranch",
-      "price": "$5"
-    },
-    {
-      "name": "Hot honey ranch",
-      "price": "$5"
-    },
-    {
-      "name": "Russian sauce",
-      "price": "$5"
-    }
-  ],
-  "kidsAddOns": [
-    {
-      "name": "Chorizo",
-      "price": "$6"
-    },
-    {
-      "name": "Prosciutto",
-      "price": "$6"
-    },
-    {
-      "name": "Pepperoni",
-      "price": "$6"
-    }
+    { "name": "Roast confit garlic", "price": "$5" },
+    { "name": "Parmesan ranch", "price": "$5" },
+    { "name": "Russian sauce", "price": "$5" }
   ]
 }

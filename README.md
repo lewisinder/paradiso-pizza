@@ -62,16 +62,22 @@ npm run check    # type/error check
 
 This site has Tina visual editing. The editable documents live in:
 
-- `src/content/homepage/home.json`
+- `src/content/pages/home.json`
 - `src/content/site/settings.json`
-- `src/content/menu/menu.json`
+- `src/content/menu/main.json`
+- `src/content/menu/kids.json`
 - `src/content/reviews/google.json`
-- `src/content/utility/*.json`
+- `src/content/pages/{not-found,thank-you}.json`
 - `src/content/privacy/privacy.mdx`
 
-Open `/admin/`, choose a document, and use the visual editor to click text and images
-directly in the preview. The field panel remains available for structured content
-such as navigation, menu items, hours, SEO fields, and links.
+Open `/admin/`, then choose **Main menu** or **Kids menu** from the navigation.
+Each opens the matching menu tab in the visual preview. Click an item on the preview
+to jump directly to its name, price, description, badges, and ordering fields. The
+selected menu tab is preserved while Tina refreshes the preview after edits.
+
+Homepage is intentionally not forced as the primary form. This lets Tina keep the
+document the editor selected instead of switching back to Homepage whenever the
+one-page preview loads.
 
 For local editing, run:
 

@@ -7,7 +7,8 @@ import UtilityPageContent from "@/components/tina/UtilityPageContent.astro";
 import {
   getGoogleReviews,
   getHomepage,
-  getMenu,
+  getKidsMenu,
+  getMainMenu,
   getPrivacyPage,
   getSiteSettings,
   getUtilityPage,
@@ -15,7 +16,8 @@ import {
 
 type HomepageBundle = {
   home: Awaited<ReturnType<typeof getHomepage>>;
-  menu: Awaited<ReturnType<typeof getMenu>>;
+  mainMenu: Awaited<ReturnType<typeof getMainMenu>>;
+  kidsMenu: Awaited<ReturnType<typeof getKidsMenu>>;
   reviews: Awaited<ReturnType<typeof getGoogleReviews>>;
   site: Awaited<ReturnType<typeof getSiteSettings>>;
 };
@@ -27,13 +29,14 @@ type UtilityBundle = {
 };
 
 const getHomepageBundle = async (): Promise<HomepageBundle> => {
-  const [home, menu, reviews, site] = await Promise.all([
-    getHomepage(true),
-    getMenu(),
+  const [home, mainMenu, kidsMenu, reviews, site] = await Promise.all([
+    getHomepage(),
+    getMainMenu(),
+    getKidsMenu(),
     getGoogleReviews(),
     getSiteSettings(),
   ]);
-  return { home, menu, reviews, site };
+  return { home, mainMenu, kidsMenu, reviews, site };
 };
 
 const getUtilityBundle = async (kind: "not-found" | "thank-you"): Promise<UtilityBundle> => {
@@ -67,7 +70,8 @@ export const islands: IslandRegistry = {
       const bundle = data as HomepageBundle;
       return {
         home: bundle.home.data.homepage,
-        menu: bundle.menu.data.menu,
+        mainMenu: bundle.mainMenu.data.mainMenu,
+        kidsMenu: bundle.kidsMenu.data.kidsMenu,
         reviews: bundle.reviews.data.googleReviews,
         site: bundle.site.data.siteSettings,
       };

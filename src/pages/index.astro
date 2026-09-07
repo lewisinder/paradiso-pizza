@@ -6,20 +6,23 @@ import HomepageContent from "@/components/tina/HomepageContent.astro";
 import {
   getGoogleReviews,
   getHomepage,
-  getMenu,
+  getKidsMenu,
+  getMainMenu,
   getSiteSettings,
 } from "@/lib/tina/data";
 import { islands } from "@/lib/tina/islands";
 
-const [homeResult, menuResult, reviewsResult, siteResult] = await Promise.all([
-  getHomepage(true),
-  getMenu(),
+const [homeResult, mainMenuResult, kidsMenuResult, reviewsResult, siteResult] = await Promise.all([
+  getHomepage(),
+  getMainMenu(),
+  getKidsMenu(),
   getGoogleReviews(),
   getSiteSettings(),
 ]);
 
 const home = homeResult.data.homepage;
-const menu = menuResult.data.menu;
+const mainMenu = mainMenuResult.data.mainMenu;
+const kidsMenu = kidsMenuResult.data.kidsMenu;
 const reviews = reviewsResult.data.googleReviews;
 const site = siteResult.data.siteSettings;
 ---
@@ -30,22 +33,31 @@ const site = siteResult.data.siteSettings;
 >
   <ScrollFootprints />
 
-  <TinaIsland name="homepage" wrapper={islands.homepage.wrapper} primary>
-    <HomepageContent home={home} menu={menu} reviews={reviews} site={site} />
+  <TinaIsland name="homepage" wrapper={islands.homepage.wrapper}>
+    <HomepageContent
+      home={home}
+      mainMenu={mainMenu}
+      kidsMenu={kidsMenu}
+      reviews={reviews}
+      site={site}
+    />
   </TinaIsland>
 
   <script>
     // Delegation keeps the menu tabs working after Tina replaces the live preview.
-    document.addEventListener("click", (event) => {
-      if (!(event.target instanceof Element)) return;
-      const button = event.target.closest<HTMLButtonElement>("[data-menu-target]");
-      if (!button) return;
+    type MenuWindow = Window & { __paradisoMenuTab?: "main" | "kids" };
+    const menuWindow = window as MenuWindow;
 
-      const target = button.dataset.menuTarget;
+    const requestedTab = new URLSearchParams(window.location.search).get("menu");
+    menuWindow.__paradisoMenuTab = requestedTab === "kids" ? "kids" : "main";
+
+    const showMenu = (target: "main" | "kids") => {
+      menuWindow.__paradisoMenuTab = target;
       document.querySelectorAll<HTMLButtonElement>("[data-menu-target]").forEach((item) => {
-        const isActive = item === button;
+        const isActive = item.dataset.menuTarget === target;
         item.classList.toggle("is-active", isActive);
         item.setAttribute("aria-selected", String(isActive));
+        item.tabIndex = isActive ? 0 : -1;
       });
 
       document.querySelectorAll<HTMLElement>("[data-menu-panel]").forEach((panel) => {
@@ -53,6 +65,30 @@ const site = siteResult.data.siteSettings;
         panel.classList.toggle("is-active", isActive);
         panel.hidden = !isActive;
       });
+    };
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const button = event.target.closest<HTMLButtonElement>("[data-menu-target]");
+      if (!button) return;
+
+      showMenu(button.dataset.menuTarget === "kids" ? "kids" : "main");
+    }, true);
+
+    document.addEventListener("keydown", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const button = event.target.closest<HTMLButtonElement>("[data-menu-target]");
+      if (!button || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const target = event.key === "ArrowLeft" || event.key === "Home" ? "main" : "kids";
+      showMenu(target);
+      document.querySelector<HTMLButtonElement>(`[data-menu-target="${target}"]`)?.focus();
     });
+
+    const observer = new MutationObserver(() => {
+      showMenu(menuWindow.__paradisoMenuTab ?? "main");
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    showMenu(menuWindow.__paradisoMenuTab);
   </script>
 </BaseLayout>

@@ -1,4 +1,5 @@
-import menu from "@/content/menu/menu.json";
+import kidsMenu from "@/content/menu/kids.json";
+import mainMenu from "@/content/menu/main.json";
 
 export type MenuBadge = "VG" | "V" | "GFO";
 
@@ -19,21 +20,25 @@ type MenuContent = {
   desserts: MenuItem[];
   addOns: MenuItem[];
   dips: MenuItem[];
+};
+
+type KidsMenuContent = {
   kidsPizzas: MenuItem[];
   kidsDips: MenuItem[];
   kidsAddOns: MenuItem[];
 };
 
-const menuContent = menu as MenuContent;
+const menuContent = mainMenu as MenuContent;
+const kidsMenuContent = kidsMenu as KidsMenuContent;
 
 export const legend = menuContent.legend;
 export const pizzas = menuContent.pizzas;
 export const desserts = menuContent.desserts;
 export const addOns = menuContent.addOns;
 export const dips = menuContent.dips;
-export const kidsPizzas = menuContent.kidsPizzas;
-export const kidsDips = menuContent.kidsDips;
-export const kidsAddOns = menuContent.kidsAddOns;
+export const kidsPizzas = kidsMenuContent.kidsPizzas;
+export const kidsDips = kidsMenuContent.kidsDips;
+export const kidsAddOns = kidsMenuContent.kidsAddOns;
 
 const legendLabels = new Map(legend.map(({ code, label }) => [code, label]));
 

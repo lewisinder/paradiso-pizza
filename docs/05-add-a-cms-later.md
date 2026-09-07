@@ -7,7 +7,8 @@ field. Structured fields are also available in the left-hand form.
 ## Editable content
 
 - Homepage copy, imagery, calls to action, feature cards, and section headings
-- Full menu categories and items
+- Main menu pizzas, desserts, add-ons, dips, dietary badges, prices, and links
+- Kids menu pizzas, dips, add-ons, prices, and descriptions
 - Business name, contact details, social links, navigation, and opening hours
 - Google review summary and selected reviews
 - Footer wording and links
@@ -16,6 +17,11 @@ field. Structured fields are also available in the left-hand form.
 
 The source documents are under `src/content/`. Tina commits production edits back
 to GitHub, and a push to `main` deploys the new version through Cloudflare Workers.
+
+Main menu and Kids menu are separate Tina documents. Selecting either document
+opens the homepage at the matching menu tab. The preview remembers that tab during
+live refreshes, so an editor can work through several items without being returned
+to Homepage or the other menu.
 
 ## Local editing
 

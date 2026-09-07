@@ -9,8 +9,11 @@ export const getHomepage = (isPrimary = false) =>
     isPrimary ? primary : undefined,
   );
 
-export const getMenu = () =>
-  requestWithMetadata(client.queries.menu({ relativePath: "menu.json" }));
+export const getMainMenu = () =>
+  requestWithMetadata(client.queries.mainMenu({ relativePath: "main.json" }));
+
+export const getKidsMenu = () =>
+  requestWithMetadata(client.queries.kidsMenu({ relativePath: "kids.json" }));
 
 export const getSiteSettings = () =>
   requestWithMetadata(client.queries.siteSettings({ relativePath: "settings.json" }));
