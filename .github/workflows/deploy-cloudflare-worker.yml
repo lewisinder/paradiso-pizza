@@ -23,11 +23,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Create Tina session storage for the first Worker deploy
-        run: npx wrangler kv namespace create SESSION --binding SESSION --update-config
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Build site and Tina visual editor
         run: npm run build
         env:
