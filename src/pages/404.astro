@@ -1,33 +1,29 @@
 ---
+import TinaIsland from "@tinacms/astro/TinaIsland.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { notFoundPage } from "@/data/pages";
-import { site } from "@/data/site";
-import { withBase } from "@/lib/base";
+import UtilityPageContent from "@/components/tina/UtilityPageContent.astro";
+import { getSiteSettings, getUtilityPage } from "@/lib/tina/data";
+import { islands } from "@/lib/tina/islands";
+
+const [pageResult, siteResult] = await Promise.all([
+  getUtilityPage("not-found", true),
+  getSiteSettings(),
+]);
+const page = pageResult.data.utilityPages;
+const site = siteResult.data.siteSettings;
 ---
 
 <BaseLayout
-  title={notFoundPage.heading}
+  title={page.heading ?? "Page not found"}
   description="That page doesn't exist."
   robots="noindex, nofollow"
 >
-  <section class="hero">
-    <div class="container">
-      <span class="overline">{notFoundPage.overline}</span>
-      <h1>{notFoundPage.heading}</h1>
-      <p class="lead">{notFoundPage.message}</p>
-      <div class="hero-actions">
-        <a class="btn btn--primary" href={withBase("/")}>{notFoundPage.homeButtonLabel}</a>
-        {notFoundPage.phoneNote && (
-          <a class="btn btn--ghost" href={`tel:${site.phone}`}>
-            {notFoundPage.phoneNote} {site.phoneDisplay}
-          </a>
-        )}
-      </div>
-      {site.email && notFoundPage.emailNote && (
-        <p class="lead">
-          {notFoundPage.emailNote} <a href={`mailto:${site.email}`}>{site.email}</a>.
-        </p>
-      )}
-    </div>
-  </section>
+  <TinaIsland
+    name="utility"
+    wrapper={islands.utility.wrapper}
+    params={{ kind: "not-found" }}
+    primary
+  >
+    <UtilityPageContent data={page} site={site} kind="not-found" />
+  </TinaIsland>
 </BaseLayout>

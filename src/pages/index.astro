@@ -1,437 +1,58 @@
 ---
+import TinaIsland from "@tinacms/astro/TinaIsland.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import FacebookIcon from "@/components/FacebookIcon.astro";
-import InstagramIcon from "@/components/InstagramIcon.astro";
-import ReviewCard from "@/components/ReviewCard.astro";
 import ScrollFootprints from "@/components/ScrollFootprints.astro";
-import { addOns, badgeLabel, desserts, dips, kidsAddOns, kidsDips, kidsPizzas, legend, pizzas } from "@/data/menu";
-import { googleReviews } from "@/data/reviews";
-import { home } from "@/data/home";
-import { site } from "@/data/site";
-import { withBase } from "@/lib/base";
+import HomepageContent from "@/components/tina/HomepageContent.astro";
+import {
+  getGoogleReviews,
+  getHomepage,
+  getMenu,
+  getSiteSettings,
+} from "@/lib/tina/data";
+import { islands } from "@/lib/tina/islands";
 
-const featured = pizzas.filter((pizza) => pizza.featured);
-const midpoint = Math.ceil(pizzas.length / 2);
-const pizzaColumns = [pizzas.slice(0, midpoint), pizzas.slice(midpoint)];
-const scrollingReviews = [...googleReviews, ...googleReviews];
-const facebookUrl =
-  site.social.find((item) => item.label.toLowerCase() === "facebook")?.href ??
-  "https://www.facebook.com/profile.php?id=61561287820379";
-const facebookPluginSrc = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
-  facebookUrl,
-)}&tabs=timeline&width=500&height=620&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`;
-const socialIcons: Record<string, typeof FacebookIcon> = {
-  facebook: FacebookIcon,
-  instagram: InstagramIcon,
-};
-// Rotation/size styling cycles through these as photos are added in the CMS.
-const photoModifiers = [
-  "about-photo-card--storefront",
-  "about-photo-card--counter",
-  "about-photo-card--napoli",
-];
-const menuNoteLines = (home.menuSection.note ?? "").split("\n").filter(Boolean);
+const [homeResult, menuResult, reviewsResult, siteResult] = await Promise.all([
+  getHomepage(true),
+  getMenu(),
+  getGoogleReviews(),
+  getSiteSettings(),
+]);
+
+const home = homeResult.data.homepage;
+const menu = menuResult.data.menu;
+const reviews = reviewsResult.data.googleReviews;
+const site = siteResult.data.siteSettings;
 ---
 
 <BaseLayout
-  title={home.seo.title}
-  description={home.seo.description || site.description}
+  title={home.seo?.title ?? site.name}
+  description={home.seo?.description || site.description || ""}
 >
   <ScrollFootprints />
 
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="container hero-grid">
-      <div>
-        <span class="overline">{home.hero.overline}</span>
-        <h1 class="hero-title scrawl" id="hero-title">
-          {home.hero.titleLines.map((line) => <span>{line}</span>)}
-        </h1>
-        <p class="lead">{home.hero.lead}</p>
-        <div class="hero-actions">
-          <a class="btn btn--ghost" href={withBase("#menu")}>{home.hero.menuButtonLabel}</a>
-          <a
-            class="btn btn--primary"
-            href={withBase(site.orderUrl)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {home.hero.orderButtonLabel}
-          </a>
-        </div>
-        <div class="footprint-trail footprint-trail--hero" aria-hidden="true">
-          <span class="footprint-mark"></span>
-          <span class="footprint-mark"></span>
-          <span class="footprint-mark"></span>
-          <span class="footprint-mark"></span>
-        </div>
-      </div>
+  <TinaIsland name="homepage" wrapper={islands.homepage.wrapper} primary>
+    <HomepageContent home={home} menu={menu} reviews={reviews} site={site} />
+  </TinaIsland>
 
-      <figure class="print-frame">
-        <img
-          src={withBase(home.hero.image)}
-          alt={home.hero.imageAlt}
-          loading="eager"
-          decoding="async"
-        />
-        {home.hero.imageCaption && (
-          <figcaption class="print-caption">{home.hero.imageCaption}</figcaption>
-        )}
-      </figure>
-    </div>
-  </section>
+  <script>
+    // Delegation keeps the menu tabs working after Tina replaces the live preview.
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const button = event.target.closest<HTMLButtonElement>("[data-menu-target]");
+      if (!button) return;
 
-  <section class="section" aria-labelledby="featured-title">
-    <div class="container">
-      <div class="section-heading">
-        <h2 class="scrawl" id="featured-title">{home.featured.heading}</h2>
-        <p class="lead">{home.featured.lead}</p>
-      </div>
+      const target = button.dataset.menuTarget;
+      document.querySelectorAll<HTMLButtonElement>("[data-menu-target]").forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-selected", String(isActive));
+      });
 
-      <div class="featured-grid">
-        {featured.map((pizza) => (
-          <article class="rough-card">
-            <h3>{pizza.name}</h3>
-            <div class="card-rule" aria-hidden="true"></div>
-            <p>{pizza.description}</p>
-            <div class="price-row">
-              <span class="price">{pizza.price}</span>
-            </div>
-            {pizza.orderUrl && (
-              <a
-                class="text-link order-card-link"
-                href={pizza.orderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {home.featured.orderLinkLabel}
-              </a>
-            )}
-          </article>
-        ))}
-      </div>
-
-      <div class="button-row button-row--center">
-        <a class="btn btn--ghost" href={withBase("#menu")}>{home.featured.buttonLabel}</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--surface" id="menu" aria-labelledby="menu-title">
-    <div class="container">
-      <div class="section-heading section-heading--center">
-        <h2 class="scrawl" id="menu-title">{home.menuSection.heading}</h2>
-        <div class="menu-switch" role="tablist" aria-label="Choose menu">
-          <button
-            class="menu-switch__button is-active"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="main-menu-panel"
-            data-menu-target="main"
-          >
-            {home.menuSection.mainTabLabel}
-          </button>
-          <button
-            class="menu-switch__button menu-switch__button--kids"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="kids-menu-panel"
-            data-menu-target="kids"
-          >
-            {home.menuSection.kidsTabLabel}
-          </button>
-        </div>
-      </div>
-
-      <div class="menu-panel is-active" id="main-menu-panel" role="tabpanel" data-menu-panel="main">
-        <div class="menu-layout">
-          <div>
-            <div class="menu-category-title">{home.menuSection.pizzasHeading}</div>
-            <dl class="dietary-legend" aria-label="Dietary legend">
-              {legend.map((entry) => (
-                <div>
-                  <dt>{entry.code}</dt>
-                  <dd>{entry.label}</dd>
-                </div>
-              ))}
-            </dl>
-            <div class="menu-columns">
-              {pizzaColumns.map((column) => (
-                <ol class="menu-list">
-                  {column.map((pizza) => (
-                    <li class="menu-entry">
-                      <h3>
-                        <span>{pizza.name}</span>
-                        {pizza.badges?.map((badge) => (
-                          <span class="dietary-mark" aria-label={badgeLabel(badge)}>
-                            {badge}
-                          </span>
-                        ))}
-                      </h3>
-                      <span class="price">{pizza.price}</span>
-                      <p>{pizza.description}</p>
-                    </li>
-                  ))}
-                </ol>
-              ))}
-            </div>
-          </div>
-
-          <aside class="red-board" id="desserts" aria-labelledby="desserts-title">
-            <div class="red-board-section">
-              <h3 id="desserts-title">{home.menuSection.dessertsHeading}</h3>
-              <ol class="menu-list">
-                {desserts.map((item) => (
-                  <li class="menu-entry">
-                    <h3>
-                      <span>{item.name}</span>
-                      {item.badges?.map((badge) => (
-                        <span class="dietary-mark" aria-label={badgeLabel(badge)}>
-                          {badge}
-                        </span>
-                      ))}
-                    </h3>
-                    <span class="price">{item.price}</span>
-                    <p>{item.description}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <div class="red-board-section">
-              <h3>{home.menuSection.addOnsHeading}</h3>
-              <ol class="side-list">
-                {addOns.map((item) => (
-                  <li>{item.name} {item.price}</li>
-                ))}
-              </ol>
-            </div>
-
-            <div class="red-board-section">
-              <h3>
-                {home.menuSection.dipsHeading}
-                {home.menuSection.dipsPrice && <span class="price">{home.menuSection.dipsPrice}</span>}
-              </h3>
-              <ol class="side-list">
-                {dips.map((item) => (
-                  <li>{item.name}</li>
-                ))}
-              </ol>
-            </div>
-
-          {menuNoteLines.length > 0 && (
-            <p class="menu-note">
-              {menuNoteLines.map((line, index) => (
-                <>
-                  {index > 0 && <br />}
-                  {line}
-                </>
-              ))}
-            </p>
-          )}
-          </aside>
-        </div>
-      </div>
-
-      <div class="menu-panel" id="kids-menu-panel" role="tabpanel" data-menu-panel="kids" hidden>
-        <div class="kids-menu-sheet">
-          <div class="kids-menu-sheet__masthead">
-            <span>{home.menuSection.kidsMastheadSmall}</span>
-            <strong>{home.menuSection.kidsMastheadTitle}</strong>
-          </div>
-
-          <div class="kids-menu-sheet__grid">
-            <ol class="menu-list kids-menu-list">
-              {kidsPizzas.map((pizza) => (
-                <li class="menu-entry">
-                  <h3>
-                    <span>{pizza.name}</span>
-                    {pizza.badges?.map((badge) => (
-                      <span class="dietary-mark" aria-label={badgeLabel(badge)}>
-                        {badge}
-                      </span>
-                    ))}
-                  </h3>
-                  <span class="price">{pizza.price}</span>
-                  <p>{pizza.description}</p>
-                </li>
-              ))}
-            </ol>
-
-            <aside class="red-board kids-red-board" aria-labelledby="kids-extras-title">
-              <div class="red-board-section">
-                <h3 id="kids-extras-title">
-                  {home.menuSection.kidsDipsHeading}
-                  {home.menuSection.kidsDipsPrice && (
-                    <span class="price">{home.menuSection.kidsDipsPrice}</span>
-                  )}
-                </h3>
-                <ol class="side-list">
-                  {kidsDips.map((item) => (
-                    <li>{item.name}</li>
-                  ))}
-                </ol>
-              </div>
-
-              <div class="red-board-section">
-                <h3>{home.menuSection.kidsAddOnsHeading}</h3>
-                <ol class="side-list">
-                  {kidsAddOns.map((item) => (
-                    <li>{item.name} {item.price}</li>
-                  ))}
-                </ol>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </div>
-
-      <script>
-        const menuSwitchButtons = document.querySelectorAll<HTMLButtonElement>("[data-menu-target]");
-        const menuPanels = document.querySelectorAll<HTMLElement>("[data-menu-panel]");
-
-        menuSwitchButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const target = button.dataset.menuTarget;
-
-            menuSwitchButtons.forEach((item) => {
-              const isActive = item === button;
-              item.classList.toggle("is-active", isActive);
-              item.setAttribute("aria-selected", String(isActive));
-            });
-
-            menuPanels.forEach((panel) => {
-              const isActive = panel.dataset.menuPanel === target;
-              panel.classList.toggle("is-active", isActive);
-              panel.hidden = !isActive;
-            });
-          });
-        });
-      </script>
-    </div>
-  </section>
-
-  <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
-    <div class="container reviews-heading">
-      <div>
-        <span class="overline">{home.reviews.overline}</span>
-        <h2 class="scrawl" id="reviews-title">{home.reviews.heading}</h2>
-      </div>
-      <div class="rating-stamp" aria-label={`Rated ${home.reviews.score} ${home.reviews.countText}`}>
-        <span class="rating-stamp__score">{home.reviews.score}</span>
-        <span class="rating-stamp__stars" aria-hidden="true">★★★★★</span>
-        <span class="rating-stamp__copy">{home.reviews.countText}</span>
-      </div>
-    </div>
-
-    <div class="reviews-marquee" aria-label="Customer reviews">
-      <div class="reviews-marquee__track">
-        {scrollingReviews.map((review, index) => (
-          <div class="reviews-marquee__item" aria-hidden={index >= googleReviews.length ? "true" : undefined}>
-            <ReviewCard name={review.name} review={review.review} color={review.color} />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section facebook-section" id="facebook" aria-labelledby="facebook-title">
-    <div class="container facebook-grid">
-      <div class="facebook-copy">
-        <span class="overline">{home.facebook.overline}</span>
-        <h2 class="scrawl" id="facebook-title">{home.facebook.heading}</h2>
-        <p class="lead">{home.facebook.lead}</p>
-        <a
-          class="btn btn--ghost"
-          href={withBase(facebookUrl)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {home.facebook.buttonLabel}
-        </a>
-      </div>
-
-      <div class="facebook-frame-wrap">
-        <iframe
-          class="facebook-feed"
-          title="Latest Facebook posts from Paradiso Pizza"
-          src={facebookPluginSrc}
-          width="500"
-          height="620"
-          style="border:none;overflow:hidden"
-          allowfullscreen="true"
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-        ></iframe>
-        <p class="facebook-fallback">
-          {home.facebook.fallbackLead}
-          <a href={withBase(facebookUrl)} target="_blank" rel="noopener noreferrer">
-            {home.facebook.fallbackLinkLabel}
-          </a>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="about" aria-labelledby="about-title">
-    <div class="container about-grid">
-      <div class="about-prints" aria-label="Photos from Paradiso Pizza">
-        {home.about.photos.map((photo, index) => (
-          <figure class={`about-photo-card ${photoModifiers[index % photoModifiers.length]}`}>
-            <img
-              src={withBase(photo.image)}
-              alt={photo.alt}
-              loading="lazy"
-              decoding="async"
-            />
-            {photo.caption && <figcaption class="print-caption">{photo.caption}</figcaption>}
-          </figure>
-        ))}
-      </div>
-
-      <div>
-        <h2 class="scrawl" id="about-title">{home.about.heading}</h2>
-        {home.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-        <div class="about-social-links">
-          {site.social.map((item) => {
-            const Icon = socialIcons[item.label.toLowerCase()];
-            return (
-              <a
-                class="social-link about-social-link"
-                href={withBase(item.href)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {Icon && <Icon class="social-link__icon" size={20} />}
-                <span>{item.label} updates</span>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section cta-band" id="order" aria-labelledby="order-title">
-    <div class="container">
-      <h2 class="cta-title" id="order-title">{home.cta.heading}</h2>
-      <p class="lead">{home.cta.lead}</p>
-      <div class="hero-actions">
-        <a
-          class="btn btn--primary"
-          href={withBase(site.orderUrl)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {home.cta.orderButtonLabel}
-        </a>
-        <a class="btn btn--ghost" href={`tel:${site.phone}`}>{home.cta.callButtonLabel} {site.phoneDisplay}</a>
-      </div>
-      <div class="footprint-trail footprint-trail--center" aria-hidden="true">
-        <span class="footprint-mark"></span>
-        <span class="footprint-mark"></span>
-        <span class="footprint-mark"></span>
-      </div>
-    </div>
-  </section>
+      document.querySelectorAll<HTMLElement>("[data-menu-panel]").forEach((panel) => {
+        const isActive = panel.dataset.menuPanel === target;
+        panel.classList.toggle("is-active", isActive);
+        panel.hidden = !isActive;
+      });
+    });
+  </script>
 </BaseLayout>

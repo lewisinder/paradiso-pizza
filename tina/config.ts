@@ -9,8 +9,11 @@ type TinaListItem = {
 };
 
 const branch =
+  process.env.GITHUB_BRANCH ||
   process.env.HEAD ||
   process.env.VERCEL_GIT_COMMIT_REF ||
+  process.env.WORKERS_CI_BRANCH ||
+  process.env.CF_PAGES_BRANCH ||
   process.env.GITHUB_REF_NAME ||
   "main";
 const tinaBasePath =
@@ -407,6 +410,7 @@ export default defineConfig({
         },
         ui: {
           allowedActions: singleDocumentActions,
+          router: () => "/",
         },
         fields: homepageFields,
       },
@@ -420,6 +424,7 @@ export default defineConfig({
         },
         ui: {
           allowedActions: singleDocumentActions,
+          router: () => "/#menu",
         },
         fields: menuFields,
       },
@@ -433,6 +438,7 @@ export default defineConfig({
         },
         ui: {
           allowedActions: singleDocumentActions,
+          router: () => "/",
         },
         fields: [
           { type: "string", name: "name", label: "Site name", required: true },
@@ -463,6 +469,33 @@ export default defineConfig({
             name: "hours",
             label: "Opening hours",
             list: true,
+          },
+          {
+            type: "object",
+            name: "openingHoursSpecification",
+            label: "Machine-readable opening hours (SEO)",
+            list: true,
+            description:
+              "Used by Google. Add each day or group of days with 24-hour opening and optional closing times.",
+            fields: [
+              {
+                type: "string",
+                name: "dayOfWeek",
+                label: "Days",
+                list: true,
+                options: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ],
+              },
+              { type: "string", name: "opens", label: "Opens (24-hour time)" },
+              { type: "string", name: "closes", label: "Closes (24-hour time)" },
+            ],
           },
           {
             type: "object",
@@ -521,6 +554,9 @@ export default defineConfig({
               { type: "string", name: "contactHeading", label: "“Contact” column heading" },
               { type: "string", name: "orderLinkLabel", label: "Order link label" },
               { type: "string", name: "bottomNote", label: "Bottom note (after the © line)" },
+              { type: "string", name: "designerLabel", label: "Designer credit label" },
+              { type: "string", name: "designerUrl", label: "Designer credit URL" },
+              { type: "string", name: "privacyLabel", label: "Privacy policy link label" },
             ],
           },
         ],
@@ -535,6 +571,7 @@ export default defineConfig({
         },
         ui: {
           allowedActions: singleDocumentActions,
+          router: () => "/#reviews",
         },
         fields: [
           {
@@ -576,8 +613,42 @@ export default defineConfig({
         },
         ui: {
           allowedActions: singleDocumentActions,
+          router: ({ document }) =>
+            document._sys.filename === "thank-you" ? "/thank-you/" : "/404/",
         },
         fields: utilityPageFields,
+      },
+      {
+        name: "privacyPage",
+        label: "Privacy policy",
+        path: "src/content/privacy",
+        format: "mdx",
+        match: {
+          include: "privacy",
+        },
+        ui: {
+          allowedActions: singleDocumentActions,
+          router: () => "/privacy/",
+        },
+        fields: [
+          { type: "string", name: "seoTitle", label: "Browser tab / search title", required: true },
+          {
+            type: "string",
+            name: "seoDescription",
+            label: "Search description",
+            required: true,
+            ui: { component: "textarea" },
+          },
+          { type: "string", name: "overline", label: "Small word above the heading", required: true },
+          { type: "string", name: "heading", label: "Heading", required: true },
+          { type: "string", name: "lastUpdated", label: "Last updated line", required: true },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Policy content",
+            isBody: true,
+          },
+        ],
       },
     ],
   },

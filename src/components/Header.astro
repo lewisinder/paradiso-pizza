@@ -1,16 +1,25 @@
 ---
 import { Menu } from "@lucide/astro";
-import { site } from "@/data/site";
-import { withBase, pathnameWithoutBase } from "@/lib/base";
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { SiteSettingsQuery } from "../../tina/__generated__/types";
+import { withBase } from "@/lib/base";
 
-const pathname = pathnameWithoutBase(Astro.url.pathname);
+type Props = {
+  site: SiteSettingsQuery["siteSettings"];
+  pathname?: string;
+};
+
+const { site, pathname = "/" } = Astro.props;
+const navItems = (site.nav ?? []).filter((item) => item !== null);
 const isCurrent = (href: string) =>
   !href.startsWith("#") && (href.replace(/\/$/, "") || "/") === pathname;
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={withBase("/")}>{site.name}</a>
+    <a class="brand" href={withBase("/")} data-tina-field={tinaField(site, "name")}>
+      {site.name}
+    </a>
     <button
       class="nav-toggle"
       type="button"
@@ -22,41 +31,30 @@ const isCurrent = (href: string) =>
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
       <ul>
-        {site.nav.map((item) => (
+        {navItems.map((item) => (
           <li>
-            <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
-              {item.label}
+            <a
+              href={withBase(item.href ?? "#")}
+              aria-current={isCurrent(item.href ?? "#") ? "page" : undefined}
+              data-tina-field={tinaField(item)}
+            >
+              {item.label ?? ""}
             </a>
           </li>
         ))}
         <li>
           <a
             class="btn btn--primary nav-cta"
-            href={withBase(site.primaryCta.href)}
+            href={withBase(site.primaryCta?.href ?? "#")}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {site.primaryCta.label}
+            <span data-tina-field={tinaField(site.primaryCta, "label")}>
+              {site.primaryCta?.label ?? ""}
+            </span>
           </a>
         </li>
       </ul>
     </nav>
   </div>
 </header>
-
-<script>
-  // Mobile nav toggle - the only JavaScript on the site.
-  const toggle = document.querySelector(".nav-toggle");
-  const nav = document.getElementById("site-nav");
-  toggle?.addEventListener("click", () => {
-    const open = nav?.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(Boolean(open)));
-  });
-
-  nav?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      toggle?.setAttribute("aria-expanded", "false");
-    });
-  });
-</script>

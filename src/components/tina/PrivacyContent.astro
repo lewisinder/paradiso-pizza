@@ -1,0 +1,31 @@
+---
+import TinaMarkdown from "@tinacms/astro/TinaMarkdown.astro";
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { PrivacyPageQuery } from "../../../tina/__generated__/types";
+
+type Props = {
+  data: PrivacyPageQuery["privacyPage"];
+};
+
+const { data } = Astro.props;
+---
+
+<section class="section policy-section" aria-labelledby="privacy-title">
+  <div class="container policy-layout">
+    <header class="policy-header">
+      <span class="overline" data-tina-field={tinaField(data, "overline")}>
+        {data.overline ?? ""}
+      </span>
+      <h1 class="scrawl" id="privacy-title" data-tina-field={tinaField(data, "heading")}>
+        {data.heading ?? ""}
+      </h1>
+      <p class="lead" data-tina-field={tinaField(data, "lastUpdated")}>
+        {data.lastUpdated ?? ""}
+      </p>
+    </header>
+
+    <div class="policy-body" data-tina-field={tinaField(data, "body")}>
+      <TinaMarkdown content={data.body} />
+    </div>
+  </div>
+</section>

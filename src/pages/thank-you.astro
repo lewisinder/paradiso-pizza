@@ -1,31 +1,29 @@
 ---
+import TinaIsland from "@tinacms/astro/TinaIsland.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { thankYouPage } from "@/data/pages";
-import { site } from "@/data/site";
-import { withBase } from "@/lib/base";
+import UtilityPageContent from "@/components/tina/UtilityPageContent.astro";
+import { getSiteSettings, getUtilityPage } from "@/lib/tina/data";
+import { islands } from "@/lib/tina/islands";
+
+const [pageResult, siteResult] = await Promise.all([
+  getUtilityPage("thank-you", true),
+  getSiteSettings(),
+]);
+const page = pageResult.data.utilityPages;
+const site = siteResult.data.siteSettings;
 ---
 
 <BaseLayout
-  title={thankYouPage.heading}
+  title={page.heading ?? "Thank you"}
   description="Your enquiry has been received."
   robots="noindex, nofollow"
 >
-  <section class="hero">
-    <div class="container">
-      <span class="overline">{thankYouPage.overline}</span>
-      <h1>{thankYouPage.heading}</h1>
-      <p class="lead">
-        {thankYouPage.message}
-        {thankYouPage.phoneNote && (
-          <>
-            {" "}{thankYouPage.phoneNote}
-            <a href={`tel:${site.phone}`}> {site.phoneDisplay}</a>.
-          </>
-        )}
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn--ghost" href={withBase("/")}>{thankYouPage.homeButtonLabel}</a>
-      </div>
-    </div>
-  </section>
+  <TinaIsland
+    name="utility"
+    wrapper={islands.utility.wrapper}
+    params={{ kind: "thank-you" }}
+    primary
+  >
+    <UtilityPageContent data={page} site={site} kind="thank-you" />
+  </TinaIsland>
 </BaseLayout>

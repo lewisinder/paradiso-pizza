@@ -62,11 +62,10 @@ standards below directly.
   Pages preview serves the site from a `/repo-name/` subpath and bare root links
   break there. Nav/CTA paths in `src/data/site.ts` stay plain (`/contact/`) —
   components apply `withBase()` when rendering.
-- **GitHub Pages preview:** every push to `main` auto-deploys a preview to
-  `https://<owner>.github.io/<repo>/` via `.github/workflows/deploy-pages.yml`
-  (once Pages is enabled — see the kickoff prompt). Preview builds are
-  automatically `noindex` with a blocking robots.txt; don't change that. Commit
-  and push after each approved milestone so the preview stays current.
+- **Cloudflare deployment:** every push to `main` builds Tina and deploys the site
+  as a Cloudflare Worker through `.github/workflows/deploy-cloudflare-worker.yml`.
+  This server-capable deployment is required for Tina's same-origin visual editing
+  route. Commit and push after each approved milestone so production stays current.
 - **Icons** are Lucide SVGs via `@lucide/astro`, mapped by name in
   `ServiceCard.astro`. Never emoji.
 - **Images:** put content images in `src/assets/` and render them with Astro's

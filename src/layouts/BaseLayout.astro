@@ -1,10 +1,13 @@
 ---
 import "../styles/global.css";
+import TinaIsland from "@tinacms/astro/TinaIsland.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { site } from "@/data/site";
+import { site as staticSite } from "@/data/site";
 import { localBusinessSchema } from "@/lib/seo";
 import { withBase, pathnameWithoutBase } from "@/lib/base";
+import { getSiteSettings } from "@/lib/tina/data";
+import { islands } from "@/lib/tina/islands";
 
 // Every page renders through this layout, which owns the whole <head>:
 // title, meta description, canonical URL, Open Graph tags, robots directive,
@@ -25,7 +28,9 @@ const isPreviewBuild = process.env.DEPLOY_TARGET === "preview";
 const robots = isPreviewBuild ? "noindex, nofollow" : (Astro.props.robots ?? "index, follow");
 
 const pathname = pathnameWithoutBase(Astro.url.pathname);
-const canonical = `${site.url}${pathname === "/" ? "/" : `${pathname}/`}`;
+const siteResult = await getSiteSettings();
+const site = siteResult.data.siteSettings;
+const canonical = `${staticSite.url}${pathname === "/" ? "/" : `${pathname}/`}`;
 const pageTitle = title.startsWith(site.name) ? title : `${title} | ${site.name}`;
 const allSchemas = [localBusinessSchema(), ...schemas];
 ---
@@ -53,10 +58,38 @@ const allSchemas = [localBusinessSchema(), ...schemas];
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header />
+    <TinaIsland name="header" wrapper={islands.header.wrapper} params={{ pathname }}>
+      <Header site={site} pathname={pathname} />
+    </TinaIsland>
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <TinaIsland name="footer" wrapper={islands.footer.wrapper}>
+      <Footer site={site} />
+    </TinaIsland>
+
+    <script>
+      // Delegated handlers survive Tina's live replacement of editable regions.
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        const toggle = event.target.closest<HTMLButtonElement>(".nav-toggle");
+        if (toggle) {
+          const nav = document.getElementById("site-nav");
+          const open = nav?.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", String(Boolean(open)));
+          return;
+        }
+
+        if (event.target.closest("#site-nav a")) {
+          const nav = document.getElementById("site-nav");
+          nav?.classList.remove("is-open");
+          document.querySelector<HTMLButtonElement>(".nav-toggle")?.setAttribute(
+            "aria-expanded",
+            "false",
+          );
+        }
+      });
+    </script>
   </body>
 </html>

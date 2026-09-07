@@ -42,6 +42,9 @@ type SiteSettings = {
     contactHeading: string;
     orderLinkLabel: string;
     bottomNote: string;
+    designerLabel: string;
+    designerUrl: string;
+    privacyLabel: string;
   };
 };
 

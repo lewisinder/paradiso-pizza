@@ -1,6 +1,19 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "paradiso-pizza",
-  "compatibility_date": "2026-07-05",
-  "pages_build_output_dir": "./dist"
+  "compatibility_date": "2026-09-07",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "paradisopizza.co.nz/*",
+      "zone_name": "paradisopizza.co.nz"
+    },
+    {
+      "pattern": "www.paradisopizza.co.nz/*",
+      "zone_name": "paradisopizza.co.nz"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
 }

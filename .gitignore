@@ -15,6 +15,9 @@ node_modules/
 # tooling / local config
 .claude/
 .netlify/
+.wrangler/
+.dev.vars*
+!.dev.vars.example
 .playwright-mcp/
 
 # macOS

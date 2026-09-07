@@ -1,10 +1,18 @@
 ---
 import FacebookIcon from "@/components/FacebookIcon.astro";
 import InstagramIcon from "@/components/InstagramIcon.astro";
-import { site } from "@/data/site";
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { SiteSettingsQuery } from "../../tina/__generated__/types";
 import { withBase } from "@/lib/base";
 
+type Props = {
+  site: SiteSettingsQuery["siteSettings"];
+};
+
+const { site } = Astro.props;
 const year = new Date().getFullYear();
+const socialItems = (site.social ?? []).filter((item) => item !== null);
+const hoursItems = (site.hours ?? []).filter((item) => item !== null);
 const socialIcons: Record<string, typeof FacebookIcon> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
@@ -15,26 +23,31 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h4 class="footer-brand">{site.name}</h4>
+        <h4 class="footer-brand" data-tina-field={tinaField(site, "name")}>{site.name}</h4>
         <span class="footer-rule" aria-hidden="true"></span>
-        <p class="muted">{site.tagline}</p>
+        <p class="muted" data-tina-field={tinaField(site, "tagline")}>{site.tagline ?? ""}</p>
       </div>
       <div>
-        <h4>{site.footer.findUsHeading}</h4>
+        <h4 data-tina-field={tinaField(site.footer, "findUsHeading")}>
+          {site.footer?.findUsHeading ?? ""}
+        </h4>
         <ul>
-          <li>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</li>
-          {site.social.map((item) => {
-            const Icon = socialIcons[item.label.toLowerCase()];
+          <li data-tina-field={tinaField(site, "address")}>
+            {site.address?.street}, {site.address?.locality}, {site.address?.region} {site.address?.postalCode}
+          </li>
+          {socialItems.map((item) => {
+            const Icon = socialIcons[(item.label ?? "").toLowerCase()];
             return (
               <li>
                 <a
                   class="social-link"
-                  href={withBase(item.href)}
+                  href={withBase(item.href ?? "#")}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-tina-field={tinaField(item)}
                 >
                   {Icon && <Icon class="social-link__icon" size={18} />}
-                  <span>{item.label} updates</span>
+                  <span>{item.label ?? ""} updates</span>
                 </a>
               </li>
             );
@@ -42,21 +55,33 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
         </ul>
       </div>
       <div>
-        <h4>{site.footer.hoursHeading}</h4>
+        <h4 data-tina-field={tinaField(site.footer, "hoursHeading")}>
+          {site.footer?.hoursHeading ?? ""}
+        </h4>
         <ul>
-          {site.hours.map((hours) => (
-            <li>{hours}</li>
+          {hoursItems.map((hours, index) => (
+            <li data-tina-field={tinaField(site, "hours", index)}>{hours}</li>
           ))}
         </ul>
       </div>
       <div>
-        <h4>{site.footer.contactHeading}</h4>
+        <h4 data-tina-field={tinaField(site.footer, "contactHeading")}>
+          {site.footer?.contactHeading ?? ""}
+        </h4>
         <ul>
-          <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
-          {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+          <li><a href={`tel:${site.phone ?? ""}`} data-tina-field={tinaField(site, "phoneDisplay")}>{site.phoneDisplay}</a></li>
+          {site.email && (
+            <li>
+              <a href={`mailto:${site.email}`} data-tina-field={tinaField(site, "email")}>
+                {site.email}
+              </a>
+            </li>
+          )}
           <li>
-            <a href={withBase(site.orderUrl)} target="_blank" rel="noopener noreferrer">
-              {site.footer.orderLinkLabel}
+            <a href={withBase(site.orderUrl ?? "#")} target="_blank" rel="noopener noreferrer">
+              <span data-tina-field={tinaField(site.footer, "orderLinkLabel")}>
+                {site.footer?.orderLinkLabel ?? ""}
+              </span>
             </a>
           </li>
         </ul>
@@ -64,16 +89,24 @@ const socialIcons: Record<string, typeof FacebookIcon> = {
     </div>
     <div class="footer-bottom">
       <span>
-        © {year} {site.legalName}. {site.footer.bottomNote} ·
+        © {year} <span data-tina-field={tinaField(site, "legalName")}>{site.legalName}</span>.
+        <span data-tina-field={tinaField(site.footer, "bottomNote")}>{site.footer?.bottomNote ?? ""}</span> ·
         <a
           class="footer-credit"
-          href="https://theblueprintcollective.co.nz/"
+          href={site.footer?.designerUrl ?? "#"}
           target="_blank"
           rel="noopener noreferrer"
+          data-tina-field={tinaField(site.footer, "designerLabel")}
         >
-          Designed by The Blueprint Collective
+          {site.footer?.designerLabel ?? ""}
         </a> ·
-        <a class="footer-credit" href={withBase("/privacy/")}>Privacy Policy</a>
+        <a
+          class="footer-credit"
+          href={withBase("/privacy/")}
+          data-tina-field={tinaField(site.footer, "privacyLabel")}
+        >
+          {site.footer?.privacyLabel ?? ""}
+        </a>
       </span>
       <span class="footprint-trail footprint-trail--footer" aria-hidden="true">
         <span class="footprint-mark"></span>

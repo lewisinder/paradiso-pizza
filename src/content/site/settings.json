@@ -36,7 +36,9 @@
       "opens": "16:00"
     },
     {
-      "dayOfWeek": "Sunday",
+      "dayOfWeek": [
+        "Sunday"
+      ],
       "opens": "12:00"
     }
   ],
@@ -74,6 +76,9 @@
     "hoursHeading": "Hours",
     "contactHeading": "Contact",
     "orderLinkLabel": "Order online",
-    "bottomNote": "Made with love and flour."
+    "bottomNote": "Made with love and flour.",
+    "designerLabel": "Designed by The Blueprint Collective",
+    "designerUrl": "https://theblueprintcollective.co.nz/",
+    "privacyLabel": "Privacy Policy"
   }
 }

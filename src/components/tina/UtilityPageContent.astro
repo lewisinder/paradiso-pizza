@@ -1,0 +1,52 @@
+---
+import { tinaField } from "@tinacms/astro/tina-field";
+import type { SiteSettingsQuery, UtilityPagesQuery } from "../../../tina/__generated__/types";
+import { withBase } from "@/lib/base";
+
+type Props = {
+  data: UtilityPagesQuery["utilityPages"];
+  site: SiteSettingsQuery["siteSettings"];
+  kind: "not-found" | "thank-you";
+};
+
+const { data, site, kind } = Astro.props;
+---
+
+<section class="hero">
+  <div class="container">
+    <span class="overline" data-tina-field={tinaField(data, "overline")}>
+      {data.overline ?? ""}
+    </span>
+    <h1 data-tina-field={tinaField(data, "heading")}>{data.heading ?? ""}</h1>
+    <p class="lead">
+      <span data-tina-field={tinaField(data, "message")}>{data.message ?? ""}</span>
+      {kind === "thank-you" && data.phoneNote && (
+        <>
+          {" "}<span data-tina-field={tinaField(data, "phoneNote")}>{data.phoneNote}</span>
+          <a href={`tel:${site.phone ?? ""}`}> {site.phoneDisplay ?? ""}</a>.
+        </>
+      )}
+    </p>
+    <div class="hero-actions">
+      <a
+        class={kind === "not-found" ? "btn btn--primary" : "btn btn--ghost"}
+        href={withBase("/")}
+        data-tina-field={tinaField(data, "homeButtonLabel")}
+      >
+        {data.homeButtonLabel ?? ""}
+      </a>
+      {kind === "not-found" && data.phoneNote && (
+        <a class="btn btn--ghost" href={`tel:${site.phone ?? ""}`}>
+          <span data-tina-field={tinaField(data, "phoneNote")}>{data.phoneNote}</span>
+          {" "}{site.phoneDisplay ?? ""}
+        </a>
+      )}
+    </div>
+    {kind === "not-found" && site.email && data.emailNote && (
+      <p class="lead">
+        <span data-tina-field={tinaField(data, "emailNote")}>{data.emailNote}</span>
+        {" "}<a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    )}
+  </div>
+</section>
